@@ -1,8 +1,8 @@
-"""create all tables
+"""create new  tables
 
-Revision ID: 691bb41e716d
+Revision ID: 01d8148c36ac
 Revises: ffdc0a98111c
-Create Date: 2022-06-25 13:12:51.137312
+Create Date: 2022-06-25 14:14:53.225640
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '691bb41e716d'
+revision = '01d8148c36ac'
 down_revision = 'ffdc0a98111c'
 branch_labels = None
 depends_on = None
@@ -21,8 +21,9 @@ def upgrade():
     op.create_table('channels',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=False),
-    sa.Column('description', sa.String(length=100), nullable=False),
-    sa.Column('channel_id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=100), nullable=False),
+    sa.Column('description', sa.String(length=255), nullable=False),
+    sa.Column('private', sa.Boolean(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
