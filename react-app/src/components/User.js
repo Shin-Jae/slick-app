@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 function User() {
   const [user, setUser] = useState({});
-  const { userId }  = useParams();
+  const { userId } = useParams();
 
   useEffect(() => {
     if (!userId) {
@@ -26,7 +26,7 @@ function User() {
         <strong>User Id</strong> {userId}
       </li>
       <li>
-        <strong>Username</strong> {user.username}
+        <strong>Username</strong> {user.first_name}
       </li>
       <li>
         <strong>Email</strong> {user.email}
