@@ -81,6 +81,14 @@ class Message(db.Model):
     # many-to-one relationship with Channel
     channel = db.relationship("Channel", back_populates="messages")
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "content": self.content,
+            "owner_id": self.owner_id,
+            "channel_id": self.channel_id,
+        }
+
 
 class Channel(db.Model):
     __tablename__ = 'channels'
