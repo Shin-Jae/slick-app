@@ -7,7 +7,6 @@ import { getAllMessages } from '../../store/messages';
 function Channels() {
     const { userId, channelId } = useParams();
     const dispatch = useDispatch();
-    console.log(channelId, userId)
 
     const allChannels = useSelector((state) => state.channels);
     const channels = Object.values(allChannels);
