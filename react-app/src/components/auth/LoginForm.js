@@ -18,6 +18,24 @@ const LoginForm = () => {
     }
   };
 
+  const demoUser1 = async (e) => {
+    setEmail('demo@aa.io');
+    setPassword('password')
+    await dispatch(login(email, password));
+  }
+
+  const demoUser2 = async (e) => {
+    setEmail('Tony@ironman.io');
+    setPassword('password')
+    await dispatch(login(email, password));
+  }
+
+  const demoUser3 = async (e) => {
+    setEmail('bill@microsoft.com');
+    setPassword('password')
+    await dispatch(login(email, password));
+  }
+
   const updateEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -57,6 +75,24 @@ const LoginForm = () => {
           onChange={updatePassword}
         />
         <button type='submit'>Login</button>
+      </div>
+      <div>
+        <button
+          type='submit'
+          onClick={demoUser1}
+        >Demo User 1</button>
+      </div>
+      <div>
+        <button
+          type='submit'
+          onClick={demoUser2}
+        >Demo User 2</button>
+      </div>
+      <div>
+        <button
+          type='submit'
+          onClick={demoUser3}
+        >Demo User 3</button>
       </div>
     </form>
   );
