@@ -1,2 +1,2 @@
 from .db import db
-from .user import User, Channel, Message
+from .user import User, Channel, Message, members

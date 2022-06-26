@@ -52,9 +52,17 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'first_name': self.first_name,
             'last_name': self.last_name,
-            'email': self.email
+            'email': self.email,
+            'members': [member.to_dict_no_user() for member in self.user_members]
         }
 
+    def to_dict_no_channel(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'email': self.email,
+        }
 
 class Message(db.Model):
     __tablename__ = 'messages'
@@ -98,3 +106,25 @@ class Channel(db.Model):
         back_populates="user_members",
         cascade="all, delete"
     )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "owner_id": self.owner_id,
+            "name": self.name,
+            "description": self.description,
+            "private": self.private,
+            "members": [member.to_dict_no_channel() for member in self.channel_members ]
+        }
+
+    def to_dict_no_user(self):
+        return {
+            "id": self.id,
+            "owner_id": self.owner_id,
+            "name": self.name,
+            "description": self.description,
+            "private": self.private,
+        }
+
+    def __repr__(self):
+        return f"< ChannelId: {self.id}, OwnerId: {self.owner_id}, Name: {self.name}, Description: {self.description}, Private: {self.private}, Channel Members: {self.channel_members} "
