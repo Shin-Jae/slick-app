@@ -10,52 +10,55 @@ import User from './components/User';
 import { authenticate } from './store/session';
 import MainPage from './components/Mainpage';
 import Channels from './components/Mainpage/Channels';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
-  const [loaded, setLoaded] = useState(false);
-  const dispatch = useDispatch();
+	const [loaded, setLoaded] = useState(false);
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    (async () => {
-      await dispatch(authenticate());
-      setLoaded(true);
-    })();
-  }, [dispatch]);
+	useEffect(() => {
+		(async () => {
+			await dispatch(authenticate());
+			setLoaded(true);
+		})();
+	}, [dispatch]);
 
-  if (!loaded) {
-    return null;
-  }
+	if (!loaded) {
+		return null;
+	}
 
-  return (
-    <BrowserRouter>
-      <NavBar />
-      <Switch>
-        <Route path='/login' exact={true}>
-          <LoginForm />
-        </Route>
-        <Route path='/sign-up' exact={true}>
-          <SignUpForm />
-        </Route>
-        <Switch >
-          <Route exact path='/users/:userId'>
-            <MainPage />
-          </Route>
-          <Route path='/users/:userId/:channelId'>
-            <Channels />
-          </Route>
-        </Switch>
-        <ProtectedRoute path='/users' exact={true} >
-          <UsersList />
-        </ProtectedRoute>
-        <ProtectedRoute path='/user/:userId' exact={true} >
-          <User />
-        </ProtectedRoute>
-        <ProtectedRoute path='/' exact={true} >
-          <h1>My Home Page</h1>
-        </ProtectedRoute>
-      </Switch>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<NavBar />
+			<Switch>
+				<Route path='/login' exact={true}>
+					<LoginForm />
+				</Route>
+				<Route path='/sign-up' exact={true}>
+					<SignUpForm />
+				</Route>
+				<PrivateRoute>
+					<Switch >
+						<Route exact path='/users/:userId'>
+							<MainPage />
+						</Route>
+						<Route path='/users/:userId/:channelId'>
+							<Channels />
+						</Route>
+					</Switch>
+					<ProtectedRoute path='/users' exact={true} >
+						<UsersList />
+					</ProtectedRoute>
+					<ProtectedRoute path='/user/:userId' exact={true} >
+						<User />
+					</ProtectedRoute>
+					<ProtectedRoute path='/' exact={true} >
+						<h1>My Home Page</h1>
+					</ProtectedRoute>
+				</PrivateRoute>
+			</Switch>
+		</BrowserRouter>
+	);
 }
 
 export default App;
