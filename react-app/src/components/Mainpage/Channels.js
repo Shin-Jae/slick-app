@@ -3,11 +3,12 @@ import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
+import MessageInput from '../MessageInput/'
 
 function Channels() {
     const { userId, channelId } = useParams();
     const dispatch = useDispatch();
-    console.log(channelId, userId)
+    // console.log(channelId, userId)
 
     const allChannels = useSelector((state) => state.channels);
     const channels = Object.values(allChannels);
@@ -50,7 +51,7 @@ function Channels() {
                     </li>
                 })}
             </ul>
-            <div>
+            {channelId && <div>
                 <div>Messages</div>
                 <ul className="messages" style={{ listStyleType: "none" }}>
                     {messages.map(message => {
@@ -59,7 +60,8 @@ function Channels() {
                         </li>
                     })}
                 </ul>
-            </div>
+                <MessageInput />
+            </div>}
         </div>
     )
 }
