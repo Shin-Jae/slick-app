@@ -11,6 +11,7 @@ import { authenticate } from './store/session';
 import MainPage from './components/Mainpage';
 import Channels from './components/Mainpage/Channels';
 import PrivateRoute from './components/PrivateRoute';
+// import Chat from './components/TestChat'
 
 function App() {
 	const [loaded, setLoaded] = useState(false);
@@ -41,6 +42,7 @@ function App() {
 					<Switch >
 						<Route exact path='/users/:userId'>
 							<MainPage />
+              {/* <Chat /> */}
 						</Route>
 						<Route path='/users/:userId/:channelId'>
 							<Channels />

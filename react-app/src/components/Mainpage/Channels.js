@@ -4,13 +4,17 @@ import { useEffect } from "react";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
 import CreateChannelModal from '../ChannelModal'
+import MessageInput from '../MessageInput/';
 
 function Channels() {
     const { userId, channelId } = useParams();
     const dispatch = useDispatch();
 
     const allChannels = useSelector((state) => state.channels);
-    const channels = Object.values(allChannels);    
+    const allUsers = useSelector((state) => state.search);
+    const channels = Object.values(allChannels);
+    // const user = useSelector((state) => state.session.user);
+
     const userEmail = useSelector((state) => state.session.user.email);
 
     const allMessages = useSelector((state) => state.messages);
@@ -20,6 +24,8 @@ function Channels() {
         dispatch(getAllChannels(userId));
         dispatch(getAllMessages(userId, channelId))
     }, [dispatch, userId, channelId]);
+
+    if (!Object.keys(allUsers).length) return null;
 
     return (
         <div>
@@ -50,16 +56,17 @@ function Channels() {
                     </li>
                 })}
             </ul>
-            <div>
+            {channelId && <div>
                 <div>Messages</div>
                 <ul className="messages" style={{ listStyleType: "none" }}>
                     {messages.map(message => {
                         return <li className="one-message" key={`message-${message.id}`}>
-                            {message.content}
+                            {`${allUsers[message.owner_id].first_name} ${allUsers[message.owner_id].last_name}: ${message.content}`}
                         </li>
                     })}
                 </ul>
-            </div>
+                <MessageInput />
+            </div>}
         </div>
     )
 }

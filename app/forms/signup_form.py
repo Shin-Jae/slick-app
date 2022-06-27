@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, IntegerField, DateField
 from wtforms.validators import DataRequired, Email, ValidationError
 from app.models import User
 
@@ -26,3 +26,10 @@ class SignUpForm(FlaskForm):
     email = StringField('email', validators=[DataRequired(), user_exists])
     profile_img = StringField('profile image')
     password = StringField('password', validators=[DataRequired()])
+
+class MessageForm(FlaskForm):
+    content = StringField('content', validators=[DataRequired()])
+    owner_id = IntegerField('owner_id', validators=[DataRequired()])
+    channel_id = IntegerField('channel_id', validators=[DataRequired()])
+    created_at = StringField('created_at', validators=[DataRequired()])
+    updated_at = StringField('updated_at', validators=[DataRequired()])

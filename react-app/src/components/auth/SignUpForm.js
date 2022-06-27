@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import './LoginForm.css'
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
@@ -53,69 +54,94 @@ const SignUpForm = () => {
   }
 
   return (
-    <form onSubmit={onSignUp}>
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
+    <span className='container-login-page'>
+      <header className='container-login-header'>
+        <div className='header-left-col'></div>
+        <NavLink exact to="/" className='header-center-col'>slick</NavLink>
+        <div className='header-right-col'>
+          Already have an account?
+          <div><NavLink to="/login">Sign in instead</NavLink></div>
+        </div>
+      </header>
+      <div className='text-sign-in'>
+        <h1>Join <span className='text-sign-in-slick'>Slick</span> today</h1>
+        <p className='text-sign-in-suggest'>We suggest using the email address you use at work</p>
       </div>
-      <div>
+      <form onSubmit={onSignUp} className='form-container'>
+        <div>
+          {errors.map((error, ind) => (
+            <div key={ind}>{error}</div>
+          ))}
+        </div>
         <label>First Name</label>
-        <input
-          type='text'
-          name='first_name'
-          onChange={updateFirstName}
-          value={first_name}
-        ></input>
-      </div>
-      <div>
+        <div className='input'>
+          <input
+            className='login-input-field'
+            type='text'
+            name='first_name'
+            onChange={updateFirstName}
+            value={first_name}
+            placeholder='Your first name'
+          ></input>
+        </div>
         <label>Last Name</label>
-        <input
-          type='text'
-          name='last_name'
-          onChange={updateLastName}
-          value={last_name}
-        ></input>
-      </div>
-      <div>
+        <div className='input'>
+          <input
+            className='login-input-field'
+            type='text'
+            name='last_name'
+            onChange={updateLastName}
+            value={last_name}
+            placeholder='Your last name'
+          ></input>
+        </div>
         <label>Email</label>
-        <input
-          type='text'
-          name='email'
-          onChange={updateEmail}
-          value={email}
-        ></input>
-      </div>
-      <div>
+        <div className='input'>
+          <input
+            className='login-input-field'
+            type='text'
+            name='email'
+            onChange={updateEmail}
+            value={email}
+            placeholder='Your email'
+          ></input>
+        </div>
         <label>Password</label>
-        <input
-          type='password'
-          name='password'
-          onChange={updatePassword}
-          value={password}
-        ></input>
-      </div>
-      <div>
+        <div className='input'>
+          <input
+            className='login-input-field'
+            type='password'
+            name='password'
+            onChange={updatePassword}
+            value={password}
+            placeholder='Please enter a password'
+          ></input>
+        </div>
         <label>Repeat Password</label>
-        <input
-          type='password'
-          name='repeat_password'
-          onChange={updateRepeatPassword}
-          value={repeatPassword}
-          required={true}
-        ></input>
-      </div>
-      <div>
+        <div className='input'>
+          <input
+            className='login-input-field'
+            type='password'
+            name='repeat_password'
+            onChange={updateRepeatPassword}
+            value={repeatPassword}
+            required={true}
+            placeholder='Confirm password'
+          ></input>
+        </div>
         <label>Profile Image</label>
-        <input
-          type='text'
-          name='profile_img'
-          onChange={updateProfileImg}
-          value={profile_img}
-        ></input>
-      </div>
-      <button type='submit'>Sign Up</button>
-    </form>
+        <div className='input'>
+          <input
+            className='login-input-field'
+            type='text'
+            name='profile_img'
+            onChange={updateProfileImg}
+            value={profile_img}
+          ></input>
+        </div>
+        <button type='submit' className='login-btn'>Sign Up</button>
+      </form>
+    </span>
   );
 };
 
