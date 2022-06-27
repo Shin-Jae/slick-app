@@ -61,7 +61,7 @@ const LoginForm = () => {
       </header>
       <div className='text-sign-in'>
         <h1>Sign in to <span className='text-sign-in-slick'>Slick</span></h1>
-        <p className='text-sign-in-suggest'>We suggest using the email address you use at work</p>
+        <p className='text-sign-in-suggest'>Welcome back to Slick</p>
       </div>
       <form onSubmit={onLogin} className='form-container'>
         <div className='container-demo-users'>

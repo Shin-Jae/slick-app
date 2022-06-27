@@ -32,6 +32,7 @@
 .text-sign-in-suggest {
     font-size: 15px;
     color: grey;
+    margin-bottom: 25px;
 }
 
 .form-container {
