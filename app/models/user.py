@@ -104,7 +104,7 @@ class Channel(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(255), nullable=False)
-    private = db.Column(db.Boolean, default=True)
+    private_chat = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, nullable=False)
     updated_at = db.Column(db.DateTime, nullable=False)
 
@@ -128,8 +128,8 @@ class Channel(db.Model):
             "owner_id": self.owner_id,
             "name": self.name,
             "description": self.description,
-            "private": self.private,
-            "members": [member.to_dict_no_channel() for member in self.channel_members]
+            "private_chat": self.private_chat,
+            "members": [member.to_dict_no_channel() for member in self.channel_members ]
         }
 
     def to_dict_no_user(self):
@@ -138,8 +138,8 @@ class Channel(db.Model):
             "owner_id": self.owner_id,
             "name": self.name,
             "description": self.description,
-            "private": self.private,
+            "private_chat": self.private_chat,
         }
 
     def __repr__(self):
-        return f"< ChannelId: {self.id}, OwnerId: {self.owner_id}, Name: {self.name}, Description: {self.description}, Private: {self.private}, Channel Members: {self.channel_members} "
+        return f"< ChannelId: {self.id}, OwnerId: {self.owner_id}, Name: {self.name}, Description: {self.description}, Private Chat: {self.private_chat}, Channel Members: {self.channel_members} "
