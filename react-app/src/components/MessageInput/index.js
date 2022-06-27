@@ -12,27 +12,42 @@ let socket;
 const MessageInput = () => {
   const dispatch = useDispatch()
   const channels = useSelector((state) => state.channels)
+  const messages = useSelector((state) => state.messages)
+
+  // console.log('messages :: ', messages)
   const { userId, channelId } = useParams()
 
   const [message, setMessage] = useState('')
-  const [messageReceived, setMessageReceived] = useState([])
+  const [messageReceived, setMessageReceived] = useState('')
+  const [newMessageId, setNewMessageId] = useState('')
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
     dispatch(getAllMessages(userId, channelId))
-  }, [dispatch, userId, channelId]);
-
+  }, [dispatch, userId, channelId, messageReceived]);
 
   useEffect(() => {
     socket = io();
-    socket.on("chat", (chat) => {
-      setMessageReceived(chat)
-      console.log(messageReceived)
+
+    socket.emit('join')
+
+    socket.on("chat", (data) => {
+      setMessageReceived(data)
     })
     return (() => {
       socket.disconnect()
     })
   }, [])
+
+  useEffect(() => {
+    console.log('------', newMessageId)
+    if (!messages[messageReceived.id]) {
+      // dispatch(createNewMessage(messageReceived))
+      setMessageReceived('')
+    }
+    // if (messageReceived.owner_id !== userId) {
+    // }
+  }, [messageReceived])
 
   if (!channels[channelId]) return null;
 
@@ -56,12 +71,14 @@ const MessageInput = () => {
     } catch (error) {
       alert(error)
     }
-    // socket = io();
-    // socket.on("chat")
-    socket.emit("chat", payload);
-    setMessage('')
-  }
 
+    if (newMessage) {
+      setNewMessageId(newMessage.id)
+    }
+
+    socket.emit("chat", payload);
+    setMessage('');
+  }
 
   return (
     <div className='message__container'>
