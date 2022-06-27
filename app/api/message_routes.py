@@ -24,6 +24,7 @@ def validation_errors_to_error_messages(validation_errors):
 def messages():
     form = MessageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print('message ------------------- ', form.data)
     if form.validate_on_submit():
         message = Message(
             content=form.data['content'],
@@ -32,7 +33,6 @@ def messages():
             created_at=form.data['created_at'],
             updated_at=form.data['updated_at'],
         )
-
         db.session.add(message)
         db.session.commit()
 

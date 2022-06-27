@@ -63,6 +63,7 @@ export const createNewMessage = (payload) => async dispatch => {
       return data.errors;
     }
   } else {
+    console.log('getting here:: ', payload)
     return ['An error occurred. Please try again.']
   }
 }
@@ -90,6 +91,7 @@ const messageReducer = (state = initialState, action) => {
         }
         return newState;
       }
+
     case UPDATE_MESSAGE:
       const updatedState = {
         ...state,
@@ -99,6 +101,7 @@ const messageReducer = (state = initialState, action) => {
         }
       }
       return updatedState;
+
     default:
       return state;
   }

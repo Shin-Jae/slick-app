@@ -6,9 +6,6 @@ import MessageContent from '../MessageContent'
 
 const ChatBox = () => {
   const allMessages = useSelector((state) => state.messages);
-  // const allUsers = useSelector((state) => state.search);
-  // const user = useSelector((state) => state.session.user)
-  // const [selectedEdit, setSelectedEdit] = useState('')
   const [edit, setEdit] = useState(true)
 
   const messages = Object.values(allMessages);

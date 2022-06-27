@@ -14,7 +14,6 @@ const MessageInput = () => {
   const channels = useSelector((state) => state.channels)
   const messages = useSelector((state) => state.messages)
 
-  // console.log('messages :: ', messages)
   const { userId, channelId } = useParams()
 
   const [message, setMessage] = useState('')
@@ -32,6 +31,7 @@ const MessageInput = () => {
     socket.emit('join')
 
     socket.on("chat", (data) => {
+      console.log('payload::: ', data)
       setMessageReceived(data)
     })
     return (() => {
@@ -40,7 +40,6 @@ const MessageInput = () => {
   }, [])
 
   useEffect(() => {
-    console.log('------', newMessageId)
     if (!messages[messageReceived.id]) {
       // dispatch(createNewMessage(messageReceived))
       setMessageReceived('')

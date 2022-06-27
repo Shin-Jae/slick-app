@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { updateMessage } from '../../store/messages';
 
 const MessageContent = ({ message }) => {
-  // console.log('message:: ', message)
   const dispatch = useDispatch();
   const allMessages = useSelector((state) => state.messages);
   const allUsers = useSelector((state) => state.search);
@@ -14,7 +13,7 @@ const MessageContent = ({ message }) => {
   const [content, setContent] = useState(message.content)
   const [edit, setEdit] = useState(true)
 
-  console.log('message:: ', message.id)
+
   const handleEdit = (e) => {
     e.preventDefault()
     setEdit(!edit)
