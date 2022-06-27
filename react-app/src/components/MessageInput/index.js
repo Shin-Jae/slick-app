@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
 import { useState, useEffect } from 'react'
-// import { createNewMessage } from '../../store/messages';
+import { createNewMessage } from '../../store/messages';
 import { io } from 'socket.io-client';
 
 let socket;
@@ -14,12 +14,12 @@ const MessageInput = () => {
   const channels = useSelector((state) => state.channels)
   const messages = useSelector((state) => state.messages)
 
-  console.log('messages :: ', messages)
+  // console.log('messages :: ', messages)
   const { userId, channelId } = useParams()
 
   const [message, setMessage] = useState('')
   const [messageReceived, setMessageReceived] = useState('')
-  // const [newMessageId, setNewMessageId] = useState('')
+  const [newMessageId, setNewMessageId] = useState('')
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
@@ -40,7 +40,7 @@ const MessageInput = () => {
   }, [])
 
   useEffect(() => {
-    // console.log('------', newMessageId)
+    console.log('------', newMessageId)
     if (!messages[messageReceived.id]) {
       // dispatch(createNewMessage(messageReceived))
       setMessageReceived('')
@@ -65,16 +65,16 @@ const MessageInput = () => {
       updated_at: new Date()
     }
 
-    // let newMessage;
-    // try {
-    //   newMessage = await dispatch(createNewMessage(payload));
-    // } catch (error) {
-    //   alert(error)
-    // }
+    let newMessage;
+    try {
+      newMessage = await dispatch(createNewMessage(payload));
+    } catch (error) {
+      alert(error)
+    }
 
-    // if (newMessage) {
-    //   setNewMessageId(newMessage.id)
-    // }
+    if (newMessage) {
+      setNewMessageId(newMessage.id)
+    }
 
     socket.emit("chat", payload);
     setMessage('');
