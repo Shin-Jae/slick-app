@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
+import "./LoginForm.css"
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -49,52 +50,84 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
+    <span className='container-login-page'>
+      <header className='container-login-header'>
+        <div className='header-left-col'></div>
+        <NavLink exact to="/" className='header-center-col'>slick</NavLink>
+        <div className='header-right-col'>
+          New to Slick?
+          <div><NavLink to="/sign-up">Create an account</NavLink></div>
+        </div>
+      </header>
+      <div className='text-sign-in'>
+        <h1>Sign in to <span className='text-sign-in-slick'>Slick</span></h1>
+        <p className='text-sign-in-suggest'>We suggest using the email address you use at work</p>
       </div>
-      <div>
-        <label htmlFor='email'>Email</label>
-        <input
-          name='email'
-          type='text'
-          placeholder='Email'
-          value={email}
-          onChange={updateEmail}
-        />
-      </div>
-      <div>
-        <label htmlFor='password'>Password</label>
-        <input
-          name='password'
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={updatePassword}
-        />
-        <button type='submit'>Login</button>
-      </div>
-      <div>
-        <button
-          type='submit'
-          onClick={demoUser1}
-        >Demo User 1</button>
-      </div>
-      <div>
-        <button
-          type='submit'
-          onClick={demoUser2}
-        >Demo User 2</button>
-      </div>
-      <div>
-        <button
-          type='submit'
-          onClick={demoUser3}
-        >Demo User 3</button>
-      </div>
-    </form>
+      <form onSubmit={onLogin} className='form-container'>
+        <div className='container-demo-users'>
+          <div>
+            <button
+              className='demo-login-btn demo-user-1'
+              type='submit'
+              onClick={demoUser1}
+            >Demo User 1</button>
+          </div>
+          <div>
+            <button
+              className='demo-login-btn demo-user-2'
+              type='submit'
+              onClick={demoUser2}
+            >Demo User 2</button>
+          </div>
+          <div>
+            <button
+              className='demo-login-btn demo-user-3'
+              type='submit'
+              onClick={demoUser3}
+            >Demo User 3</button>
+          </div>
+        </div>
+        <div className='container-content-rule'>
+          <hr className='horizontal-line line-left'></hr>
+          <div className='content-rule-center'> OR </div>
+          <hr className='horizontal-line line-right'></hr>
+        </div>
+        <div>
+          {errors.map((error, ind) => (
+            <div key={ind}>{error}</div>
+          ))}
+        </div>
+        <div>
+          <label htmlFor='email'><span className='input-login-text'>Email</span></label>
+          <div className='input'>
+            <input
+              className='login-input-field'
+              name='email'
+              type='text'
+              placeholder='name@work-email.com'
+              value={email}
+              onChange={updateEmail}
+            />
+          </div>
+        </div>
+        <div>
+          <label htmlFor='password'><span className='input-login-text'>Password</span></label>
+          <div className='input'>
+            <input
+              className='login-input-field'
+              name='password'
+              type='password'
+              placeholder='Your password'
+              value={password}
+              onChange={updatePassword}
+            />
+          </div>
+          <div>
+            <button type='submit' className='login-btn'>Login</button>
+          </div>
+        </div>
+      </form>
+    </span>
   );
 };
 
