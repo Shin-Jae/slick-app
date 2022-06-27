@@ -42,12 +42,11 @@ const channelReducer = (state = initialState, action) => {
     switch (action.type) {
         case ALL_CHANNELS:
             const channels = {};
-
             for (let channel of action.channels.channels) {
                 channels[channel.id] = channel;
             }
-            return { ...channels };
-        default:
+            return { ...channels };        
+            default:
             return state;
     }
 }

@@ -16,7 +16,7 @@ def channels(userId):
 @channel_routes.route('/<int:userId>', methods = ['POST'])
 def new_channel(userId):
     member = User.query.get(userId)
-    person = member(users = userId, channels= foreign.data)   
+    # person = member(users = userId, channels= form.data)   
     form = CreateChannel()    
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -28,8 +28,9 @@ def new_channel(userId):
             created_at = datetime.datetime.now(),
             updated_at = datetime.datetime.now()            
         )
-        member.channels.append(created_channel)
-        created_channel.users.append(member)
+        # member.channels.append(created_channel)
+        created_channel.channel_members.append(member)
+        
         db.session.add(created_channel)
         db.session.commit()
         return created_channel.to_dict()

@@ -10,8 +10,7 @@ function Channels() {
     const dispatch = useDispatch();
 
     const allChannels = useSelector((state) => state.channels);
-    const channels = Object.values(allChannels);
-
+    const channels = Object.values(allChannels);    
     const userEmail = useSelector((state) => state.session.user.email);
 
     const allMessages = useSelector((state) => state.messages);
@@ -28,7 +27,7 @@ function Channels() {
             <ul className="view-channels" style={{ listStyleType: "none" }}>
                 {channels.map(channel => {
                     return <li className="one-channel" key={`channel-${channel.id}`}>
-                        {channel.private ? null :
+                        {channel.private_chat ? null :
                             <NavLink exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
                                 {channel.name}
                             </NavLink>
@@ -41,7 +40,7 @@ function Channels() {
             <ul className="view-dms" style={{ listStyleType: "none" }}>
                 {channels.map(channel => {
                     return <li className="one-dm" key={`channel-${channel.id}`}>
-                        {channel.private ?
+                        {channel.private_chat ?
                             <NavLink exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
                                 {channel.members.map(member => {
                                     if (member.email !== userEmail) return <span key={`${member.id}`}>{member.first_name} </span>
