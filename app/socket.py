@@ -12,14 +12,11 @@ else:
     origins = "*"
 
 # initialize your socket instance
-socketio = SocketIO(cors_allowed_origins=origins, async_mode='eventlet')
+socketio = SocketIO(cors_allowed_origins=origins)
 
 
 # handle chat messages
-
-def ack():
-    print('message was received!::::::::::::::')
-
 @socketio.on("chat")
 def handle_chat(data):
-    emit("chat", data, callback=ack)
+    print('data:::::::::::: ', data)
+    socketio.emit("chat", data, broadcast=True)
