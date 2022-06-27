@@ -53,6 +53,23 @@ const SignUpForm = () => {
     return <Redirect to='/' />;
   }
 
+  let isSelected = false
+  const profileImg1 = (e) => {
+    if (profile_img === "") {
+      setProfileImg("");
+      isSelected = false;
+      console.log("unsetting", isSelected)
+    } else {
+      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1")
+      isSelected = true;
+      console.log("setting", isSelected)
+    }
+  }
+
+  const profileImg2 = (e) => {
+    setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1")
+  }
+
   return (
     <span className='container-login-page'>
       <header className='container-login-header'>
@@ -137,7 +154,17 @@ const SignUpForm = () => {
             name='profile_img'
             onChange={updateProfileImg}
             value={profile_img}
-          ></input>
+          >
+          </input>
+          <span onClick={profileImg1}><img
+            src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1"}
+            alt="1" />
+          </span>
+          <span onClick={profileImg2}>
+            <img
+              src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1"}
+              alt="2" />
+          </span>
         </div>
         <button type='submit' className='login-btn'>Sign Up</button>
       </form>
