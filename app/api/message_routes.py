@@ -8,6 +8,7 @@ from ..socket import socketio
 
 message_routes = Blueprint('messages', __name__)
 
+
 def validation_errors_to_error_messages(validation_errors):
     """
     Simple function that turns the WTForms validation errors into a simple list
@@ -17,6 +18,7 @@ def validation_errors_to_error_messages(validation_errors):
         for error in validation_errors[field]:
             errorMessages.append(f'{field} : {error}')
     return errorMessages
+
 
 @message_routes.route('/', methods=['POST'], strict_slashes=False)
 def messages():
@@ -38,6 +40,20 @@ def messages():
 
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+
+@message_routes.route('/<int:messageId>', methods=['PUT'], strict_slashes=False)
+def updateMessage(messageId):
+    message = Message.query.get(messageId)
+    new_message = request.json
+
+    content = message.content
+    content = new_message['content']
+    message.content = content
+    db.session.merge(message)
+    db.session.flush()
+    db.session.commit()
+
+    return {message}
 
 # @socketio.on('chat')
 # def handle_message(data):
