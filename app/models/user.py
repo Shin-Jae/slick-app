@@ -87,6 +87,7 @@ class Message(db.Model):
             "content": self.content,
             "owner_id": self.owner_id,
             "channel_id": self.channel_id,
+            "created_at": self.created_at
         }
 
 

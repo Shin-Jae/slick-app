@@ -3,7 +3,8 @@ import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
-import MessageInput from '../MessageInput/'
+import MessageInput from '../MessageInput/';
+
 
 function Channels() {
     const { userId, channelId } = useParams();
