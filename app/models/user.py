@@ -6,8 +6,10 @@ from flask_login import UserMixin
 members = db.Table(
     'members',
     db.Model.metadata,
-    db.Column('users', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('channels', db.Integer, db.ForeignKey('channels.id'), primary_key=True)
+    db.Column('users', db.Integer, db.ForeignKey(
+        'users.id'), primary_key=True),
+    db.Column('channels', db.Integer, db.ForeignKey(
+        'channels.id'), primary_key=True)
 )
 
 
@@ -64,6 +66,7 @@ class User(db.Model, UserMixin):
             'email': self.email,
         }
 
+
 class Message(db.Model):
     __tablename__ = 'messages'
 
@@ -80,6 +83,9 @@ class Message(db.Model):
 
     # many-to-one relationship with Channel
     channel = db.relationship("Channel", back_populates="messages")
+
+    # def __init__(self, content):
+    #     self.content = content
 
     def to_dict(self):
         return {

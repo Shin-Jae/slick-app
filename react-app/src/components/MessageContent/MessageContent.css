@@ -1,0 +1,9 @@
+.input__inactive {
+  background-color: white;
+  border: none
+}
+
+.input__active {
+  background-color: white;
+  border: 1px black solid;
+}

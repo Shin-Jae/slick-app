@@ -3,8 +3,10 @@ import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
+import ChatBox from "../ChatBox";
 import CreateChannelModal from '../ChannelModal'
 import MessageInput from '../MessageInput/';
+
 
 function Channels() {
     const { userId, channelId } = useParams();
@@ -18,7 +20,7 @@ function Channels() {
     const userEmail = useSelector((state) => state.session.user.email);
 
     const allMessages = useSelector((state) => state.messages);
-    const messages = Object.values(allMessages);
+    // const messages = Object.values(allMessages);
 
     useEffect(() => {
         dispatch(getAllChannels(userId));
@@ -56,17 +58,7 @@ function Channels() {
                     </li>
                 })}
             </ul>
-            {channelId && <div>
-                <div>Messages</div>
-                <ul className="messages" style={{ listStyleType: "none" }}>
-                    {messages.map(message => {
-                        return <li className="one-message" key={`message-${message.id}`}>
-                            {`${allUsers[message.owner_id].first_name} ${allUsers[message.owner_id].last_name}: ${message.content}`}
-                        </li>
-                    })}
-                </ul>
-                <MessageInput />
-            </div>}
+            {channelId && <ChatBox />}
         </div>
     )
 }
