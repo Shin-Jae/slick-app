@@ -12,9 +12,9 @@ const CreateChannelForm = ({onClose}) => {
     const [name, setName ] = useState("")
     const [description, setDescription] = useState("")
     const privatechat = false
-    const userId = useSelector((state) => state.session.user.id)
-    const owner_id = useSelector((state) => state.session.user).id
+    const userId = useSelector((state) => state.session.user.id)  
     const  [errors, setErrors] = useState([])
+    console.log("-------------------", userId)
 
     useEffect(() => {
         const validationErrors =[]
@@ -35,19 +35,20 @@ const CreateChannelForm = ({onClose}) => {
             name,
             description,
             privatechat,
-            owner_id
+            owner_id: userId,            
         }
-        const createdChannel = await dispatch(createOneChannel(payload, userId))
+        
+        const createdChannel = await dispatch(createOneChannel(userId, payload))
         if (createdChannel) {
             setErrors([])
-            await dispatch(getAllChannels(createdChannel.id))
-            history.push(`/users/${createdChannel.id}`)
+            await dispatch(getAllChannels(userId))
+            history.push(`/users/${userId}/${createdChannel.id}`)
             onClose(false)
         }
     }
     return (
-        <div>
-            
+
+        <div>            
             <form onSubmit={channelSubmission}>
                 <h1>Create New Channel</h1>
                 <ul>{errors.map((error) => (

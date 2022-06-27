@@ -10,7 +10,7 @@ def seed_users():
         owner_id=1,
         name='School',
         description='For all my classmates',
-        private=False,
+        private_chat=False,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
         # channel_members = [1, 2, 3]
@@ -21,7 +21,7 @@ def seed_users():
         owner_id=2,
         name='Work',
         description='For all my colleagues',
-        private=False,
+        private_chat=False,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
         # channel_members = [1, 2, 3]
@@ -32,7 +32,7 @@ def seed_users():
         owner_id=2,
         name='appAcademy',
         description='A place for appAcademy students',
-        private=False,
+        private_chat=False,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
         # channel_members = [1, 2, 3]
@@ -43,7 +43,7 @@ def seed_users():
         owner_id=2,
         name='private1',
         description='private1',
-        private=True,
+        private_chat=True,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
         # channel_members = [tony, bill]
@@ -53,7 +53,7 @@ def seed_users():
         owner_id=2,
         name='private2',
         description='private2',
-        private=True,
+        private_chat=True,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
         # channel_members = [demo, tony]
@@ -63,7 +63,7 @@ def seed_users():
         owner_id=2,
         name='private3',
         description='private3',
-        private=True,
+        private_chat=True,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
         # channel_members = [demo, tony, bill]

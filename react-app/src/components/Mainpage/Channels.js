@@ -3,6 +3,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
+import CreateChannelModal from '../ChannelModal'
 
 function Channels() {
     const { userId, channelId } = useParams();
@@ -32,8 +33,9 @@ function Channels() {
                                 {channel.name}
                             </NavLink>
                         }
-                    </li>
+                    </li>                    
                 })}
+                < CreateChannelModal />
             </ul>
             <div>DMs</div>
             <ul className="view-dms" style={{ listStyleType: "none" }}>
