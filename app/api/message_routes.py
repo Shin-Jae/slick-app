@@ -53,8 +53,16 @@ def updateMessage(messageId):
     db.session.flush()
     db.session.commit()
 
-    return {message}
+    return message.to_dict()
 
+
+@message_routes.route('/<int:messageId>', methods=['DELETE'], strict_slashes=False)
+def deleteMessage(messageId):
+    message = Message.query.get(messageId)
+    print('message ------------', message)
+    db.session.delete(message)
+    db.session.commit()
+    return message.to_dict()
 # @socketio.on('chat')
 # def handle_message(data):
 #     emit('response', {'data': data}, broadcast=True)

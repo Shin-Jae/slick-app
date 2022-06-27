@@ -1,26 +1,47 @@
 import './MessageContent.css'
 import MessageInput from '../MessageInput/';
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from 'react'
-import { updateMessage } from '../../store/messages';
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { updateMessage, deleteMessage, getAllMessages } from '../../store/messages';
 
 const MessageContent = ({ message }) => {
+  const { channelId } = useParams()
   const dispatch = useDispatch();
   const allMessages = useSelector((state) => state.messages);
   const allUsers = useSelector((state) => state.search);
   const user = useSelector((state) => state.session.user)
-  const [originalContent, setOriginalContent] = (message.content)
+  const [originalContent, setOriginalContent] = useState(message.content)
   const [content, setContent] = useState(message.content)
   const [edit, setEdit] = useState(true)
+  const [deleted, setDeleted] = useState(false)
 
+
+  useEffect(() => {
+    dispatch(getAllMessages(user.id, channelId))
+    return () => {
+      setDeleted(false)
+    }
+  }, [deleted]);
 
   const handleEdit = (e) => {
     e.preventDefault()
     setEdit(!edit)
   }
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault()
+
+    let deletedMessage;
+    try {
+      deletedMessage = await dispatch(deleteMessage(message.id));
+    } catch (error) {
+      alert(error)
+    }
+
+    if (deletedMessage) {
+      setDeleted(true)
+    }
   }
 
   const handleSave = async (e) => {
@@ -35,6 +56,7 @@ const MessageContent = ({ message }) => {
     }
 
     let updatedMessage;
+
     try {
       updatedMessage = await dispatch(updateMessage(payload, message.id));
     } catch (error) {
@@ -43,13 +65,15 @@ const MessageContent = ({ message }) => {
 
     if (updateMessage) {
       setEdit(true)
+      setOriginalContent(updatedMessage.content)
     }
-  }
 
+  }
 
   const handleCancel = (e) => {
     e.preventDefault()
     setEdit(true)
+    setContent(message.content)
   }
 
   return (
