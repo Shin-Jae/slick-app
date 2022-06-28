@@ -15,9 +15,12 @@ def channels(userId):
 
 @channel_routes.route('/<int:userId>', methods = ['POST'])
 def new_channel(userId):
-    member = User.query.get(userId)
-    # person = member(users = userId, channels= form.data)   
-    form = CreateChannel()    
+    # member = User.query.get(userId)
+
+    members = request.json['members']
+
+
+    form = CreateChannel()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         created_channel = Channel(
@@ -26,11 +29,13 @@ def new_channel(userId):
             description = form.data["description"],
             private_chat = form.data["private_chat"],
             created_at = datetime.datetime.now(),
-            updated_at = datetime.datetime.now()            
+            updated_at = datetime.datetime.now()
         )
-        # member.channels.append(created_channel)
-        created_channel.channel_members.append(member)
-        
+        for mem in members:
+            member = User.query.filter_by(id=mem).first()
+            print("helllpppp" , member)
+            created_channel.channel_members.append(member)
+
         db.session.add(created_channel)
         db.session.commit()
         return created_channel.to_dict()

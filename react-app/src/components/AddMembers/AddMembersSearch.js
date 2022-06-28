@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 
-function SearchBar() {
+function AddMembersSearch({ setMembers }) {
     const [query, setQuery] = useState("")
     const allUsers = useSelector((state) => state.search);
     const users = Object.values(allUsers);
+    const [members, setMember] = useState("")
 
     const userChannels = useSelector((state) => state.channels);
     const channels = Object.values(userChannels);
@@ -13,6 +14,9 @@ function SearchBar() {
     const userId = useSelector((state) => state.session.user.id);
 
     let channelId;
+    const AddMember = (e) => {
+        setMembers("hello")
+    }
 
     const filterUsers = (users, query) => {
         if (!query) {
@@ -48,7 +52,7 @@ function SearchBar() {
                         }
                         if (channelId === undefined) channelId = 1
                     })
-                    return <NavLink to={`/users/${userId}/${channelId}`} key={user.id}><div>{user.first_name} {user.last_name}</div></NavLink>
+                    return <div onClick={AddMember} key={user.id}>{user.first_name} {user.last_name}</div>
                 }) : null}
 
             </ul>
@@ -56,4 +60,4 @@ function SearchBar() {
     )
 }
 
-export default SearchBar;
+export default AddMembersSearch;
