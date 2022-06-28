@@ -2,7 +2,7 @@ import './ChatBox.css'
 import MessageInput from '../MessageInput/';
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages, updateMessage } from '../../store/messages';
 import MessageContent from '../MessageContent'
@@ -12,6 +12,7 @@ let socket;
 
 const ChatBox = () => {
   const dispatch = useDispatch()
+  const bottomRef = useRef(null);
   const { channelId, userId } = useParams()
   const allMessages = useSelector((state) => state.messages);
   const channels = useSelector((state) => state.channels)
@@ -27,11 +28,12 @@ const ChatBox = () => {
     dispatch(getAllMessages(userId, channelId))
   }, [dispatch, userId, channelId, messageReceived, messageUpdated, updateComplete, onDelete]);
 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [dispatch, channelId, messageReceived]);
 
   useEffect(() => {
     socket = io();
-
-    // socket.emit('join')
 
     socket.emit('update', updateComplete)
     socket.on('update', (data) => {
@@ -47,27 +49,18 @@ const ChatBox = () => {
     socket.on("delete", (data) => {
       setOnDelete(false)
     })
-
     return (() => {
       socket.disconnect()
     })
   }, [updateComplete, createMessage, onDelete])
 
-  // useEffect(() => {
-
-  //   socket.on('update', (data) => {
-  //     console.log('payload::: ', data)
-  //   });
-
-  //   socket.on("chat", (data) => {
-  //     setMessageReceived(data)
-  //   })
-
-  // },[messageUpdated, createMessage])
+  if (!Object.keys(channels).length) return null
 
   return (
     <div className='chatbox'>
-      <div className='chatbox__header'>{channels[channelId].name}</div>
+      <div className='chatbox__header'>
+        <h2 className='chatbox__header--text'>#{channels[channelId].name}</h2>
+      </div>
       <div className='chatbox__messages'>
         <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>
           {messages.map(message =>
@@ -76,6 +69,7 @@ const ChatBox = () => {
             </li>
           )}
         </ul>
+        <div ref={bottomRef} />
       </div>
       <div className='chatbox__input'>
         <MessageInput setMessageReceived={setMessageReceived} setCreateMessage={setCreateMessage} />
