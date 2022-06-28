@@ -4,13 +4,13 @@ import { useHistory } from "react-router-dom"
 import { createOneChannel, getAllChannels } from "../../store/channels"
 
 let arr = []
-const CreateChannelForm = ({ onClose }) => {
+function CreateDMForm({ onClose }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
-    const privatechat = false
+    const private_chat = true
     const [errors, setErrors] = useState([])
 
     //used for search
@@ -37,7 +37,7 @@ const CreateChannelForm = ({ onClose }) => {
         const payload = {
             name,
             description,
-            privatechat,
+            private_chat,
             owner_id: userId,
             members: arr
         }
@@ -73,34 +73,19 @@ const CreateChannelForm = ({ onClose }) => {
         } else {
             arr.pop(id);
         }
+        console.log('arrrrr', arr);
     }
 
-    return (
 
+    return (
         <div>
             <form onSubmit={channelSubmission}>
-                <h1>Create New Channel</h1>
+                <h1>Create New DM</h1>
                 <ul>{errors.map((error) => (
                     <li className="error_info">
                         {error}
                     </li>))}
                 </ul>
-                <input type="hidden" value={privatechat} />
-                <div>
-                    <label>Channel Name: </label>
-                    <input
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}>
-                    </input>
-
-                </div>
-                <div>
-                    <label>Description: </label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                </div>
                 <div>
                     <label>Members: </label>
                     <div>
@@ -126,13 +111,28 @@ const CreateChannelForm = ({ onClose }) => {
                         </ul>
                     </div>
                 </div>
+                <input type="hidden" value={private_chat} />
                 <div>
-                    <button type="submit" disabled={errors.length > 0}> Create Channel
-                    </button>
+                    <label>Channel Name: </label>
+                    <input
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}>
+                    </input>
+
+                </div>
+                <div>
+                    <label>Description: </label>
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    ></textarea>
+                </div>
+                <div>
+                    <button type="submit" disabled={errors.length > 0}>Send DM</button>
                 </div>
             </form>
         </div>
     )
 }
 
-export default CreateChannelForm;
+export default CreateDMForm;

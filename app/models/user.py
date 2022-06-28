@@ -112,7 +112,7 @@ class Channel(db.Model):
     messages = db.relationship("Message", back_populates="channel")
 
     # many-to-one relationship with User
-    user = db.relationship("User", back_populates="channels")
+    user = db.relationship("User", back_populates="channels", cascade="delete, merge, save-update")
 
     # many-to-many with User, through members
     channel_members = db.relationship(

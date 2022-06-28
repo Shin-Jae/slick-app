@@ -5,13 +5,13 @@ import CreateChannelForm from "../ChannelForm";
 const CreateChannelModal = () => {
     const [showModal, setShowModal] = useState(false);
     return (
-        <>
-        <button onClick={() => setShowModal(true)} style={{ cursor: 'pointer' }}>Create Channel</button>
+        <>             
+                <button onClick={() => setShowModal(true)} style={{ cursor: 'pointer' }}>Create Channel</button>                
         {showModal && (
         <Modal onClose={() => setShowModal(false)}>
             <CreateChannelForm onClose={() => setShowModal(false)} />
         </Modal>
-        )}
+        )}        
         </>
     )
 }

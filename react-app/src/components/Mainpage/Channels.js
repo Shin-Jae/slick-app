@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllChannels } from '../../store/channels';

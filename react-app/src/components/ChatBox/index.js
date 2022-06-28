@@ -22,6 +22,8 @@ const ChatBox = () => {
   const [messageUpdated, setMessageUpdated] = useState('')
   const [createMessage, setCreateMessage] = useState('')
   const [onDelete, setOnDelete] = useState(false)
+  // const [name, setName] = useState("")
+  //   const [description, setDescription] = useState("")
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
@@ -31,6 +33,13 @@ const ChatBox = () => {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [dispatch, channelId, messageReceived]);
+
+  // useEffect(() => {
+  //   if (channels[channelId]) {
+  //     setName(channels[channelId].name)
+  //     setDescription(channels[channelId].description)
+  //   }
+  // })
 
   useEffect(() => {
     socket = io();
@@ -53,9 +62,11 @@ const ChatBox = () => {
       socket.disconnect()
     })
   }, [updateComplete, createMessage, onDelete])
+  
+
 
   if (!Object.keys(channels).length) return null
-
+  
   return (
     <div className='chatbox'>
       <div className='chatbox__header'>
