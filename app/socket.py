@@ -18,5 +18,12 @@ socketio = SocketIO(cors_allowed_origins=origins)
 # handle chat messages
 @socketio.on("chat")
 def handle_chat(data):
-    print('data:::::::::::: ', data)
     socketio.emit("chat", data, broadcast=True)
+
+@socketio.on('update')
+def handle_update(data):
+    socketio.emit('update', data, broadcast=True)
+
+@socketio.on('delete')
+def handle_delete():
+    socketio.emit('delete', broadcast=True)
