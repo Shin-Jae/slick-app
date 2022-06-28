@@ -11,6 +11,10 @@
 .main-display__sidebar {
   background-color: #f2f2f2;
   max-width: 20em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1em;
 }
 
 .main-display__chatbox {

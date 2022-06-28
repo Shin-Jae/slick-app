@@ -59,7 +59,6 @@ def updateMessage(messageId):
 @message_routes.route('/<int:messageId>', methods=['DELETE'], strict_slashes=False)
 def deleteMessage(messageId):
     message = Message.query.get(messageId)
-    print('message ------------', message)
     db.session.delete(message)
     db.session.commit()
     return message.to_dict()

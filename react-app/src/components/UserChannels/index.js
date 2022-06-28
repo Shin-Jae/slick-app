@@ -37,7 +37,7 @@ const UserChannels = () => {
           return <li className="one-channel" key={`channel-${channel.id}`}>
             {channel.private_chat ? null :
               <NavLink exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
-                {channel.name}
+                # {channel.name}
               </NavLink>
             }
             {channel.private_chat ? null : < EditChannelModal channelId={channel.id} userId={user.id} owner_id={channel.owner_id} />}

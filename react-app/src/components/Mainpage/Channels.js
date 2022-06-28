@@ -5,8 +5,8 @@ import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
 import ChatBox from "../ChatBox";
 import './Channels.css'
-import MessageInput from '../MessageInput/';
-import Sidebar from "../Sidebar";
+import DMs from '../DMs';
+import UserChannels from '../UserChannels';
 
 function Channels() {
   const { userId, channelId } = useParams();
@@ -32,7 +32,12 @@ function Channels() {
   return (
     <div className='main-display'>
       <div className='main-display__sidebar'>
-        <Sidebar />
+        <div>
+          <UserChannels />
+        </div>
+        <div>
+          <DMs />
+        </div>
       </div>
       <div className='main-display__chatbox'>
         {channelId && <ChatBox />}

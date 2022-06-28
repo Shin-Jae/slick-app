@@ -5,10 +5,14 @@ import UserChannels from '../UserChannels';
 
 const Sidebar = () => {
   return (
-    <>
-      <UserChannels />
-      <DMs />
-    </>
+    <div className='sidebar'>
+      <div>
+        <UserChannels />
+      </div>
+      <div>
+        <DMs />
+      </div>
+    </div>
   );
 }
 

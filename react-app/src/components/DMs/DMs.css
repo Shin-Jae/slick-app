@@ -1,0 +1,21 @@
+.dms__list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.dms__list-item:hover {
+  background-color: #FFEE40;
+}
+
+.dms__list-item--icon-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%
+}
+
+.dms__list-item--name-container {
+  width: 14em;
+}

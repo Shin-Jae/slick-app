@@ -7,6 +7,7 @@ import { getAllChannels } from '../../store/channels';
 import { getAllMessages, updateMessage } from '../../store/messages';
 import MessageContent from '../MessageContent'
 import { io } from 'socket.io-client';
+import { useResolvedPath } from 'react-router';
 
 let socket;
 
@@ -16,12 +17,22 @@ const ChatBox = () => {
   const { channelId, userId } = useParams()
   const allMessages = useSelector((state) => state.messages);
   const channels = useSelector((state) => state.channels)
+  const currentChannel = channels[channelId];
+
   const messages = Object.values(allMessages);
   const [messageReceived, setMessageReceived] = useState('')
   const [updateComplete, setUpdateComplete] = useState('')
   const [messageUpdated, setMessageUpdated] = useState('')
   const [createMessage, setCreateMessage] = useState('')
   const [onDelete, setOnDelete] = useState(false)
+
+  let privateMembers;
+
+  if (currentChannel.private_chat) {
+    privateMembers = currentChannel.members.filter(user =>
+      +user.id !== +userId
+      ).map(user => `${user.first_name} ${user.last_name}`).join(', ')
+  }
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
@@ -59,7 +70,12 @@ const ChatBox = () => {
   return (
     <div className='chatbox'>
       <div className='chatbox__header'>
-        <h2 className='chatbox__header--text'>#{channels[channelId].name}</h2>
+        <h2 className='chatbox__header--text'>
+          { privateMembers ?
+          (`${privateMembers}`) :
+          (`#${currentChannel.name}`)
+          }
+        </h2>
       </div>
       <div className='chatbox__messages'>
         <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>
