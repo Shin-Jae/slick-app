@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom"
 import { updateChannel, getAllChannels } from "../../store/channels"
 
 
-const EditChannelForm = ({  closeModal, channelId } ) => {       
+const EditChannelForm = ({ closeModal, channelId }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const channel = useSelector((state) => state.channels[channelId])
@@ -13,8 +13,7 @@ const EditChannelForm = ({  closeModal, channelId } ) => {
     const privatechat = false
     const userId = useSelector((state) => state.session.user.id)
     const [errors, setErrors] = useState([])
-    const [show, setShow] = useState(true)
-    
+
     useEffect(() => {
         const validationErrors = []
         if (!name)
@@ -38,7 +37,6 @@ const EditChannelForm = ({  closeModal, channelId } ) => {
     const editChannelSubmission = async (e) => {
         e.preventDefault()
         const payload = {
-            
             name,
             description,
             privatechat,
@@ -47,7 +45,6 @@ const EditChannelForm = ({  closeModal, channelId } ) => {
         const updatedChannel = await dispatch(updateChannel(channelId, payload))
         if (updatedChannel) {
             setErrors([])
-            setShow(false)
             await dispatch(getAllChannels(userId))
             history.push(`/users/${userId}/${channelId}`)
             closeModal(false)
@@ -55,7 +52,7 @@ const EditChannelForm = ({  closeModal, channelId } ) => {
     }
     return (
         <div>
-           
+
             <form onSubmit={editChannelSubmission}>
                 <h1>Edit Channel</h1>
                 <ul className="validation-errors">{errors.map((error) => (
@@ -81,8 +78,8 @@ const EditChannelForm = ({  closeModal, channelId } ) => {
                     <button type="submit" disabled={errors.length > 0}> Update Channel</button>
                 </div>
             </form>
-            
-            
+
+
         </div>
     )
 }
