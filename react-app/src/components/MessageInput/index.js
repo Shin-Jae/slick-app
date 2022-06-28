@@ -5,6 +5,7 @@ import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
 import { useState, useEffect } from 'react'
 import { createNewMessage } from '../../store/messages';
+import './MessageInput.css'
 // import { io } from 'socket.io-client';
 
 // let socket;
