@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { useHistory, useParams } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import { updateChannel, getAllChannels } from "../../store/channels"
 
 
-const EditChannelForm = ({ onClose, channelId } ) => {
-    console.log("----------------------", channelId)
-    
+const EditChannelForm = ({  closeModal, channelId } ) => {       
     const dispatch = useDispatch()
     const history = useHistory()
     const channel = useSelector((state) => state.channels[channelId])
@@ -15,8 +13,8 @@ const EditChannelForm = ({ onClose, channelId } ) => {
     const privatechat = false
     const userId = useSelector((state) => state.session.user.id)
     const [errors, setErrors] = useState([])
-    console.log("++++++++++++++++++++++++++", channel)
-
+    const [show, setShow] = useState(true)
+    
     useEffect(() => {
         const validationErrors = []
         if (!name)
@@ -46,16 +44,18 @@ const EditChannelForm = ({ onClose, channelId } ) => {
             privatechat,
             owner_id: userId,
         }
-        const updatedChannel = await dispatch(updateChannel(payload))
+        const updatedChannel = await dispatch(updateChannel(channelId, payload))
         if (updatedChannel) {
             setErrors([])
+            setShow(false)
             await dispatch(getAllChannels(userId))
-            history.push(`/channels/${channelId}`)
-            onClose(false)
+            history.push(`/users/${userId}/${channelId}`)
+            closeModal(false)
         }
     }
     return (
         <div>
+           
             <form onSubmit={editChannelSubmission}>
                 <h1>Edit Channel</h1>
                 <ul className="validation-errors">{errors.map((error) => (
@@ -81,6 +81,8 @@ const EditChannelForm = ({ onClose, channelId } ) => {
                     <button type="submit" disabled={errors.length > 0}> Update Channel</button>
                 </div>
             </form>
+            
+            
         </div>
     )
 }

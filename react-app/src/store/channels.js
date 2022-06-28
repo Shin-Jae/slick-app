@@ -42,6 +42,7 @@ export const createOneChannel = (userId, payload) => async dispatch => {
 }
 
 export const updateChannel = (channelId, payload) => async dispatch => {
+    console.log("-------->>>>>>>>>>>>>>>>>>", channelId)
     const response = await fetch(`/api/channels/${channelId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

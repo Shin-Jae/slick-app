@@ -2,15 +2,17 @@ import { Modal } from "../../context/modal";
 import React, { useState } from "react";
 import EditChannelForm from "../EditChannel";
 
-const EditChannelModal = ({ channelId }) => {
-    console.log("OOOOOOOOOOOOOOOOOOOOO", channelId)
+const EditChannelModal = ({ userId, channelId, owner_id }) => {
+    
+    console.log("userId:", userId )
+    console.log("owner_id:", owner_id)
     const [showModal, setShowModal] = useState(false);
     return (
         <>
-            <button onClick={() => setShowModal(true)} style={{ cursor: 'pointer' }}>Edit Channel</button>
+            {userId === owner_id && (<button onClick={() => setShowModal(true)} style={{ cursor: 'pointer' }} >Edit Channel</button>)}
             {showModal && (
-                <Modal onClose={() => setShowModal(false)}>
-                    <EditChannelForm onClose={() => setShowModal(false)} channelId={channelId} />
+                <Modal closeModal={() => setShowModal(false)}>
+                    <EditChannelForm closeModal={() => setShowModal(false)} channelId={channelId} />
                 </Modal>
             )}
 

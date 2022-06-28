@@ -36,17 +36,21 @@ def new_channel(userId):
         return created_channel.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
-@channel_routes.route("/<int:channelId>", methods = ["PUT"])
-def edit_channel():
-    form = ChannelForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        updated_channel = Channel.query.get(id)
-        updated_channel.name = form.data["name"]
-        updated_channel.description = form.data["description"]
-        db.session.commit()
-        return updated_channel.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+@channel_routes.route('/<int:channelId>', methods = ['PUT'])
+def edit_channel(channelId):
+    print("-------------->", channelId)
+    channel = Channel.query.get(channelId)
+    updated_channel = request.json
+    name = channel.name
+    name = updated_channel['name']
+    description = channel.description
+    description = updated_channel['description']
+    channel.name = name
+    channel.description = description
+    db.session.merge(channel)
+    db.session.flush()
+    db.session.commit()
+    return channel.to_dict()
 
 ######################## message feature ###################################
 @channel_routes.route('/<int:userId>/<int:channelId>')

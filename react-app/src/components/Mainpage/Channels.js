@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllChannels } from '../../store/channels';
@@ -15,8 +15,8 @@ function Channels() {
     const allChannels = useSelector((state) => state.channels);
     const allUsers = useSelector((state) => state.search);
     const channels = Object.values(allChannels);
-    // const user = useSelector((state) => state.session.user);
-
+    
+    const user = useSelector((state) => state.session.user)
     const userEmail = useSelector((state) => state.session.user.email);
 
     const allMessages = useSelector((state) => state.messages);
@@ -34,13 +34,17 @@ function Channels() {
             <div>Channels</div>
             <ul className="view-channels" style={{ listStyleType: "none" }}>
                 {channels.map(channel => { 
+                    
                     return <li className="one-channel" key={`channel-${channel.id}`}>
                         {channel.private_chat ? null :
                             <NavLink exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
                                 {channel.name}
+                               
                             </NavLink>
-                        }
-                        < EditChannelModal channelId={channel.id}/>
+                        } 
+                        
+                        {channel.private_chat ? null : < EditChannelModal channelId={channel.id}  userId={user.id} owner_id={channel.owner_id}/>}
+                                                    
                     </li>                    
                 })}
                 < CreateChannelModal />
