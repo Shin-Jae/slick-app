@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import EditChannelForm from "../EditChannel";
 
 const EditChannelModal = ({ userId, channelId, owner_id }) => {
-    
-    console.log("userId:", userId )
-    console.log("owner_id:", owner_id)
+
     const [showModal, setShowModal] = useState(false);
     return (
         <>

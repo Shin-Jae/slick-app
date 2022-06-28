@@ -1,3 +1,4 @@
+from turtle import update
 from flask import Blueprint, jsonify, request
 from app.models import Channel, User, members, Message, db
 from flask_login import current_user
@@ -40,13 +41,32 @@ def new_channel(userId):
 
 @channel_routes.route('/<int:channelId>', methods = ['PUT'])
 def edit_channel(channelId):
-    print("-------------->", channelId)
+    # print("-------------->", channelId)
     channel = Channel.query.get(channelId)
     updated_channel = request.json
+
+    updated_members = request.json['members']
+    remove_members = request.json['remove']
+
     name = channel.name
     name = updated_channel['name']
     description = channel.description
     description = updated_channel['description']
+
+    for new in updated_members:
+        member = User.query.filter_by(id=new).first()
+        if member not in channel.channel_members:
+            channel.channel_members.append(member)
+        else:
+            continue
+
+    for rem in remove_members:
+        remove = User.query.filter_by(id=rem).first()
+        if remove in channel.channel_members:
+            channel.channel_members.remove(remove)
+        else:
+            continue
+
     channel.name = name
     channel.description = description
     db.session.merge(channel)
