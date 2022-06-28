@@ -81,7 +81,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
   }
 
   return (
-    <>
+    <div className={edit ? 'message__container' : 'message__container--edit'}>
       <p>{allUsers[message.owner_id].first_name} {allUsers[message.owner_id].last_name}: </p>
       <form>
         <input
@@ -104,7 +104,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
           </div>
         }
       </form>
-    </>
+    </div>
   );
 }
 

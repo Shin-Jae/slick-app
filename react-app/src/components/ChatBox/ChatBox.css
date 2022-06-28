@@ -1,15 +1,16 @@
 .chatbox__header {
-  margin: .5em;
+  padding-bottom: 4em;
   background-color: white;
-  border-bottom: 1px #dedede solid;
   z-index: 3;
+  max-height: 3em;
 }
 .chatbox__header--text {
-  margin: .5em;
+  padding-top: .75em;
+  padding-left: .75em;
 }
 .chatbox {
-  display: grid;
-  grid-template-rows: 1fr 3fr 1fr;
+  /* display: grid;
+  grid-template-rows: 2fr 3fr 1fr; */
 }
 
 .chatbox__input {
@@ -20,12 +21,18 @@
 }
 
 .chatbox__messages {
+  /* border-bottom: 1px #dedede solid; */
+  border-top: 1px #dedede solid;
   position: fixed;
-  top: 10em;
+  top: 6.5em;
   max-height: 70%;
-  min-width: 72%;
+  min-width: 75%;
   overflow-y: scroll;
-  z-index: 1
+  z-index: 1;
+}
+
+.chatbox__messages--list {
+
 }
 
 ::-webkit-scrollbar {
