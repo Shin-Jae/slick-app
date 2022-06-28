@@ -70,6 +70,8 @@ const CreateChannelForm = ({ onClose }) => {
 
         if (!arr.includes(id)) {
             arr.push(id);
+        } else {
+            arr.pop(id);
         }
     }
 
