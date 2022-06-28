@@ -1,9 +1,34 @@
 .input__inactive {
   background-color: white;
-  border: none
+  border: none;
+  width: 100%;
+  padding: 1em;
 }
 
 .input__active {
   background-color: white;
-  border: 1px black solid;
+  border: 2px #dedede solid;
+  border-radius: 1em;
+  width: 100%;
+  padding: 1em;
+}
+
+.message__container:hover .input__inactive{
+  background-color: #f7f7f7;
+}
+
+.message__container:hover {
+  background-color: #f7f7f7;
+}
+
+.message__container {
+  width: 100%;
+  padding: 1em;
+  padding-left: 2em;
+}
+
+.message__container--edit {
+  background-color: #fff4cf;
+  width: 100%;
+  padding: 1em;
 }

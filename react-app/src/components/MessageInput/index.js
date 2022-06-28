@@ -18,39 +18,7 @@ const MessageInput = ({setMessageReceived, setCreateMessage}) => {
   const { userId, channelId } = useParams()
 
   const [message, setMessage] = useState('')
-  // const [messageReceived, setMessageReceived] = useState('')
   const [newMessageId, setNewMessageId] = useState('')
-
-  // useEffect(() => {
-  //   dispatch(getAllChannels(userId));
-  //   dispatch(getAllMessages(userId, channelId))
-  // }, [dispatch, userId, channelId, messageReceived]);
-
-  // useEffect(() => {
-  //   socket = io();
-
-  //   socket.emit('join')
-
-  //   socket.on('update', (data) => {
-  //     console.log('payload::: ', data)
-  //   });
-
-  //   socket.on("chat", (data) => {
-  //     setMessageReceived(data)
-  //   })
-  //   return (() => {
-  //     socket.disconnect()
-  //   })
-  // }, [])
-
-  // useEffect(() => {
-  //   if (!messages[messageReceived.id]) {
-  //     // dispatch(createNewMessage(messageReceived))
-  //     setMessageReceived('')
-  //   }
-  //   // if (messageReceived.owner_id !== userId) {
-  //   // }
-  // }, [messageReceived])
 
   if (!channels[channelId]) return null;
 
@@ -84,7 +52,7 @@ const MessageInput = ({setMessageReceived, setCreateMessage}) => {
   }
 
   return (
-    <div className='message__container'>
+    <div className='message__input--container'>
       <form className='message__form' onSubmit={handleSubmit}>
         <input
           className='message__input'
