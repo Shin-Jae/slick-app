@@ -1,0 +1,29 @@
+.container-signup-profile-img {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.hide-profile-img-btn {
+    font-size: 18px;
+    height: 35px;
+    width: 100px;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-style: italic;
+    background-color: #4a154b;
+    color: white;
+    font-weight: bold;
+}
+
+.signup-profile-img {
+    height: 160px;
+    width: 210px;
+    margin: 2px 4px 0 2px;
+    transition: border .5s;
+}
+
+.signup-profile-img:hover {
+    border: 5px solid #4a154b;
+}
