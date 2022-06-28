@@ -1,6 +1,7 @@
 const ALL_MESSAGES = "messages/ALL_MESSAGES";
 const CREATE_MESSAGE = "messages/CREATE_MESSAGE";
 const UPDATE_MESSAGE = 'message/UPDATE_MESSAGE'
+const DELETE_MESSAGE = 'message/DELETE_MESSAGE'
 
 export const allMessages = (messages) => ({
   type: ALL_MESSAGES,
@@ -17,6 +18,11 @@ export const updateOne = (updatedMessage) => ({
   updatedMessage
 })
 
+export const deleteOne = (deletedMessage) => ({
+  type: DELETE_MESSAGE,
+  deletedMessage
+})
+
 export const getAllMessages = (userId, channelId) => async dispatch => {
   const response = await fetch(`/api/channels/${userId}/${channelId}`)
 
@@ -28,7 +34,7 @@ export const getAllMessages = (userId, channelId) => async dispatch => {
 }
 
 export const updateMessage = (payload, messageId) => async dispatch => {
-  console.log('messageId from reducer:: ', messageId)
+  // console.log('messageId from reducer:: ', messageId)
   const response = await fetch(`/api/messages/${messageId}`, {
     method: 'PUT',
     headers: {
@@ -68,6 +74,17 @@ export const createNewMessage = (payload) => async dispatch => {
   }
 }
 
+export const deleteMessage = (id) => async dispatch => {
+  const response = await fetch(`/api/messages/${id}`, {
+    method: 'DELETE'
+  });
+
+  if (response.ok) {
+    const deletedMessage = await response.json();
+    dispatch(deleteOne(deletedMessage));
+    return deletedMessage;
+  }
+}
 
 
 const initialState = {}
@@ -101,6 +118,11 @@ const messageReducer = (state = initialState, action) => {
         }
       }
       return updatedState;
+
+    case DELETE_MESSAGE:
+      const newState = { ...state };
+      delete newState[action.deletedMessage.id];
+      return newState;
 
     default:
       return state;

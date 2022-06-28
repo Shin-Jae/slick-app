@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LogoutButton from './auth/LogoutButton';
+import './NavBar.css'
 import Search from './Search';
 
 const NavBar = () => {
@@ -9,7 +10,7 @@ const NavBar = () => {
 
 	if (!user) {
 		return (
-			<nav>
+			<nav className='navbar'>
 				{/* <p>Logged-in: {`user.id: ${id} name: ${first_name} ${last_name}`}</p> */}
 				<ul>
 					<li>
@@ -33,7 +34,7 @@ const NavBar = () => {
 	} else {
 		const { id, first_name, last_name } = user;
 		return (
-			<nav>
+			<nav className='navbar'>
 				<p>Logged-in: {`id: ${id}, ${first_name} ${last_name}`}</p>
 				<Search />
 				<ul>

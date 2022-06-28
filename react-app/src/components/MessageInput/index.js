@@ -5,11 +5,12 @@ import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
 import { useState, useEffect } from 'react'
 import { createNewMessage } from '../../store/messages';
-import { io } from 'socket.io-client';
+import './MessageInput.css'
+// import { io } from 'socket.io-client';
 
-let socket;
+// let socket;
 
-const MessageInput = () => {
+const MessageInput = ({setMessageReceived, setCreateMessage}) => {
   const dispatch = useDispatch()
   const channels = useSelector((state) => state.channels)
   const messages = useSelector((state) => state.messages)
@@ -17,41 +18,43 @@ const MessageInput = () => {
   const { userId, channelId } = useParams()
 
   const [message, setMessage] = useState('')
-  const [messageReceived, setMessageReceived] = useState('')
+  // const [messageReceived, setMessageReceived] = useState('')
   const [newMessageId, setNewMessageId] = useState('')
 
-  useEffect(() => {
-    dispatch(getAllChannels(userId));
-    dispatch(getAllMessages(userId, channelId))
-  }, [dispatch, userId, channelId, messageReceived]);
+  // useEffect(() => {
+  //   dispatch(getAllChannels(userId));
+  //   dispatch(getAllMessages(userId, channelId))
+  // }, [dispatch, userId, channelId, messageReceived]);
 
-  useEffect(() => {
-    socket = io();
+  // useEffect(() => {
+  //   socket = io();
 
-    socket.emit('join')
+  //   socket.emit('join')
 
-    socket.on("chat", (data) => {
-      console.log('payload::: ', data)
-      setMessageReceived(data)
-    })
-    return (() => {
-      socket.disconnect()
-    })
-  }, [])
+  //   socket.on('update', (data) => {
+  //     console.log('payload::: ', data)
+  //   });
 
-  useEffect(() => {
-    if (!messages[messageReceived.id]) {
-      // dispatch(createNewMessage(messageReceived))
-      setMessageReceived('')
-    }
-    // if (messageReceived.owner_id !== userId) {
-    // }
-  }, [messageReceived])
+  //   socket.on("chat", (data) => {
+  //     setMessageReceived(data)
+  //   })
+  //   return (() => {
+  //     socket.disconnect()
+  //   })
+  // }, [])
+
+  // useEffect(() => {
+  //   if (!messages[messageReceived.id]) {
+  //     // dispatch(createNewMessage(messageReceived))
+  //     setMessageReceived('')
+  //   }
+  //   // if (messageReceived.owner_id !== userId) {
+  //   // }
+  // }, [messageReceived])
 
   if (!channels[channelId]) return null;
 
   const { name } = channels[channelId]
-
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -75,7 +78,8 @@ const MessageInput = () => {
       setNewMessageId(newMessage.id)
     }
 
-    socket.emit("chat", payload);
+    // socket.emit("chat", payload);
+    setCreateMessage(payload)
     setMessage('');
   }
 
