@@ -14,7 +14,6 @@ const DMs = () => {
   const userEmail = useSelector((state) => state.session.user.email);
   const allChannels = useSelector((state) => state.channels);
   const channels = Object.values(allChannels);
-  console.log("userid", userId, channelId);
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
@@ -30,21 +29,23 @@ const DMs = () => {
       <ul className="view-dms" style={{ listStyleType: "none" }}>
         {channels.map(channel => {
           return <li className="one-dm" key={`channel-${channel.id}`}>
-            {channel.private_chat ?
+            {channel.private_chat && channel.members.length > 1 ?
               <div>
                 <NavLink exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
                   {channel.members.map(member => {
                     if (member.email !== userEmail) {
-                      return <span key={`${member.id}`}> - {member.first_name}</span>
-                    }
-                    if (channel.owner_id === parseInt(userId)) {
-                      return < EditDMModal channelId={channel.id} />
+                      return <span key={`${member.id}`}> - {member.first_name} {channel.id}</span>
                     }
                   })}
                 </NavLink>
+                {(channel.owner_id !== parseInt(userId))
+                  ? null
+                  : <EditDMModal channelId={channel.id} />
+                }
               </div>
               : null
             }
+
           </li>
         })}
       </ul>
