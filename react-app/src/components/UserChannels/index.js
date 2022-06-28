@@ -1,30 +1,37 @@
 import './UserChannels.css'
 import CreateChannelModal from '../ChannelModal'
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
 import EditChannelModal from "../EditChannelModal";
+import { deleteChannel } from '../../store/channels';
 
 const UserChannels = () => {
-  const { userId, channelId } = useParams();
+  const { userId, channelId} = useParams();
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const allChannels = useSelector((state) => state.channels);
   const allUsers = useSelector((state) => state.search);
   const channels = Object.values(allChannels);
-
+  
   const user = useSelector((state) => state.session.user)
   const userEmail = useSelector((state) => state.session.user.email);
 
   const allMessages = useSelector((state) => state.messages);
   // const messages = Object.values(allMessages);
-
+  
   useEffect(() => {
     dispatch(getAllChannels(userId));
     dispatch(getAllMessages(userId, channelId))
   }, [dispatch, userId, channelId]);
+  
+  const removingChannel = async (channelId) => {
+    // e.preventDefault()
+    dispatch(deleteChannel(channelId))
+    
+  }
 
   if (!Object.keys(allUsers).length) return null;
 
@@ -41,7 +48,7 @@ const UserChannels = () => {
               </NavLink>
             }
             {channel.private_chat ? null : < EditChannelModal channelId={channel.id} userId={user.id} owner_id={channel.owner_id} />}
-
+            {user.id === channel.owner_id && <button onClick={() => removingChannel(channel.id)} style={{cursor:"pointer"}}>Delete Channel</button>}
           </li>
         })}
         < CreateChannelModal />
