@@ -19,11 +19,6 @@ const CreateChannelForm = ({ onClose }) => {
     const allUsers = useSelector((state) => state.search);
     const users = Object.values(allUsers);
 
-    const userChannels = useSelector((state) => state.channels);
-    const channels = Object.values(userChannels);
-    let channelId;
-
-
     useEffect(() => {
         const validationErrors = []
         if (!name)
@@ -84,7 +79,6 @@ const CreateChannelForm = ({ onClose }) => {
         if (!arr.includes(id)) {
             arr.push(id);
         }
-        console.log(users[id], arr)
     }
 
     return (

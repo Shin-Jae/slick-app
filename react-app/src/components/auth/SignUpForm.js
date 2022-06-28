@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect, NavLink } from 'react-router-dom';
 import { signUp } from '../../store/session';
-import './LoginForm.css'
+import './LoginForm.css';
+import './SignUpForm.css';
 
+let isSelected = false
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
   const [first_name, setFirstName] = useState('');
@@ -12,11 +14,17 @@ const SignUpForm = () => {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [profile_img, setProfileImg] = useState('');
+  const [show, setShow] = useState(false);
+  const [imageProfile, setImageProfile] = useState("");
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
+  let pictures = ["0%dabbing&monkey%with%cool%shades%", "1%courage%the%cowardly%dog", "2%storm%trooper%", "3%ninja%with%kunai%", "4%happy%minion%looking%up%", "5%sleeping%koala%on%branch%", ""]
+
   const onSignUp = async (e) => {
     e.preventDefault();
+
+    console.log("submitformmmmm", profile_img)
     if (password === repeatPassword) {
       const data = await dispatch(signUp(first_name, last_name, email, password, profile_img));
       if (data) {
@@ -51,6 +59,101 @@ const SignUpForm = () => {
 
   if (user) {
     return <Redirect to='/' />;
+  }
+
+  const profileImg1 = () => {
+    if (profile_img.length && profile_img !== pictures[0]) {
+      setProfileImg("https://img.freepik.com/free-vector/cool-monkey-dabbing-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3373.jpg?t=st=1656386633~exp=1656387233~hmac=d41895f34d10b8738dae368bf446fd2ed7beccb785537e5eb3b63717f841813f&w=740")
+      setImageProfile(pictures[0]);
+      return isSelected = true;
+    } else if (isSelected === true) {
+      setProfileImg(pictures[6]);
+      return isSelected = false;
+    } else {
+      setProfileImg("https://img.freepik.com/free-vector/cool-monkey-dabbing-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3373.jpg?t=st=1656386633~exp=1656387233~hmac=d41895f34d10b8738dae368bf446fd2ed7beccb785537e5eb3b63717f841813f&w=740")
+      setImageProfile(pictures[0]);
+      return isSelected = true;
+    }
+  }
+
+  const profileImg2 = () => {
+    if (profile_img.length && profile_img !== pictures[1]) {
+      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1")
+      setImageProfile(pictures[1])
+      isSelected = true;
+    } else if (isSelected === true) {
+      setProfileImg(pictures[6]);
+      isSelected = false;
+    } else {
+      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1")
+      setImageProfile(pictures[1])
+      isSelected = true;
+    }
+  }
+
+  const profileImg3 = () => {
+    if (profile_img.length && profile_img !== pictures[2]) {
+      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1")
+      setImageProfile(pictures[2])
+      isSelected = true;
+      console.log('change')
+    } else if (isSelected === true) {
+      setProfileImg(pictures[6]);
+      isSelected = false;
+    } else {
+      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1")
+      setImageProfile(pictures[2])
+      isSelected = true;
+    }
+  }
+
+  const profileImg4 = () => {
+    if (profile_img.length && profile_img !== pictures[3]) {
+      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1")
+      setImageProfile(pictures[3])
+      isSelected = true;
+    } else if (isSelected === true) {
+      setProfileImg(pictures[6]);
+      isSelected = false;
+    } else {
+      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1")
+      setImageProfile(pictures[3])
+      isSelected = true;
+    }
+  }
+
+  const profileImg5 = () => {
+    if (profile_img.length && profile_img !== pictures[4]) {
+      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1")
+      setImageProfile(pictures[4])
+      isSelected = true;
+    } else if (isSelected === true) {
+      setProfileImg(pictures[6]);
+      isSelected = false;
+    } else {
+      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1")
+      setImageProfile(pictures[4])
+      isSelected = true;
+    }
+  }
+
+  const profileImg6 = () => {
+    if (profile_img.length && profile_img !== pictures[5]) {
+      setProfileImg("https://cdn.dribbble.com/users/1044993/screenshots/7144312/media/aad1fc1a4ec6d1c27e486c04c1a820b9.png")
+      setImageProfile(pictures[5])
+      isSelected = true;
+    } else if (isSelected === true) {
+      setProfileImg(pictures[6]);
+      isSelected = false;
+    } else {
+      setProfileImg("https://cdn.dribbble.com/users/1044993/screenshots/7144312/media/aad1fc1a4ec6d1c27e486c04c1a820b9.png")
+      setImageProfile(pictures[5])
+      isSelected = true;
+    }
+  }
+
+  function hideImg() {
+    setShow(!show);
   }
 
   return (
@@ -136,8 +239,60 @@ const SignUpForm = () => {
             type='text'
             name='profile_img'
             onChange={updateProfileImg}
-            value={profile_img}
-          ></input>
+            value={imageProfile}
+            placeholder="Add profile image or pick one from below"
+          >
+          </input>
+          <button
+            className='hide-profile-img-btn'
+            onClick={hideImg}
+            type="button"
+          >{show ? "Close" : "Pick Here"}</button>
+          {show ?
+            <div className='container-signup-profile-img form-container'>
+              <span onClick={profileImg1}><img
+                src={"https://img.freepik.com/free-vector/cool-monkey-dabbing-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3373.jpg?t=st=1656386633~exp=1656387233~hmac=d41895f34d10b8738dae368bf446fd2ed7beccb785537e5eb3b63717f841813f&w=740"}
+                alt="1"
+                className='signup-profile-img'
+              />
+              </span>
+              <span onClick={profileImg2}>
+                <img
+                  src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1"}
+                  alt="2"
+                  className='signup-profile-img'
+                />
+              </span>
+              <span onClick={profileImg3}>
+                <img
+                  src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1"}
+                  alt="3"
+                  className='signup-profile-img'
+                />
+              </span>
+              <span onClick={profileImg4}>
+                <img
+                  src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1"}
+                  alt="4"
+                  className='signup-profile-img'
+                />
+              </span>
+              <span onClick={profileImg5}>
+                <img
+                  src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1"}
+                  alt="5"
+                  className='signup-profile-img'
+                />
+              </span>
+              <span onClick={profileImg6}>
+                <img
+                  src={"https://cdn.dribbble.com/users/1044993/screenshots/7144312/media/aad1fc1a4ec6d1c27e486c04c1a820b9.png"}
+                  alt="6"
+                  className='signup-profile-img'
+                />
+              </span>
+            </div>
+            : null}
         </div>
         <button type='submit' className='login-btn'>Sign Up</button>
       </form>
