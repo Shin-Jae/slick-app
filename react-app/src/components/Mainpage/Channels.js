@@ -6,7 +6,7 @@ import { getAllMessages } from '../../store/messages';
 import ChatBox from "../ChatBox";
 import CreateChannelModal from '../ChannelModal'
 import MessageInput from '../MessageInput/';
-
+import EditChannelModal from "../EditChannelModal";
 
 function Channels() {
     const { userId, channelId } = useParams();
@@ -33,13 +33,14 @@ function Channels() {
         <div>
             <div>Channels</div>
             <ul className="view-channels" style={{ listStyleType: "none" }}>
-                {channels.map(channel => {
+                {channels.map(channel => { 
                     return <li className="one-channel" key={`channel-${channel.id}`}>
                         {channel.private_chat ? null :
                             <NavLink exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
                                 {channel.name}
                             </NavLink>
                         }
+                        < EditChannelModal channelId={channel.id}/>
                     </li>                    
                 })}
                 < CreateChannelModal />

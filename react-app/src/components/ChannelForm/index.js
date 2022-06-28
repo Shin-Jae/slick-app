@@ -59,16 +59,14 @@ const CreateChannelForm = ({onClose}) => {
                 <input type="hidden" value={privatechat} />
                 <div>
                     <label>Channel Name: </label>
-                    <input
-                    value={name}
+                    <input                   
                     onChange={(e) => setName(e.target.value)}>
                     </input>
                    
                     </div>
                 <div>
                     <label>Description: </label>
-                        <textarea
-                         value={description}
+                        <textarea                         
                          onChange={(e) => setDescription(e.target.value)}
                         ></textarea>
                    

@@ -1,5 +1,6 @@
 const ALL_CHANNELS = "channels/ALL_CHANNELS";
 const CREATE_CHANNEL = "channels/CREATE_CHANNEL"
+const UPDATE_CHANNEL = "channels/UPDATE_CHANNEL"
 
 export const allChannels = (channels) => ({
     type: ALL_CHANNELS,
@@ -8,6 +9,11 @@ export const allChannels = (channels) => ({
 
 export const createChannels = (channels) => ({
     type: CREATE_CHANNEL,
+    channels
+})
+
+export const updateOneChannel = (channels) => ({
+    type: UPDATE_CHANNEL,
     channels
 })
 
@@ -35,6 +41,19 @@ export const createOneChannel = (userId, payload) => async dispatch => {
     }
 }
 
+export const updateChannel = (channelId, payload) => async dispatch => {
+    const response = await fetch(`/api/channels/${channelId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+    if (response.ok) {
+        const channels = await response.json();
+        dispatch(updateOneChannel(channels))
+        return channels
+    }
+}
+
 const initialState = {}
 
 const channelReducer = (state = initialState, action) => {
@@ -45,8 +64,12 @@ const channelReducer = (state = initialState, action) => {
             for (let channel of action.channels.channels) {
                 channels[channel.id] = channel;
             }
-            return { ...channels };        
-            default:
+            return { ...channels };
+        case UPDATE_CHANNEL:
+            const newState = { ...state }
+            newState[action.channels.id] = action.channels;
+            return newState
+        default:
             return state;
     }
 }
