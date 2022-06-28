@@ -5,20 +5,23 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { updateMessage, deleteMessage, getAllMessages } from '../../store/messages';
 
-const MessageContent = ({ message }) => {
-  const { channelId } = useParams()
+
+const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
+  const { channelId, userId } = useParams()
   const dispatch = useDispatch();
   const allMessages = useSelector((state) => state.messages);
   const allUsers = useSelector((state) => state.search);
   const user = useSelector((state) => state.session.user)
+
   const [originalContent, setOriginalContent] = useState(message.content)
   const [content, setContent] = useState(message.content)
   const [edit, setEdit] = useState(true)
   const [deleted, setDeleted] = useState(false)
-
+  // const [messageUpdated, setMessageUpdated] = useState('')
 
   useEffect(() => {
     dispatch(getAllMessages(user.id, channelId))
+    console.log('messages', allMessages)
     return () => {
       setDeleted(false)
     }
@@ -41,6 +44,7 @@ const MessageContent = ({ message }) => {
 
     if (deletedMessage) {
       setDeleted(true)
+      setOnDelete(true)
     }
   }
 
@@ -63,11 +67,11 @@ const MessageContent = ({ message }) => {
       alert(error)
     }
 
-    if (updateMessage) {
-      setEdit(true)
-      setOriginalContent(updatedMessage.content)
+    if (updatedMessage) {
+      setEdit(true);
+      setOriginalContent(updatedMessage.content);
+      setUpdateComplete(updatedMessage)
     }
-
   }
 
   const handleCancel = (e) => {

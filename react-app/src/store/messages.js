@@ -34,7 +34,7 @@ export const getAllMessages = (userId, channelId) => async dispatch => {
 }
 
 export const updateMessage = (payload, messageId) => async dispatch => {
-  console.log('messageId from reducer:: ', messageId)
+  // console.log('messageId from reducer:: ', messageId)
   const response = await fetch(`/api/messages/${messageId}`, {
     method: 'PUT',
     headers: {
