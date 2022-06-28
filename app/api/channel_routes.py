@@ -15,10 +15,8 @@ def channels(userId):
 
 @channel_routes.route('/<int:userId>', methods = ['POST'])
 def new_channel(userId):
-    # member = User.query.get(userId)
 
     members = request.json['members']
-
 
     form = CreateChannel()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -33,7 +31,6 @@ def new_channel(userId):
         )
         for mem in members:
             member = User.query.filter_by(id=mem).first()
-            print("helllpppp" , member)
             created_channel.channel_members.append(member)
 
         db.session.add(created_channel)

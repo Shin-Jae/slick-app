@@ -67,7 +67,7 @@ const ChatBox = () => {
 
   return (
     <div className='chatbox'>
-      <div className='chatbox__header'>{channels[channelId].name}</div>
+      <div className='chatbox__header'>{channels[channelId]?.name}</div>
       <div className='chatbox__messages'>
         <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>
           {messages.map(message =>
