@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
-// import EditChannelModal from "../Edit";
+import EditChannelModal from "../EditChannelModal";
 
 const UserChannels = () => {
   const { userId, channelId } = useParams();
