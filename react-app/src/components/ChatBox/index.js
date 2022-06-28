@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getAllChannels } from '../../store/channels';
-import { getAllMessages } from '../../store/messages';
+import { getAllMessages, updateMessage } from '../../store/messages';
 import MessageContent from '../MessageContent'
 import { io } from 'socket.io-client';
 
@@ -31,12 +31,11 @@ const ChatBox = () => {
   useEffect(() => {
     socket = io();
 
-    socket.emit('join')
+    // socket.emit('join')
 
     socket.emit('update', updateComplete)
     socket.on('update', (data) => {
       setMessageUpdated(data)
-      console.log('data here :: ', messageUpdated)
     });
 
     socket.emit('chat', createMessage)
@@ -67,16 +66,20 @@ const ChatBox = () => {
   // },[messageUpdated, createMessage])
 
   return (
-    <div>
-      <div>Messages</div>
-      <ul className="messages" style={{ listStyleType: "none" }}>
-        {messages.map(message =>
-          <li className="one-message" key={`message-${message.id}`}>
-            <MessageContent message={message} setUpdateComplete={setUpdateComplete} setOnDelete={setOnDelete}/>
-          </li>
-        )}
-      </ul>
-      <MessageInput setMessageReceived={setMessageReceived} setCreateMessage={setCreateMessage} />
+    <div className='chatbox'>
+      <div className='chatbox__header'>{channels[channelId].name}</div>
+      <div className='chatbox__messages'>
+        <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>
+          {messages.map(message =>
+            <li className="one-message" key={`message-${message.id}`}>
+              <MessageContent message={message} setUpdateComplete={setUpdateComplete} setOnDelete={setOnDelete} />
+            </li>
+          )}
+        </ul>
+      </div>
+      <div className='chatbox__input'>
+        <MessageInput setMessageReceived={setMessageReceived} setCreateMessage={setCreateMessage} />
+      </div>
     </div>
   );
 }

@@ -1,0 +1,16 @@
+.main-display {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  position: absolute;
+  top: 100px; /* Header Height */
+  bottom: 20px; /* Footer Height */
+  width: 100%;
+  overflow: hidden;
+}
+
+.main-display__sidebar {
+  background-color: #f2f2f2;
+}
+
+.main-display__chatbox {
+}
