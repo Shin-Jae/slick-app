@@ -15,10 +15,10 @@ const ChatBox = () => {
     setEdit(!edit)
   }
 
-
   const handleDelete = (e) => {
     e.preventDefault()
   }
+
   return (
     <div>
       <div>Messages</div>
