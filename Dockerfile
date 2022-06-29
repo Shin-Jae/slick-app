@@ -22,6 +22,7 @@ COPY /react-app/build/* app/static/
 # install psycopg2
 RUN pip install -r requirements.txt
 RUN pip install psycopg2
+# RUN apt-get -o Dpkg::Options::='--force-confmiss' install --reinstall -y netbase
 # Start the flask environment by setting our
 # closing command to gunicorn app:app
 CMD gunicorn --worker-class eventlet -w 1 app:app
