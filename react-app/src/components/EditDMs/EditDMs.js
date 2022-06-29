@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom"
 import { getAllChannels, updateChannel } from "../../store/channels"
 
 let remove = new Set()
-function EditDMModalForm({ onClose, channelId, showModal, set }) {
+function EditDMModalForm({ onClose, channelId, set }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -12,7 +12,6 @@ function EditDMModalForm({ onClose, channelId, showModal, set }) {
     const userId = useSelector((state) => state.session.user.id)
     const [query, setQuery] = useState("")
     const allUsers = useSelector((state) => state.search);
-    const channels = useSelector((state) => state.channels[channelId].members)
     const users = Object.values(allUsers);
 
     //default entries for name and description/ private always true for dms
