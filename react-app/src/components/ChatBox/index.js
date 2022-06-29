@@ -7,9 +7,8 @@ import { getAllChannels } from '../../store/channels';
 import { getAllMessages, updateMessage } from '../../store/messages';
 import MessageContent from '../MessageContent'
 import { io } from 'socket.io-client';
-// import { useResolvedPath } from 'react-router';
 
-// let socket;
+let socket;
 
 const ChatBox = () => {
   const dispatch = useDispatch()
@@ -52,27 +51,27 @@ const ChatBox = () => {
   //   }
   // })
 
-  // useEffect(() => {
-  //   socket = io();
+  useEffect(() => {
+    socket = io();
 
-  //   socket.emit('update', updateComplete)
-  //   socket.on('update', (data) => {
-  //     setMessageUpdated(data)
-  //   });
+    // socket.emit('update', updateComplete)
+    // socket.on('update', (data) => {
+    //   setMessageUpdated(data)
+    // });
 
-  //   socket.emit('chat', createMessage)
-  //   socket.on("chat", (data) => {
-  //     setMessageReceived(data)
-  //   })
+    socket.emit('chat', createMessage)
+    socket.on("chat", (data) => {
+      setMessageReceived(data)
+    })
 
-  //   socket.emit('delete')
-  //   socket.on("delete", (data) => {
-  //     setOnDelete(false)
-  //   })
-  //   return (() => {
-  //     socket.disconnect()
-  //   })
-  // }, [updateComplete, createMessage, onDelete])
+    socket.emit('delete')
+    socket.on("delete", (data) => {
+      setOnDelete(false)
+    })
+    return (() => {
+      socket.disconnect()
+    })
+  }, [updateComplete, createMessage, onDelete])
 
 
 
