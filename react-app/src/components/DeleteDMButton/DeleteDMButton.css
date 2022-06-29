@@ -1,0 +1,12 @@
+.delete__DMButton--container {
+  border: red 2px solid;
+  width: 15em;
+}
+
+.noShowButton {
+  display: none
+}
+
+.dms__list-item--delete-container {
+
+}

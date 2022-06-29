@@ -6,12 +6,13 @@ import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
 import CreateDMModal from '../CreateDMs';
 import EditDMModal from '../EditDMs';
+import DeleteDMButton from '../DeleteDMButton';
 import UserIcon from '../UserIcon';
 
 const DMs = () => {
   const dispatch = useDispatch();
   const { userId, channelId } = useParams();
-  const [deleted, setDeleted] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
   const userEmail = useSelector((state) => state.session.user.email);
   const allChannels = useSelector((state) => state.channels);
   const channels = Object.values(allChannels);
@@ -21,27 +22,6 @@ const DMs = () => {
     dispatch(getAllChannels(userId));
     dispatch(getAllMessages(userId, channelId))
   }, [dispatch, userId, channelId]);
-
-
-  const handleDelete = async (channelId) => {
-    // console.log(channelId)
-    let deletedDM;
-
-    // try {
-    //   deletedDM = await dispatch(deleteDM(channelId))
-    // } catch (error) {
-    //   alert(error)
-    // }
-
-    // if (deletedDM) {
-    //   setDeleted(true)
-    //   resetState()
-    // }
-  }
-
-  const resetState = () => {
-    setDeleted(false)
-  }
 
   return (
     <>
@@ -53,7 +33,10 @@ const DMs = () => {
         {channels.map(channel => {
           return <li className="one-dm" key={`channel-${channel.id}`}>
             {channel.private_chat ?
-              <div className='dms__list-item'>
+              <div className='dms__list-item'
+                onMouseEnter={(e) => setShowDelete(true)}
+                onMouseLeave={(e) => setShowDelete(false)}
+              >
                 <NavLink exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
                   <div className='dms__list-item--icon-name'>
                     <div className='dms__list-item--icon-container'>
@@ -70,10 +53,9 @@ const DMs = () => {
                       })}
                     </div>
                   </div>
-
                 </NavLink>
-                <div className='dms__list-item--delete-container'>
-                  <button onClick={() => handleDelete(channel.id)}>X</button>
+                <div >
+                  <DeleteDMButton channelId={channel.id} showDelete={showDelete} />
                 </div>
               </div>
               : null
