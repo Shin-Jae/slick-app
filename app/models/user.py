@@ -35,7 +35,7 @@ class User(db.Model, UserMixin):
         "Channel",
         secondary=members,
         back_populates="channel_members",
-        cascade="all, delete"
+        # cascade="all, delete"
     )
 
     @property
@@ -74,7 +74,7 @@ class Message(db.Model):
     content = db.Column(db.String(2000), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     channel_id = db.Column(db.Integer,  db.ForeignKey(
-        'channels.id'), nullable=False)
+        'channels.id', ondelete="CASCADE"), nullable=False)
     created_at = db.Column(db.DateTime(timezone=False), nullable=False)
     updated_at = db.Column(db.DateTime(timezone=False), nullable=False)
 
@@ -109,17 +109,17 @@ class Channel(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False)
 
     # one-to-many relationship with Message
-    messages = db.relationship("Message", back_populates="channel")
+    messages = db.relationship("Message", back_populates="channel", passive_deletes=True, cascade='save-update,delete,delete-orphan')
 
     # many-to-one relationship with User
-    user = db.relationship("User", back_populates="channels", cascade="delete, merge, save-update")
+    user = db.relationship("User", back_populates="channels")
 
     # many-to-many with User, through members
     channel_members = db.relationship(
         "User",
         secondary=members,
         back_populates="user_members",
-        cascade="all, delete"
+        # cascade="all, delete"
     )
 
     def to_dict(self):
