@@ -14,7 +14,7 @@ const EditDMModal = ({ channelId }) => {
     return (
         <>
             <div>
-                <button onClick={() => setShowModal(true)}>Edit DM</button>
+                <button onClick={() => setShowModal(true)}>Edit members</button>
                 {showModal && (
                     <Modal onClose={() => setShowModal(false)}>
                         <EditDMModalForm onClose={() => setShowModal(false)} showModal={showModal} channelId={channelId} set={set} />

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { createOneChannel, getAllChannels } from "../../store/channels"
 
-let arr = []
+let set = new Set()
 const CreateChannelForm = ({ onClose }) => {
     const dispatch = useDispatch()
     const history = useHistory()
@@ -39,14 +39,14 @@ const CreateChannelForm = ({ onClose }) => {
             description,
             privatechat,
             owner_id: userId,
-            members: arr
+            members: setArr
         }
 
         const createdChannel = await dispatch(createOneChannel(userId, payload))
         if (createdChannel) {
             setErrors([])
+            set.clear()
             await dispatch(getAllChannels(userId))
-            arr = [];
             history.push(`/users/${userId}/${createdChannel.id}`)
             onClose(false)
         }
@@ -63,15 +63,26 @@ const CreateChannelForm = ({ onClose }) => {
     }
     const filteredUsers = filterUsers(users, query);
 
-    const channelMembers = (id) => {
-        if (!arr.length) {
-            arr.push(userId)
-        }
+    let setArr = [...set]
 
-        if (!arr.includes(id)) {
-            arr.push(id);
-        } else {
-            arr.pop(id);
+
+    const removeMembers = (id) => {
+        if (set.has(id)) {
+            set.delete(id);
+            if (query === "") {
+                return setQuery("*")
+            } else {
+                return setQuery("")
+            }
+        }
+    }
+
+    const addMembers = (id) => {
+        if (!set.size) set.add(userId)
+
+        if (!set.has(id)) {
+            set.add(id);
+            return setQuery("")
         }
     }
 
@@ -81,7 +92,7 @@ const CreateChannelForm = ({ onClose }) => {
             <form onSubmit={channelSubmission}>
                 <h1>Create New Channel</h1>
                 <ul>{errors.map((error) => (
-                    <li className="error_info">
+                    <li className="error_info" key={error}>
                         {error}
                     </li>))}
                 </ul>
@@ -104,24 +115,30 @@ const CreateChannelForm = ({ onClose }) => {
                 <div>
                     <label>Members: </label>
                     <div>
-                        {arr.length ? arr.map(person => {
+                        {setArr.length ? setArr.map(person => {
                             if (person !== userId) {
-                                return <div> --- {allUsers[person].first_name} {allUsers[person].last_name}</div>
+                                return <div key={`user-${person}`}>
+                                    <div>-- {allUsers[person].first_name} {allUsers[person].last_name} </div>
+                                    <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
+                                </div>
                             }
                         }) : null}
                     </div>
                     <div>
-                        <form>
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                value={query}
-                                onInput={e => setQuery(e.target.value)}
-                            />
-                        </form>
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            value={query}
+                            onInput={e => setQuery(e.target.value)}
+                        />
                         <ul className="filtered-list" >
                             {query ? filteredUsers.map(user => {
-                                if (user.id !== userId) return <div onClick={() => channelMembers(user.id)} key={user.id}>{user.first_name} {user.last_name}</div>
+                                if (user.id !== userId) {
+                                    return <div key={user.id}>
+                                        <div >{user.first_name} {user.last_name}</div>
+                                        <button type="button" onClick={() => addMembers(user.id)}>+</button>
+                                    </div>
+                                }
                             }) : null}
                         </ul>
                     </div>
