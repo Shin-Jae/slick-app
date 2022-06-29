@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom"
 import { updateChannel, getAllChannels } from "../../store/channels"
 
 let remove = new Set()
-const EditChannelForm = ({ closeModal, channelId, set }) => {
+const EditChannelForm = ({ closeModal, channelId, set, onClose }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const channel = useSelector((state) => state.channels[channelId])
@@ -132,7 +132,8 @@ const EditChannelForm = ({ closeModal, channelId, set }) => {
                     </ul>
                 </div>
                 <div>
-                    <button type="submit" disabled={errors.length > 0}> Update Channel</button>
+                    <button type="submit" disabled={errors.length > 0} style={{ cursor: "pointer" }}> Update Channel</button>
+                    <button type="submit" onClick={onClose} style={{ cursor: "pointer" }}> Cancel Edit</button>
                 </div>
 
             </form>
