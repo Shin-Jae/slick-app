@@ -86,7 +86,7 @@ def deleteChannel(channelId):
 
     db.session.delete(channel)
     db.session.commit()
-    return {1: 1}
+    return channel.to_dict()
 
 ######################## message feature ###################################
 @channel_routes.route('/<int:userId>/<int:channelId>')
