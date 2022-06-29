@@ -90,7 +90,7 @@ function EditDMModalForm({ onClose, channelId, set }) {
                         {setArr.length ? setArr.map(person => {
                             if (person !== userId) {
                                 return <div key={`mem-${person}`}>
-                                    <span> --- {allUsers[person].first_name} {allUsers[person].last_name}</span>
+                                    <span> -- {allUsers[person].first_name} {allUsers[person].last_name}</span>
                                     <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
                                 </div>
                             }
@@ -115,10 +115,7 @@ function EditDMModalForm({ onClose, channelId, set }) {
                             }) : null}
                         </ul>
                     </div>
-                </div>
-                <input type="hidden" value={private_chat} />
-                <div>
-                    <button type="submit" disabled={false}>Edit members</button>
+                    <button type="submit" disabled={!setArr.length}>Edit members</button>
                 </div>
             </form>
         </div>
