@@ -4,12 +4,19 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
   box-sizing: border-box;
-  overflow: hidden;
   margin: 0;
   /* padding: 0 */
 }
 
+.chatbox-messages {
+  overflow: hidden;
+}
+
+.main-display__sidebar{
+  overflow: auto;
+}
 
 ul {
   padding-inline-start: 0px;
+  list-style: none;
 }
