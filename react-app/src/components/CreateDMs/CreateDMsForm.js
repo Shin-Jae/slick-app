@@ -68,15 +68,23 @@ function CreateDMForm({ onClose }) {
 
     let setArr = [...set]
 
-    const channelMembers = (id) => {
-        if (!set.size) {
-            set.add(userId)
+    const removeMembers = (id) => {
+        if (set.has(id)) {
+            set.delete(id);
+            if (query === "") {
+                return setQuery("*")
+            } else {
+                return setQuery("")
+            }
         }
+    }
+
+    const addMembers = (id) => {
+        if (!set.size) set.add(userId)
 
         if (!set.has(id)) {
             set.add(id);
-        } else {
-            set.delete(id);
+            return setQuery("")
         }
     }
 
@@ -94,7 +102,10 @@ function CreateDMForm({ onClose }) {
                     <div>
                         {setArr.length ? setArr.map(person => {
                             if (person !== userId) {
-                                return <div onClick={() => channelMembers(person)} key={person}  > --- {allUsers[person].first_name} {allUsers[person].last_name}</div>
+                                return <div key={person}>
+                                    <span> {allUsers[person].first_name} {allUsers[person].last_name} </span>
+                                    <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
+                                </div>
                             }
                         }) : null}
                     </div>
@@ -106,8 +117,14 @@ function CreateDMForm({ onClose }) {
                             onInput={e => setQuery(e.target.value)}
                         />
                         <ul className="filtered-list" >
-                            {query ? filteredUsers.map(user => {
-                                if (user.id !== userId) return <div onClick={() => channelMembers(user.id)} key={user.id}>{user.first_name} {user.last_name}</div>
+                            {query.length ? filteredUsers.map(user => {
+                                if (user.id !== userId) {
+                                    return <div key={user.id}>
+                                        <span>{user.first_name} {user.last_name}</span>
+                                        <button type="button" onClick={() => addMembers(user.id)}>+</button>
+                                    </div>
+
+                                }
                             }) : null}
                         </ul>
                     </div>
