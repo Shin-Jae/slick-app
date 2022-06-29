@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { createOneChannel, getAllChannels } from "../../store/channels"
+import { getAllChannels, updateChannel } from "../../store/channels"
 
-let arr = []
-function EditDMModalForm({ onClose, channelId }) {
+let remove = new Set()
+function EditDMModalForm({ onClose, channelId, set }) {
     const dispatch = useDispatch()
     const history = useHistory()
-
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const private_chat = true
-    const [errors, setErrors] = useState([])
 
     //used for search
     const userId = useSelector((state) => state.session.user.id)
@@ -19,35 +14,29 @@ function EditDMModalForm({ onClose, channelId }) {
     const allUsers = useSelector((state) => state.search);
     const users = Object.values(allUsers);
 
-    useEffect(() => {
-        const validationErrors = []
-        if (!name)
-            validationErrors.push("Please enter a channel name")
-        if (name.length > 100)
-            validationErrors.push('Channel Name must be 100 characters or less')
-        if (!description)
-            validationErrors.push("Please enter channel's description")
-        if (description.length > 255)
-            validationErrors.push("Channel Description must be 255 characters or less")
-        setErrors(validationErrors)
-    }, [name, description, dispatch])
+    //default entries for name and description/ private always true for dms
+    const name = `private ${userId}-${channelId}`
+    const description = `dm description ${userId}-${channelId}`
+    const private_chat = true
 
-    const channelSubmission = async (e) => {
+
+    const editDmSubmission = async (e) => {
         e.preventDefault()
+
         const payload = {
             name,
             description,
             private_chat,
             owner_id: userId,
-            members: arr
+            members: setArr,
+            remove: removeArr
         }
-
-        const createdChannel = await dispatch(createOneChannel(userId, payload))
-        if (createdChannel) {
-            setErrors([])
+        const updatedDM = await dispatch(updateChannel(channelId, payload))
+        if (updatedDM) {
+            set.clear();
+            remove.clear();
             await dispatch(getAllChannels(userId))
-            arr = [];
-            history.push(`/users/${userId}/${createdChannel.id}`)
+            history.push(`/users/${userId}/${channelId}`)
             onClose(false)
         }
     }
@@ -63,71 +52,71 @@ function EditDMModalForm({ onClose, channelId }) {
     }
     const filteredUsers = filterUsers(users, query);
 
-    const channelMembers = (id) => {
-        if (!arr.length) {
-            arr.push(userId)
-        }
+    let setArr = [...set];
+    let removeArr = [...remove];
 
-        if (!arr.includes(id)) {
-            arr.push(id);
-        } else {
-            arr.pop(id);
+    const removeMembers = (id) => {
+        if (set.has(id) && !remove.has(id)) {
+            set.delete(id);
+            remove.add(id);
+            if (query === "") {
+                return setQuery("-")
+            } else {
+                return setQuery("")
+            }
         }
     }
 
+    const addMembers = (id) => {
+        if (!set.has(id) && remove.has(id)) {
+            set.add(id)
+            remove.delete(id)
+            return setQuery("")
+        } else if (!set.has(id)) {
+            set.add(id)
+            return setQuery("")
+        }
+    }
 
     return (
         <div>
-            <form onSubmit={channelSubmission}>
-                <h1>Edit DM</h1>
-                <ul>{errors.map((error) => (
-                    <li className="error_info">
-                        {error}
-                    </li>))}
-                </ul>
+            <form onSubmit={editDmSubmission}>
+                <h1>Edit Members</h1>
                 <div>
                     <label>Members: </label>
                     <div>
-                        {arr.length ? arr.map(person => {
+                        {setArr.length ? setArr.map(person => {
                             if (person !== userId) {
-                                return <div> --- {allUsers[person].first_name} {allUsers[person].last_name}</div>
+                                return <div key={`mem-${person}`}>
+                                    <div> --- {allUsers[person].first_name} {allUsers[person].last_name}</div>
+                                    <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
+                                </div>
                             }
-                        }) : null}
+                        })
+                            : null}
                     </div>
                     <div>
-                        <form>
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                value={query}
-                                onInput={e => setQuery(e.target.value)}
-                            />
-                        </form>
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            value={query}
+                            onInput={e => setQuery(e.target.value)}
+                        />
                         <ul className="filtered-list" >
                             {query ? filteredUsers.map(user => {
-                                if (user.id !== userId) return <div onClick={() => channelMembers(user.id)} key={user.id}>{user.first_name} {user.last_name}</div>
+                                if (user.id !== userId) {
+                                    return <div key={user.id}>
+                                        <div>{user.first_name} {user.last_name}</div>
+                                        <button type="button" onClick={() => addMembers(user.id)}>+</button>
+                                    </div>
+                                }
                             }) : null}
                         </ul>
                     </div>
                 </div>
                 <input type="hidden" value={private_chat} />
                 <div>
-                    <label>Channel Name: </label>
-                    <input
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}>
-                    </input>
-
-                </div>
-                <div>
-                    <label>Description: </label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                </div>
-                <div>
-                    <button type="submit" disabled={errors.length > 0}>Send DM</button>
+                    <button type="submit" disabled={false}>Edit members</button>
                 </div>
             </form>
         </div>

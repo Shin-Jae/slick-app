@@ -16,7 +16,6 @@ const DMs = () => {
   const userEmail = useSelector((state) => state.session.user.email);
   const allChannels = useSelector((state) => state.channels);
   const channels = Object.values(allChannels);
-  console.log("userid", userId, channelId);
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
@@ -60,6 +59,7 @@ const DMs = () => {
               </div>
               : null
             }
+
           </li>
         })}
       </ul>

@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { updateChannel, getAllChannels } from "../../store/channels"
 
-
-const EditChannelForm = ({ closeModal, channelId }) => {
+let remove = new Set()
+const EditChannelForm = ({ closeModal, channelId, set, onClose }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const channel = useSelector((state) => state.channels[channelId])
@@ -13,6 +13,11 @@ const EditChannelForm = ({ closeModal, channelId }) => {
     const privatechat = false
     const userId = useSelector((state) => state.session.user.id)
     const [errors, setErrors] = useState([])
+
+    //used for search
+    const [query, setQuery] = useState("")
+    const allUsers = useSelector((state) => state.search);
+    const users = Object.values(allUsers);
 
     useEffect(() => {
         const validationErrors = []
@@ -41,15 +46,57 @@ const EditChannelForm = ({ closeModal, channelId }) => {
             description,
             privatechat,
             owner_id: userId,
+            members: setArr,
+            remove: removeArr
         }
         const updatedChannel = await dispatch(updateChannel(channelId, payload))
         if (updatedChannel) {
+            set.clear();
+            remove.clear();
             setErrors([])
             await dispatch(getAllChannels(userId))
             history.push(`/users/${userId}/${channelId}`)
             closeModal(false)
         }
     }
+
+    const filterUsers = (users, query) => {
+        if (!query) {
+            return users;
+        }
+        return users.filter((user) => {
+            const fullName = `${user.first_name.toLowerCase()} ${user.last_name.toLowerCase()}`;
+            return fullName.includes(query.toLowerCase());
+        })
+    }
+    const filteredUsers = filterUsers(users, query);
+
+    let setArr = [...set];
+    let removeArr = [...remove];
+
+    const removeMembers = (id) => {
+        if (set.has(id) && !remove.has(id)) {
+            set.delete(id);
+            remove.add(id);
+            if (query === "") {
+                return setQuery("-")
+            } else {
+                return setQuery("")
+            }
+        }
+    }
+
+    const addMembers = (id) => {
+        if (!set.has(id) && remove.has(id)) {
+            set.add(id)
+            remove.delete(id)
+            return setQuery("")
+        } else if (!set.has(id)) {
+            set.add(id)
+            return setQuery("")
+        }
+    }
+
     return (
         <div>
 
@@ -75,8 +122,39 @@ const EditChannelForm = ({ closeModal, channelId }) => {
                     ></textarea>
                 </div>
                 <div>
-                    <button type="submit" disabled={errors.length > 0}> Update Channel</button>
+                    {setArr.length ? setArr.map(person => {
+                        if (person !== userId) {
+                            return <div key={`mem-${person}`}>
+                                <div> -- {allUsers[person].first_name} {allUsers[person].last_name}</div>
+                                <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
+                            </div>
+                        }
+                    })
+                        : null}
                 </div>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        value={query}
+                        onInput={e => setQuery(e.target.value)}
+                    />
+                    <ul className="filtered-list" >
+                        {query ? filteredUsers.map(user => {
+                            if (user.id !== userId) {
+                                return <div key={user.id}>
+                                    <div >{user.first_name} {user.last_name}</div>
+                                    <button type="button" onClick={() => addMembers(user.id)}>+</button>
+                                </div>
+                            }
+                        }) : null}
+                    </ul>
+                </div>
+                <div>
+                    <button type="submit" disabled={errors.length > 0} style={{ cursor: "pointer" }}> Update Channel</button>
+                    <button type="submit" onClick={onClose} style={{ cursor: "pointer" }}> Cancel Edit</button>
+                </div>
+
             </form>
 
 

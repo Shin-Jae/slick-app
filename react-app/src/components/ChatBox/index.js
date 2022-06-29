@@ -25,6 +25,8 @@ const ChatBox = () => {
   const [messageUpdated, setMessageUpdated] = useState('')
   const [createMessage, setCreateMessage] = useState('')
   const [onDelete, setOnDelete] = useState(false)
+  // const [name, setName] = useState("")
+  //   const [description, setDescription] = useState("")
 
   let privateMembers;
 
@@ -42,6 +44,13 @@ const ChatBox = () => {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [dispatch, channelId, messageReceived]);
+
+  // useEffect(() => {
+  //   if (channels[channelId]) {
+  //     setName(channels[channelId].name)
+  //     setDescription(channels[channelId].description)
+  //   }
+  // })
 
   useEffect(() => {
     socket = io();
@@ -64,6 +73,8 @@ const ChatBox = () => {
       socket.disconnect()
     })
   }, [updateComplete, createMessage, onDelete])
+
+
 
   if (!Object.keys(channels).length) return null
 
