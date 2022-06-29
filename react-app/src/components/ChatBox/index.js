@@ -62,15 +62,15 @@ const ChatBox = () => {
       socket.disconnect()
     })
   }, [updateComplete, createMessage, onDelete])
-  
+
 
 
   if (!Object.keys(channels).length) return null
-  
+
   return (
     <div className='chatbox'>
       <div className='chatbox__header'>
-        <h2 className='chatbox__header--text'>#{channels[channelId].name}</h2>
+        <h2 className='chatbox__header--text'>#{channels[channelId]?.name}</h2>
       </div>
       <div className='chatbox__messages'>
         <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>
