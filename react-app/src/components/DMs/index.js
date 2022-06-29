@@ -34,7 +34,7 @@ const DMs = () => {
                 <NavLink exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
                   {channel.members.map(member => {
                     if (member.email !== userEmail) {
-                      return <span key={`${member.id}`}> - {member.first_name} {channel.id}</span>
+                      return <span key={`${member.id}`}> - {member.first_name}</span>
                     }
                   })}
                 </NavLink>

@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { getAllChannels, updateChannel } from "../../store/channels"
 
-let newMembers = []
-let remove = []
-function EditDMModalForm({ onClose, channelId }) {
+let remove = new Set()
+function EditDMModalForm({ onClose, channelId, showModal, set }) {
     const dispatch = useDispatch()
     const history = useHistory()
-
-    // const [errors, setErrors] = useState([])
 
     //used for search
     const userId = useSelector((state) => state.session.user.id)
@@ -18,9 +15,7 @@ function EditDMModalForm({ onClose, channelId }) {
     const channels = useSelector((state) => state.channels[channelId].members)
     const users = Object.values(allUsers);
 
-
-
-
+    //default entries for name and description/ private always true for dms
     const name = `private ${userId}-${channelId}`
     const description = `dm description ${userId}-${channelId}`
     const private_chat = true
@@ -29,38 +24,23 @@ function EditDMModalForm({ onClose, channelId }) {
     const editDmSubmission = async (e) => {
         e.preventDefault()
 
-        // let allMembers = newMembers.concat(arr);
-        // console.log('alltogether', allMembers)
-
         const payload = {
             name,
             description,
             private_chat,
             owner_id: userId,
-            members: newMembers,
-            remove: remove
+            members: setArr,
+            remove: removeArr
         }
-        console.log('after alltogether and final')
         const updatedDM = await dispatch(updateChannel(channelId, payload))
         if (updatedDM) {
-            // setErrors([])
-            arr = [];
-            remove = []
-            newMembers = []
+            set.clear();
+            remove.clear();
             await dispatch(getAllChannels(userId))
             history.push(`/users/${userId}/${channelId}`)
             onClose(false)
         }
     }
-
-    let arr = []
-    for (const channel of channels) {
-        arr.push(channel['id'])
-    }
-    console.log("arr", arr)
-    console.log('remove', remove)
-
-    console.log('newMembers', newMembers)
 
     const filterUsers = (users, query) => {
         if (!query) {
@@ -73,37 +53,30 @@ function EditDMModalForm({ onClose, channelId }) {
     }
     const filteredUsers = filterUsers(users, query);
 
+    let setArr = [...set];
+    let removeArr = [...remove];
+
     const channelMembers = (id) => {
-        if (!newMembers.includes(id) && !arr.includes(id)) {
-            newMembers.push(id);
-            console.log("1")
-        } else if (newMembers.includes(id)) {
-            newMembers.pop(id);
-            console.log("2", id);
-        } else if (arr.includes(id) && !remove.includes(id)) {
-            remove.push(id)
-            console.log("3 hello", arr)
-        } else if (remove.includes(id)) {
-            remove.pop(id)
+        if (set.has(id) && !remove.has(id)) {
+            set.delete(id);
+            remove.add(id);
+        } else if (!set.has(id) && remove.has(id)) {
+            set.add(id)
+            remove.delete(id)
+        } else if (!set.has(id)) {
+            set.add(id)
         }
     }
-
-    const addedMembers = (!newMembers.length && remove.length === arr.length - 1) || (!newMembers.length && !remove.length)
 
     return (
         <div>
             <form onSubmit={editDmSubmission}>
                 <h1>Edit DM</h1>
-                {/* <ul>{errors.map((error) => (
-                    <li className="error_info" key={error}>
-                        {error}
-                    </li>))}
-                </ul> */}
                 <div>
                     <label>Members: </label>
                     <div>
-                        {arr.length || newMembers.length ? arr.concat(newMembers).map(person => {
-                            if (person !== userId && !remove.includes(person)) {
+                        {setArr.length ? setArr.map(person => {
+                            if (person !== userId) {
                                 return <div key={`mem-${person}`}> --- {allUsers[person].first_name} {allUsers[person].last_name}</div>
                             }
                         })
@@ -125,7 +98,7 @@ function EditDMModalForm({ onClose, channelId }) {
                 </div>
                 <input type="hidden" value={private_chat} />
                 <div>
-                    <button type="submit" disabled={addedMembers}>Edit DM</button>
+                    <button type="submit" disabled={false}>Edit DM</button>
                 </div>
             </form>
         </div>
