@@ -74,6 +74,18 @@ def edit_channel(channelId):
     db.session.commit()
     return channel.to_dict()
 
+@channel_routes.route('/<int:channelId>', methods= ['DELETE'])
+def deleteChannel(channelId):
+    channel = Channel.query.get(channelId)
+    for message in channel.messages:
+        db.session.delete(message)
+        db.session.commit()
+    print('children:: ', channel.channel_members)
+
+    db.session.delete(channel)
+    db.session.commit()
+    return {1: 1}
+
 ######################## message feature ###################################
 @channel_routes.route('/<int:userId>/<int:channelId>')
 def messages(userId, channelId):
