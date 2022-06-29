@@ -30,10 +30,10 @@ const ChatBox = () => {
 
   let privateMembers;
 
-  if (currentChannel.private_chat) {
+  if (currentChannel?.private_chat) {
     privateMembers = currentChannel.members.filter(user =>
       +user.id !== +userId
-      ).map(user => `${user.first_name} ${user.last_name}`).join(', ')
+    ).map(user => `${user.first_name} ${user.last_name}`).join(', ')
   }
 
   useEffect(() => {
@@ -82,9 +82,9 @@ const ChatBox = () => {
     <div className='chatbox'>
       <div className='chatbox__header'>
         <h2 className='chatbox__header--text'>
-          { privateMembers ?
-          (`${privateMembers}`) :
-          (`#${currentChannel.name}`)
+          {privateMembers ?
+            (`${privateMembers}`) :
+            (`#${currentChannel.name}`)
           }
         </h2>
       </div>
