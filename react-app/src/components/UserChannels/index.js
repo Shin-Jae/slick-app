@@ -27,20 +27,26 @@ const UserChannels = () => {
     dispatch(getAllMessages(logInId, channelId))
   }, [dispatch, logInId, channelId, deleted]);
  
-  const removingChannel = async (channelId) => {
- 
+  const removingChannel = async (deletechannelId) => {
+        
     let deletedChannel;
     try {
-      deletedChannel = await dispatch(deleteChannel(channelId));
+      deletedChannel = await dispatch(deleteChannel(deletechannelId));
+      
     } catch (error) {
       alert(error)
     }
-
+    
     if (deletedChannel) {
       setDeleted(true)
-      
+      if (deletedChannel.id == channelId) {
+          console.log("-----------------", deleteChannel.id)
+          console.log("oooooooooooooooooo", channelId)
+                history.push(`/users/${logInId}`)       
+      }
     }
-    setDeleted(false)
+     setDeleted(false)
+    
   }
 
   if (!Object.keys(allUsers).length) return null;
