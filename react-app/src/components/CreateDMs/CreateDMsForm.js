@@ -64,7 +64,6 @@ function CreateDMForm({ onClose }) {
   }
   const filteredUsers = filterUsers(users, query);
 
-
   let setArr = [...set]
 
   const removeMembers = (id) => {

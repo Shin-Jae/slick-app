@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { updateMessage, deleteMessage, getAllMessages } from '../../store/messages';
-
+import MessageUserIcon from '../MessageUserIcon';
 
 const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
   const { channelId, userId } = useParams()
@@ -81,6 +81,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
 
   return (
     <div className={edit ? 'message__container' : 'message__container--edit'}>
+      <MessageUserIcon memberImage={allUsers[message.owner_id].profile_img} />
       <p>{allUsers[message.owner_id].first_name} {allUsers[message.owner_id].last_name}: </p>
       <form>
         <input

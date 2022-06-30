@@ -59,7 +59,7 @@ const SignUpForm = () => {
     return <Redirect to={`/users/${user.id}`} />;
   }
 
-  console.log("prooo", profile_img)
+
   const profileImg1 = () => {
     if (profile_img && imageProfile !== pictures[0]) {
       setProfileImg("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F40%2F92%2FuDb8Ag.jpg&f=1&nofb=1")
