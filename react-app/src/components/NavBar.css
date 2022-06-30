@@ -18,19 +18,36 @@
   height: 26px;
   width: 700px;
   text-align: center;
-  /* position: fixed; */
+  position: relative;
 }
 
 .container-search-result {
   text-align: center;
   width: 700px;
-  position: fixed;
+  position: absolute;
   margin-top: 26px;
+  padding-top: 5px;
+  padding-bottom: 10px;
   background-color: lightgrey;
+  z-index: 5;
   /* overflow: auto; */
 }
 
 .filtered-list-nav-search {
   height: 200px;
   padding-top: 10px;
+}
+
+.nav-search-results {
+  height: 30px;
+  width: 400px;
+  font-size: 17px;
+  margin-top: 5px;
+  border: none;
+  transition: background-color, cursor .5s;
+}
+
+.nav-search-results:hover {
+  background-color: darkgray;
+  cursor: pointer;
 }
