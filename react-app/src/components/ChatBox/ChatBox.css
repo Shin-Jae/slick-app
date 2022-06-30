@@ -2,15 +2,20 @@
   padding-bottom: 4em;
   background-color: white;
   z-index: 3;
-  max-height: 3em;
+  height: 7em;
+  display: flex;
+  align-items: center;
 }
 .chatbox__header--text {
   padding-top: .75em;
   padding-left: .75em;
 }
-.chatbox {
-  /* display: grid;
-  grid-template-rows: 2fr 3fr 1fr; */
+.chatbox__header--text-container {
+  padding: 1em;
+}
+
+.chatbox__header--icon-container {
+  margin-top: 1em;
 }
 
 .chatbox__input {

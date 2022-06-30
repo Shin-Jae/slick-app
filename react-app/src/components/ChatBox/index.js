@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages, updateMessage } from '../../store/messages';
 import MessageContent from '../MessageContent'
+import EditDMModal from '../EditDMs';
 import { io } from 'socket.io-client';
 
 let socket;
@@ -24,6 +25,7 @@ const ChatBox = () => {
   const [messageUpdated, setMessageUpdated] = useState('')
   const [createMessage, setCreateMessage] = useState('')
   const [onDelete, setOnDelete] = useState(false)
+  const [owner, setOwner] = useState(false)
   // const [name, setName] = useState("")
   //   const [description, setDescription] = useState("")
 
@@ -32,12 +34,13 @@ const ChatBox = () => {
   if (currentChannel.private_chat) {
     privateMembers = currentChannel.members.filter(user =>
       +user.id !== +userId
-      ).map(user => `${user.first_name} ${user.last_name}`).join(', ')
+    ).map(user => `${user.first_name} ${user.last_name}`).join(', ')
   }
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
     dispatch(getAllMessages(userId, channelId))
+    setOwner(currentChannel.owner_id == parseInt(userId))
   }, [dispatch, userId, channelId, messageReceived, messageUpdated, updateComplete, onDelete]);
 
   useEffect(() => {
@@ -73,19 +76,22 @@ const ChatBox = () => {
     })
   }, [updateComplete, createMessage, onDelete])
 
-
-
   if (!Object.keys(channels).length) return null
 
   return (
     <div className='chatbox'>
       <div className='chatbox__header'>
-        <h2 className='chatbox__header--text'>
-          { privateMembers ?
-          (`${privateMembers}`) :
-          (`#${currentChannel.name}`)
-          }
-        </h2>
+        <div className='chatbox__header--text-container'>
+          <h2 className='chatbox__header--text'>
+            {privateMembers ?
+              (`${privateMembers}`) :
+              (`#${currentChannel.name}`)
+            }
+          </h2>
+        </div>
+        <div className='chatbox__header--icon-container'>
+          <h2>{owner && <EditDMModal channelId={currentChannel.id} />}</h2>
+        </div>
       </div>
       <div className='chatbox__messages'>
         <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>

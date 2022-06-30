@@ -1,23 +1,43 @@
 import './DeleteDMButton.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteChannel } from '../../store/channels';
+import { getAllChannels } from '../../store/channels';
+import { getAllMessages } from '../../store/messages';
 
-const DeleteDMButton = ({ channelId, showDelete }) => {
+const DeleteDMButton = ({ currentChannelId, showDelete }) => {
+  const { channelId } = useParams()
+  const dispatch = useDispatch()
+  const history = useHistory();
   const [deleted, setDeleted] = useState(false)
+  const logInId = useSelector((state) => state.session.user.id)
 
-  const handleDelete = async (channelId) => {
-    // console.log(channelId)
+  useEffect(() => {
+    dispatch(getAllChannels(logInId));
+    dispatch(getAllMessages(logInId, currentChannelId))
+  }, [dispatch, deleted]);
+
+  const handleDelete = async (currentChannelId) => {
+
     let deletedDM;
 
-    // try {
-    //   deletedDM = await dispatch(deleteDM(channelId))
-    // } catch (error) {
-    //   alert(error)
-    // }
+    try {
+      deletedDM = await dispatch(deleteChannel(currentChannelId))
+    } catch (error) {
+      alert(error)
+    }
 
-    // if (deletedDM) {
-    //   setDeleted(true)
-    //   resetState()
-    // }
+    if (deletedDM) {
+      console.log('deletedDM', deletedDM)
+      console.log('channelId', channelId)
+      if (deletedDM.id == channelId) {
+        history.push(`/users/${logInId}`)
+      }
+
+      setDeleted(true)
+      resetState()
+    }
   }
 
   const resetState = () => {
@@ -25,13 +45,16 @@ const DeleteDMButton = ({ channelId, showDelete }) => {
   }
 
   return (
-      <div
+    <div
       style={showDelete ? { display: 'block' } : { display: 'none' }}
       className='dms__list-item--delete-container'>
-        <button
-          onClick={() => handleDelete(channelId)}
-          >X</button>
-      </div>
+      <button
+        className='deleteDM__button'
+        onClick={() => handleDelete(currentChannelId)}
+      >
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
   );
 }
 
