@@ -4,7 +4,8 @@ import { useHistory } from "react-router-dom"
 import { createOneChannel, getAllChannels } from "../../store/channels"
 
 let set = new Set()
-const CreateChannelForm = ({ onClose }) => {
+let count = 1
+const CreateChannelForm = ({ onClose }) => {    
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -12,12 +13,13 @@ const CreateChannelForm = ({ onClose }) => {
     const [description, setDescription] = useState("")
     const privatechat = false
     const [errors, setErrors] = useState([])
-
+    
     //used for search
     const userId = useSelector((state) => state.session.user.id)
     const [query, setQuery] = useState("")
     const allUsers = useSelector((state) => state.search);
     const users = Object.values(allUsers);
+    let setArr = [...set]
 
     useEffect(() => {
         const validationErrors = []
@@ -29,8 +31,10 @@ const CreateChannelForm = ({ onClose }) => {
             validationErrors.push("Please enter channel's description")
         if (description.length > 255)
             validationErrors.push("Channel Description must be 255 characters or less")
+        if ( count < 2 )
+            validationErrors.push("Please add a member to the channel")
         setErrors(validationErrors)
-    }, [name, description, dispatch])
+    }, [name, description, count, dispatch])
 
     const channelSubmission = async (e) => {
         e.preventDefault()
@@ -46,6 +50,7 @@ const CreateChannelForm = ({ onClose }) => {
         if (createdChannel) {
             setErrors([])
             set.clear()
+            count = 0
             await dispatch(getAllChannels(userId))
             history.push(`/users/${userId}/${createdChannel.id}`)
             onClose(false)
@@ -63,12 +68,13 @@ const CreateChannelForm = ({ onClose }) => {
     }
     const filteredUsers = filterUsers(users, query);
 
-    let setArr = [...set]
+    
 
 
     const removeMembers = (id) => {
         if (set.has(id)) {
             set.delete(id);
+            count -=1
             if (query === "") {
                 return setQuery("*")
             } else {
@@ -82,6 +88,7 @@ const CreateChannelForm = ({ onClose }) => {
 
         if (!set.has(id)) {
             set.add(id);
+            count +=1
             return setQuery("")
         }
     }
