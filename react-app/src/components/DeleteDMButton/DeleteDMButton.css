@@ -10,3 +10,10 @@
 .dms__list-item--delete-container {
 
 }
+
+.deleteDM__button {
+  border: none;
+  background-color: transparent;
+  font-weight: 800;
+  cursor: pointer
+}
