@@ -6,3 +6,30 @@
   background-color: #f91690;
   max-height: 3em;
 }
+
+.container-full-search {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.input-search-bar-field {
+  height: 26px;
+  width: 700px;
+  text-align: center;
+  /* position: fixed; */
+}
+
+.container-search-result {
+  text-align: center;
+  width: 700px;
+  position: fixed;
+  margin-top: 26px;
+  background-color: lightgrey;
+  /* overflow: auto; */
+}
+
+.filtered-list-nav-search {
+  height: 200px;
+  padding-top: 10px;
+}
