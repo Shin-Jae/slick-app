@@ -14,6 +14,42 @@
   padding: 1em;
 }
 
+.chatbox__header--buttons-container {
+  display: flex;
+  position: relative;
+}
+
+.chatbox__header--buttons-container h2{
+  margin: .5em;
+}
+
+.chatbox__header--buttons {
+  background-color: transparent;
+  border: transparent;
+  display: inline-block;
+  /* position:absolute; */
+  border-radius: .25em;
+}
+
+.chatbox__header--buttons:hover {
+  background-color: #EEEEEE;
+  padding: .25em;
+  border: transparent;
+}
+
+.chatbox__header--buttons::before {
+  display: block;
+  content: attr(title);
+  font-weight: bold;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.material-symbols-outlined {
+  background-color: transparent;
+}
+
 .chatbox__header--icon-container {
   margin-top: 1em;
 }
