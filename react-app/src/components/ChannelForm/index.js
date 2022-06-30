@@ -51,7 +51,7 @@ const CreateChannelForm = ({ onClose }) => {
     if (createdChannel) {
       setErrors([])
       set.clear()
-      count = 0
+      count = 1
       await dispatch(getAllChannels(userId))
       history.push(`/users/${userId}/${createdChannel.id}`)
       onClose(false)

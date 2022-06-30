@@ -1,7 +1,7 @@
 import './ChatBox.css'
 import MessageInput from '../MessageInput/';
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Redirect } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages, updateMessage } from '../../store/messages';
@@ -41,13 +41,12 @@ const ChatBox = () => {
     privateMembers = currentChannel.members.filter(user =>
       +user.id !== +userId
     ).map(user => `${user.first_name} ${user.last_name}`).join(', ')
-
   }
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
     dispatch(getAllMessages(userId, channelId))
-    setOwner(currentChannel.owner_id == parseInt(userId))
+    setOwner(currentChannel?.owner_id == parseInt(userId))
   }, [dispatch, userId, channelId, messageReceived, messageUpdated, updateComplete, onDelete, deleted]);
 
   useEffect(() => {
@@ -55,58 +54,64 @@ const ChatBox = () => {
   }, [dispatch, channelId, messageReceived]);
 
   // useEffect(() => {
-  //   if (channels[channelId]) {
-  //     setName(channels[channelId].name)
-  //     setDescription(channels[channelId].description)
-  //   }
-  // })
+    //   if (channels[channelId]) {
+      //     setName(channels[channelId].name)
+      //     setDescription(channels[channelId].description)
+      //   }
+      // })
 
-  useEffect(() => {
-    socket = io();
+      useEffect(() => {
+        socket = io();
 
-    // socket.emit('update', updateComplete)
-    // socket.on('update', (data) => {
-    //   setMessageUpdated(data)
-    // });
+        // socket.emit('update', updateComplete)
+        // socket.on('update', (data) => {
+          //   setMessageUpdated(data)
+          // });
 
-    socket.emit('chat', createMessage)
-    socket.on("chat", (data) => {
-      setMessageReceived(data)
-    })
+          socket.emit('chat', createMessage)
+          socket.on("chat", (data) => {
+            setMessageReceived(data)
+          })
 
-    socket.emit('delete')
-    socket.on("delete", (data) => {
-      setOnDelete(false)
-    })
-    return (() => {
-      socket.disconnect()
-    })
-  }, [updateComplete, createMessage, onDelete])
+          socket.emit('delete')
+          socket.on("delete", (data) => {
+            setOnDelete(false)
+          })
+          return (() => {
+            socket.disconnect()
+          })
+        }, [updateComplete, createMessage, onDelete])
 
-  const removingChannel = async (deletechannelId) => {
+        const removingChannel = async (deletechannelId) => {
 
-    let deletedChannel;
-    try {
-      deletedChannel = await dispatch(deleteChannel(deletechannelId));
+          let deletedChannel;
+          try {
+            deletedChannel = await dispatch(deleteChannel(deletechannelId));
 
-    } catch (error) {
-      alert(error)
-    }
+          } catch (error) {
+            alert(error)
+          }
 
-    if (deletedChannel) {
-      setDeleted(true)
-      if (deletedChannel.id == channelId) {
-        history.push(`/users/${logInId}`)
-      }
-    }
-    setDeleted(false)
+          if (deletedChannel) {
+            setDeleted(true)
+            if (deletedChannel.id == channelId) {
+              history.push(`/users/${logInId}`)
+            }
+          }
+          setDeleted(false)
 
-  }
+        }
 
-  if (!Object.keys(channels).length) return null;
+        if (!Object.keys(channels).length) return null;
 
-  return (
-    <div className='chatbox'>
+        if (!currentChannel) {
+          return (
+            <Redirect to={`/users/${logInId}`}/>
+          )
+        }
+
+        return (
+          <div className='chatbox'>
       <div className='chatbox__header'>
         <div className='chatbox__header--text-container'>
           <h2 className='chatbox__header--text'>

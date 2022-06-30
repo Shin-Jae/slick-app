@@ -29,8 +29,6 @@ const DeleteDMButton = ({ currentChannelId, showDelete }) => {
     }
 
     if (deletedDM) {
-      console.log('deletedDM', deletedDM)
-      console.log('channelId', channelId)
       if (deletedDM.id == channelId) {
         history.push(`/users/${logInId}`)
       }

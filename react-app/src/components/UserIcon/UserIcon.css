@@ -1,14 +1,31 @@
 .dm__icon {
   width: 1.5em;
   margin: .25em;
+  margin-right: 1em;
   background-size: cover;
   background-position: center;
   border-radius: .25em;
-  background-color: aquamarine;
 }
 
 .dm__icon::after{
   display: block;
   padding-top: 100%;
   content: '';
+}
+
+.dm__icon-container {
+  display: flex;
+  position: relative;
+}
+
+.dm__icon--length {
+  font-size: .75em;
+  position: absolute;
+  background-color: #C8C8C8;
+  top: 1.5em;
+  border: white solid 1.5px;
+  left: 1.25em;
+  padding: .2em .4em .2em .4em;
+  border-radius: .5em;
+  color: #494949;
 }

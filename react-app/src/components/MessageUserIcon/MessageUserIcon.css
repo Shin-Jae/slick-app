@@ -1,0 +1,14 @@
+.message__icon--user {
+  width: 2.5em;
+  margin: .25em;
+  margin-right: 1em;
+  background-size: cover;
+  background-position: center;
+  border-radius: .25em;
+}
+
+.message__icon--user::after{
+  display: block;
+  padding-top: 100%;
+  content: '';
+}

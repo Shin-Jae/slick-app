@@ -21,12 +21,12 @@ const DMChannel = ({ channel }) => {
           <NavLink exact to={`/users/${id}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
             <div className='dms__list-item--icon-name'>
               <div className='dms__list-item--icon-container'>
-                <UserIcon />
+                <UserIcon members={channel.members}/>
               </div>
               <div className='dms__list-item--name-container'>
                 {channel.members.map(member => {
                   if (member.email !== email) {
-                    return <span key={`${member.id}`}> - {member.first_name}</span>
+                    return <span key={`${member.id}`}> {member.first_name}</span>
                   }
                 })}
               </div>

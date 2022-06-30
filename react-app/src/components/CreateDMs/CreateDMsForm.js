@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom"
 import { createOneChannel, getAllChannels } from "../../store/channels"
 
 const set = new Set();
+let count = 1
 function CreateDMForm({ onClose }) {
 
   const dispatch = useDispatch()
@@ -35,8 +36,10 @@ function CreateDMForm({ onClose }) {
       validationErrors.push("Please enter channel's description")
     if (description.length > 255)
       validationErrors.push("Channel Description must be 255 characters or less")
+      if (count < 2)
+      validationErrors.push("Please add a member to the DM")
     setErrors(validationErrors)
-  }, [name, description, dispatch])
+  }, [name, description, count, dispatch])
 
   //check if dm already exists
   let matchId;
@@ -92,9 +95,11 @@ function CreateDMForm({ onClose }) {
   }
   const filteredUsers = filterUsers(users, query);
 
+
   const removeMembers = (id) => {
     if (set.has(id)) {
       set.delete(id);
+      count -=1
       if (query === "") {
         return setQuery("*")
       } else {
@@ -108,6 +113,7 @@ function CreateDMForm({ onClose }) {
 
     if (!set.has(id)) {
       set.add(id);
+      count += 1
       return setQuery("")
     }
   }
