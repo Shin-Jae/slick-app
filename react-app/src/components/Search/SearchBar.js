@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { useSelector } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useHistory } from "react-router-dom";
+import { createOneChannel, getAllChannels } from "../../store/channels";
 
 function SearchBar() {
+    const history = useHistory();
+    const dispatch = useDispatch();
     const [query, setQuery] = useState("")
     const allUsers = useSelector((state) => state.search);
     const users = Object.values(allUsers);
@@ -12,7 +15,42 @@ function SearchBar() {
 
     const userId = useSelector((state) => state.session.user.id);
 
-    let channelId;
+    //search members if one to one dm exist
+    let match = []
+    let matchId = []
+    channels.filter(channel => {
+        if (channel.private_chat === true && channel.members.length === 2) {
+            match.push(channel.id)
+            return channel.members.forEach(member => {
+                if (member.id !== userId) return matchId.push(member.id)
+            })
+        } else {
+            return null
+        }
+    })
+    //if one to one exist the redirect else create dm
+    const checkDm = async (id) => {
+        if (matchId.includes(id)) {
+            let idx = matchId.indexOf(id)
+            let channelId = match[idx]
+            setQuery("")
+            return history.push(`/users/${userId}/${channelId}`)
+        } else {
+            const payload = {
+                name: `private-${userId}-${id}`,
+                description: 'search-prive-dm',
+                private_chat: true,
+                owner_id: userId,
+                members: [userId, id]
+            }
+            const createSearchDM = await dispatch(createOneChannel(userId, payload))
+            if (createSearchDM) {
+                setQuery("")
+                await dispatch(getAllChannels(userId))
+                history.push(`/users/${userId}/${createSearchDM.id}`)
+            }
+        }
+    }
 
     const filterUsers = (users, query) => {
         if (!query) {
@@ -41,18 +79,7 @@ function SearchBar() {
                 <div className="container-search-result">
                     <ul className="filtered-list" >
                         {query ? filteredUsers.map(user => {
-                            channels.forEach(channel => {
-                                if (channel.members.length <= 2) {
-                                    return channel.members.forEach(member => {
-                                        if (member.id === user.id && channel.private === true) {
-                                            channelId = channel.id
-                                        }
-                                    })
-                                }
-                                if (channelId === undefined) channelId = 1
-                            })
-                            return <NavLink to={`/users/${userId}/${channelId}`} key={user.id}><div>{user.first_name} {user.last_name}</div></NavLink>
-                            // return < button type="button" > hi</button>
+                            return <div key={user.id}><button className="nav-search-results" type="button" onClick={() => checkDm(user.id)}>{user.first_name} {user.last_name}</button></div>
                         }) : null}
                     </ul>
                 </div>
