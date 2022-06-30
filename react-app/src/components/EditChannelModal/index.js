@@ -16,8 +16,8 @@ const EditChannelModal = ({ userId, channelId, owner_id }) => {
         <>
             {userId === owner_id && (<button onClick={() => setShowModal(true)} style={{ cursor: 'pointer' }} >Edit Channel</button>)}
             {showModal && (
-                <Modal closeModal={() => setShowModal(false)} >
-                    <EditChannelForm closeModal={() => setShowModal(false)} channelId={channelId} set={set} />
+                <Modal onClose={() => setShowModal(false)} >
+                    <EditChannelForm onClose={() => setShowModal(false)} showModal={showModal} channelId={channelId} set={set} />
                 </Modal>
             )}
 
