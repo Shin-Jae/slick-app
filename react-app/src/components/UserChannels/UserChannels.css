@@ -1,7 +1,23 @@
+.user__channels-display {
+  position: relative;
+}
+
 .channels__header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: .5em;
+  /* position: absolute; */
+  top: 0;
+}
+
+.channels__header-text {
+  padding-top: .35em;
+  padding-bottom: .35em;
+}
+
+.button__create-channel--hidden {
+  display: none;
 }
 
 .button__create-channel {
@@ -9,6 +25,7 @@
   border: transparent;
   padding: .25em;
   border-radius: .5em;
+  transition: 0.2s;
   /* color: transparent; */
 }
 
@@ -17,4 +34,25 @@
   display: block;
   color: black;
   cursor: pointer;
+}
+
+.view-channels {
+  padding-left: .5em;
+}
+
+.one-channel {
+}
+
+.one-channel-container {
+  /* margin-bottom: .5em; */
+  min-width: 100%;
+  padding: .5em;
+  transition: 0.2s;
+}
+
+.one-channel-container:hover {
+  background-color: #FFEE40;
+}
+
+.one-channel-link {
 }

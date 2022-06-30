@@ -15,9 +15,10 @@ const UserChannels = () => {
   const allUsers = useSelector((state) => state.search);
   const channels = Object.values(allChannels);
   const logInId = useSelector((state) => state.session.user.id)
-  const user = useSelector((state) => state.session.user)
-  const userEmail = useSelector((state) => state.session.user.email);
-  const allMessages = useSelector((state) => state.messages);
+  const [hoverDisplay, setHoverDisplay] = useState(false)
+  // const user = useSelector((state) => state.session.user)
+  // const userEmail = useSelector((state) => state.session.user.email);
+  // const allMessages = useSelector((state) => state.messages);
   // const messages = Object.values(allMessages);
 
   useEffect(() => {
@@ -29,19 +30,22 @@ const UserChannels = () => {
 
   return (
     <>
-      <div className='channels__header-container'>
-        <h3>Channels</h3>
-        <CreateChannelModal />
+      <div className='channels__header-container'
+        onMouseEnter={(e) => setHoverDisplay(true)}
+        onMouseLeave={(e) => setHoverDisplay(false)}
+      >
+        <h3 className='channels__header-text'>Channels</h3>
+        <CreateChannelModal hoverDisplay={hoverDisplay} />
       </div>
       <ul className="view-channels" style={{ listStyleType: "none" }}>
         {channels.map(channel =>
-          <li className="one-channel" key={`channel-${channel.id}`}>
-            {channel.private_chat ? null :
-              <NavLink exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
-                # {channel.name}
-              </NavLink>
-            }
-          </li>
+          <NavLink exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
+            <div className='one-channel-container'>
+              <li className="one-channel" key={`channel-${channel.id}`}>
+                {!channel.private_chat && `# ${channel.name}`}
+              </li>
+            </div>
+          </NavLink>
         )}
       </ul>
     </>

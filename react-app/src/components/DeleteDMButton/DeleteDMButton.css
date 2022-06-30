@@ -8,12 +8,17 @@
 }
 
 .dms__list-item--delete-container {
-
+  /* border: red 2px solid; */
+  position: relative;
 }
 
 .deleteDM__button {
   border: none;
   background-color: transparent;
   font-weight: 800;
-  cursor: pointer
+  cursor: pointer;
+  position: absolute;
+  right: 1em;
+  top: -1em;
+  /* margin-right: 3em; */
 }
