@@ -7,7 +7,7 @@
   transition: 0.2s;
   color: black;
   resize: none;
-  /* overflow: hidden; */
+  overflow: hidden;
   display: flex;
 }
 
@@ -21,7 +21,7 @@
   padding: 1em;
   resize: none;
   transition: 0.2s;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .message__textarea--container {
