@@ -40,13 +40,13 @@ function App() {
 				</Route>
 				<PrivateRoute>
 					<Switch >
-						<Route exact path='/users/:userId'>
+						<ProtectedRoute exact path='/users/:userId'>
 							<MainPage />
-              {/* <Chat /> */}
-						</Route>
-						<Route path='/users/:userId/:channelId'>
+							{/* <Chat /> */}
+						</ProtectedRoute>
+						<ProtectedRoute path='/users/:userId/:channelId'>
 							<Channels />
-						</Route>
+						</ProtectedRoute>
 					</Switch>
 					<ProtectedRoute path='/users' exact={true} >
 						<UsersList />

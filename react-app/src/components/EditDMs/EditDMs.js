@@ -59,6 +59,8 @@ function EditDMModalForm({ onClose, channelId, set }) {
         if (set.has(id) && !remove.has(id)) {
             set.delete(id);
             remove.add(id);
+            console.log('set', set, setArr)
+            console.log('remove', remove)
             if (query === "") {
                 return setQuery("-")
             } else {
@@ -88,7 +90,7 @@ function EditDMModalForm({ onClose, channelId, set }) {
                         {setArr.length ? setArr.map(person => {
                             if (person !== userId) {
                                 return <div key={`mem-${person}`}>
-                                    <div> --- {allUsers[person].first_name} {allUsers[person].last_name}</div>
+                                    <span> -- {allUsers[person].first_name} {allUsers[person].last_name}</span>
                                     <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
                                 </div>
                             }
@@ -106,17 +108,14 @@ function EditDMModalForm({ onClose, channelId, set }) {
                             {query ? filteredUsers.map(user => {
                                 if (user.id !== userId) {
                                     return <div key={user.id}>
-                                        <div>{user.first_name} {user.last_name}</div>
+                                        <span>{user.first_name} {user.last_name}</span>
                                         <button type="button" onClick={() => addMembers(user.id)}>+</button>
                                     </div>
                                 }
                             }) : null}
                         </ul>
                     </div>
-                </div>
-                <input type="hidden" value={private_chat} />
-                <div>
-                    <button type="submit" disabled={false}>Edit members</button>
+                    <button type="submit" disabled={!setArr.length}>Edit members</button>
                 </div>
             </form>
         </div>

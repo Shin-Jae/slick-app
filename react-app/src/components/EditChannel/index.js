@@ -125,7 +125,7 @@ const EditChannelForm = ({ closeModal, channelId, set, onClose }) => {
                     {setArr.length ? setArr.map(person => {
                         if (person !== userId) {
                             return <div key={`mem-${person}`}>
-                                <div> -- {allUsers[person].first_name} {allUsers[person].last_name}</div>
+                                <span> -- {allUsers[person].first_name} {allUsers[person].last_name}</span>
                                 <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
                             </div>
                         }
@@ -143,7 +143,7 @@ const EditChannelForm = ({ closeModal, channelId, set, onClose }) => {
                         {query ? filteredUsers.map(user => {
                             if (user.id !== userId) {
                                 return <div key={user.id}>
-                                    <div >{user.first_name} {user.last_name}</div>
+                                    <span >{user.first_name} {user.last_name}</span>
                                     <button type="button" onClick={() => addMembers(user.id)}>+</button>
                                 </div>
                             }

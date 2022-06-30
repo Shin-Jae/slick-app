@@ -156,7 +156,7 @@ const SignUpForm = () => {
   }
 
   return (
-    <span className='container-login-page'>
+    <div className='container-login-page'>
       <header className='container-login-header'>
         <div className='header-left-col'></div>
         <NavLink exact to="/" className='header-center-col'>slick</NavLink>
@@ -295,7 +295,7 @@ const SignUpForm = () => {
         </div>
         <button type='submit' className='login-btn'>Sign Up</button>
       </form>
-    </span>
+    </div>
   );
 };
 

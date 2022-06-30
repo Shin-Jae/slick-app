@@ -50,7 +50,7 @@ const LoginForm = () => {
   }
 
   return (
-    <span className='container-login-page'>
+    <div className='container-login-page'>
       <header className='container-login-header'>
         <div className='header-left-col'></div>
         <NavLink exact to="/" className='header-center-col'>slick</NavLink>
@@ -127,7 +127,7 @@ const LoginForm = () => {
           </div>
         </div>
       </form>
-    </span>
+    </div>
   );
 };
 
