@@ -41,7 +41,7 @@ const ChatBox = () => {
     privateMembers = currentChannel.members.filter(user =>
       +user.id !== +userId
     ).map(user => `${user.first_name} ${user.last_name}`).join(', ')
-    
+
   }
 
   useEffect(() => {
@@ -103,7 +103,7 @@ const ChatBox = () => {
 
   }
 
-  if (!Object.keys(channels).length) return null
+  if (!Object.keys(channels).length) return null;
 
   return (
     <div className='chatbox'>

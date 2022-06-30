@@ -14,6 +14,7 @@
 .channels__header-text {
   padding-top: .35em;
   padding-bottom: .35em;
+  white-space: nowrap;
 }
 
 .button__create-channel--hidden {
@@ -38,9 +39,6 @@
 
 .view-channels {
   padding-left: .5em;
-}
-
-.one-channel {
 }
 
 .one-channel-container {

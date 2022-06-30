@@ -1,0 +1,31 @@
+.modal__form-container {
+  padding: 3em;
+  border-radius: 1em;
+  text-align: left;
+}
+
+.modal__form-container div {
+  padding: .25em;
+}
+
+.modal__form-container input, textarea {
+  padding: .5em;
+  border-radius: .75em;
+  outline: none;
+  border: 1px solid #D4D4D4;
+  width: 90%;
+}
+
+.modal__form-container button {
+  padding: .75em;
+  border-radius: .75em;
+  color: white;
+  background-color: #FF4FCA;
+  transition: 0.3s;
+  border: transparent;
+  margin: 1em;
+}
+.modal__form-container button:hover {
+  background-color: #FF197E;
+  cursor: pointer
+}
