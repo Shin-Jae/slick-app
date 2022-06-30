@@ -11,6 +11,9 @@ function CreateDMForm({ onClose }) {
   const history = useHistory()
   const [errors, setErrors] = useState([])
 
+  const userChannels = useSelector((state) => state.channels);
+  const channels = Object.values(userChannels);
+
   //used for search
   const userId = useSelector((state) => state.session.user.id)
   const [query, setQuery] = useState("")
@@ -20,6 +23,8 @@ function CreateDMForm({ onClose }) {
   const name = `private for ${userId}`
   const description = `dm description ${userId}`
   const private_chat = true
+
+  let setArr = [...set]
 
   useEffect(() => {
     const validationErrors = []
@@ -36,8 +41,31 @@ function CreateDMForm({ onClose }) {
     setErrors(validationErrors)
   }, [name, description, count, dispatch])
 
+  //check if dm already exists
+  let matchId;
+  channels.forEach(channel => {
+    if (channel.private_chat === true) {
+      let count = 0
+
+      if (setArr.length === channel.members.length) {
+        channel.members.forEach(member => {
+          if (setArr.includes(member.id)) count++
+        })
+        if (count === setArr.length) {
+          matchId = channel.id
+        }
+      }
+    }
+  })
+
   const channelSubmission = async (e) => {
     e.preventDefault()
+
+    if (matchId) {
+      onClose(false)
+      return history.push(`/users/${userId}/${matchId}`)
+    }
+
     const payload = {
       name,
       description,
@@ -67,7 +95,6 @@ function CreateDMForm({ onClose }) {
   }
   const filteredUsers = filterUsers(users, query);
 
-  let setArr = [...set]
 
   const removeMembers = (id) => {
     if (set.has(id)) {

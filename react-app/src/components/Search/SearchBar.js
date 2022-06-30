@@ -27,6 +27,7 @@ function SearchBar() {
     }
   })
 
+
   //if one to one exist the redirect else create dm
   const checkDm = async (id) => {
     if (matchId.includes(id)) {
@@ -48,6 +49,7 @@ function SearchBar() {
         await dispatch(getAllChannels(userId))
         history.push(`/users/${userId}/${createSearchDM.id}`)
       }
+
     }
   }
 
