@@ -41,6 +41,7 @@ const ChatBox = () => {
     privateMembers = currentChannel.members.filter(user =>
       +user.id !== +userId
     ).map(user => `${user.first_name} ${user.last_name}`).join(', ')
+    
   }
 
   useEffect(() => {

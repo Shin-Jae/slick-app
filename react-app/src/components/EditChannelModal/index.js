@@ -18,8 +18,8 @@ const EditChannelModal = ({ userId, channelId, owner_id }) => {
         <span class="material-symbols-outlined">edit</span>
       </button>)}
       {showModal && (
-        <Modal closeModal={() => setShowModal(false)} >
-          <EditChannelForm closeModal={() => setShowModal(false)} channelId={channelId} set={set} />
+        <Modal onClose={() => setShowModal(false)} >
+          <EditChannelForm onClose={() => setShowModal(false)} channelId={channelId} set={set} />
         </Modal>
       )}
     </>
