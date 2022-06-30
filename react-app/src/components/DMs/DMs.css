@@ -3,6 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  transition: 0.2s;
 }
 
 .dms__list-item:hover {
@@ -18,5 +19,5 @@
 }
 
 .dms__list-item--name-container {
-  width: 14em;
+  width: 12em;
 }

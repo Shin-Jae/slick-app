@@ -1,3 +1,4 @@
+import './ChannelForm.css'
 import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
@@ -5,158 +6,156 @@ import { createOneChannel, getAllChannels } from "../../store/channels"
 
 let set = new Set()
 let count = 1
-const CreateChannelForm = ({ onClose }) => {    
-    const dispatch = useDispatch()
-    const history = useHistory()
+const CreateChannelForm = ({ onClose }) => {
+  const dispatch = useDispatch()
+  const history = useHistory()
 
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const privatechat = false
-    const [errors, setErrors] = useState([])
-    
-    //used for search
-    const userId = useSelector((state) => state.session.user.id)
-    const [query, setQuery] = useState("")
-    const allUsers = useSelector((state) => state.search);
-    const users = Object.values(allUsers);
-    let setArr = [...set]
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const privatechat = false
+  const [errors, setErrors] = useState([])
 
-    useEffect(() => {
-        const validationErrors = []
-        if (!name)
-            validationErrors.push("Please enter a channel name")
-        if (name.length > 100)
-            validationErrors.push('Channel Name must be 100 characters or less')
-        if (!description)
-            validationErrors.push("Please enter channel's description")
-        if (description.length > 255)
-            validationErrors.push("Channel Description must be 255 characters or less")
-        if ( count < 2 )
-            validationErrors.push("Please add a member to the channel")
-        setErrors(validationErrors)
-    }, [name, description, count, dispatch])
+  //used for search
+  const userId = useSelector((state) => state.session.user.id)
+  const [query, setQuery] = useState("")
+  const allUsers = useSelector((state) => state.search);
+  const users = Object.values(allUsers);
+  let setArr = [...set]
 
-    const channelSubmission = async (e) => {
-        e.preventDefault()
-        const payload = {
-            name,
-            description,
-            privatechat,
-            owner_id: userId,
-            members: setArr
-        }
+  useEffect(() => {
+    const validationErrors = []
+    if (!name)
+      validationErrors.push("Please enter a channel name")
+    if (name.length > 100)
+      validationErrors.push('Channel Name must be 100 characters or less')
+    if (!description)
+      validationErrors.push("Please enter channel's description")
+    if (description.length > 255)
+      validationErrors.push("Channel Description must be 255 characters or less")
+    if (count < 2)
+      validationErrors.push("Please add a member to the channel")
+    setErrors(validationErrors)
+  }, [name, description, count, dispatch])
 
-        const createdChannel = await dispatch(createOneChannel(userId, payload))
-        if (createdChannel) {
-            setErrors([])
-            set.clear()
-            count = 0
-            await dispatch(getAllChannels(userId))
-            history.push(`/users/${userId}/${createdChannel.id}`)
-            onClose(false)
-        }
+  const channelSubmission = async (e) => {
+    e.preventDefault()
+    const payload = {
+      name,
+      description,
+      privatechat,
+      owner_id: userId,
+      members: setArr
     }
 
-    const filterUsers = (users, query) => {
-        if (!query) {
-            return users;
-        }
-        return users.filter((user) => {
-            const fullName = `${user.first_name.toLowerCase()} ${user.last_name.toLowerCase()}`;
-            return fullName.includes(query.toLowerCase());
-        })
+    const createdChannel = await dispatch(createOneChannel(userId, payload))
+    if (createdChannel) {
+      setErrors([])
+      set.clear()
+      count = 0
+      await dispatch(getAllChannels(userId))
+      history.push(`/users/${userId}/${createdChannel.id}`)
+      onClose(false)
     }
-    const filteredUsers = filterUsers(users, query);
+  }
 
-    
-
-
-    const removeMembers = (id) => {
-        if (set.has(id)) {
-            set.delete(id);
-            count -=1
-            if (query === "") {
-                return setQuery("*")
-            } else {
-                return setQuery("")
-            }
-        }
+  const filterUsers = (users, query) => {
+    if (!query) {
+      return users;
     }
+    return users.filter((user) => {
+      const fullName = `${user.first_name.toLowerCase()} ${user.last_name.toLowerCase()}`;
+      return fullName.includes(query.toLowerCase());
+    })
+  }
+  const filteredUsers = filterUsers(users, query);
 
-    const addMembers = (id) => {
-        if (!set.size) set.add(userId)
 
-        if (!set.has(id)) {
-            set.add(id);
-            count +=1
-            return setQuery("")
-        }
+
+
+  const removeMembers = (id) => {
+    if (set.has(id)) {
+      set.delete(id);
+      count -= 1
+      if (query === "") {
+        return setQuery("*")
+      } else {
+        return setQuery("")
+      }
     }
+  }
 
-    return (
+  const addMembers = (id) => {
+    if (!set.size) set.add(userId)
 
+    if (!set.has(id)) {
+      set.add(id);
+      count += 1
+      return setQuery("")
+    }
+  }
+
+  return (
+    <div className='modal__form-container'>
+      <form onSubmit={channelSubmission}>
+        <h1>Create New Channel</h1>
+        <ul>{errors.map((error) => (
+          <li className="error_info" key={error}>
+            {error}
+          </li>))}
+        </ul>
+        <input type="hidden" value={privatechat} />
         <div>
-            <form onSubmit={channelSubmission}>
-                <h1>Create New Channel</h1>
-                <ul>{errors.map((error) => (
-                    <li className="error_info" key={error}>
-                        {error}
-                    </li>))}
-                </ul>
-                <input type="hidden" value={privatechat} />
-                <div>
-                    <label>Channel Name: </label>
-                    <input
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}>
-                    </input>
+          <input
+            placeholder='Channel Name'
+            value={name}
+            onChange={(e) => setName(e.target.value)}>
+          </input>
 
-                </div>
-                <div>
-                    <label>Description: </label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                </div>
-                <div>
-                    <label>Members: </label>
-                    <div>
-                        {setArr.length ? setArr.map(person => {
-                            if (person !== userId) {
-                                return <div key={`user-${person}`}>
-                                    <div>-- {allUsers[person].first_name} {allUsers[person].last_name} </div>
-                                    <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
-                                </div>
-                            }
-                        }) : null}
-                    </div>
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Search"
-                            value={query}
-                            onInput={e => setQuery(e.target.value)}
-                        />
-                        <ul className="filtered-list" >
-                            {query ? filteredUsers.map(user => {
-                                if (user.id !== userId) {
-                                    return <div key={user.id}>
-                                        <div >{user.first_name} {user.last_name}</div>
-                                        <button type="button" onClick={() => addMembers(user.id)}>+</button>
-                                    </div>
-                                }
-                            }) : null}
-                        </ul>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" disabled={errors.length > 0}> Create Channel
-                    </button>
-                </div>
-            </form>
         </div>
-    )
+        <div>
+          <textarea
+            placeholder='Description'
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
+        </div>
+        <div>
+          <div>
+            <input
+              type="text"
+              placeholder="Search"
+              value={query}
+              onInput={e => setQuery(e.target.value)}
+            />
+            <div>
+              {setArr.length ? setArr.map(person => {
+                if (person !== userId) {
+                  return <div key={`user-${person}`}>
+                    <div>-- {allUsers[person].first_name} {allUsers[person].last_name} </div>
+                    <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
+                  </div>
+                }
+              }) : null}
+            </div>
+            <ul className="filtered-list" >
+              {query ? filteredUsers.map(user => {
+                if (user.id !== userId) {
+                  return <div key={user.id}>
+                    <div >{user.first_name} {user.last_name}</div>
+                    <button type="button" onClick={() => addMembers(user.id)}>+</button>
+                  </div>
+                }
+              }) : null}
+            </ul>
+          </div>
+        </div>
+        <div>
+          <button type="submit" disabled={errors.length > 0}> Create Channel
+          </button>
+        </div>
+      </form>
+    </div>
+  )
 }
 
 export default CreateChannelForm;

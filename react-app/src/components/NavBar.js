@@ -14,7 +14,7 @@ const NavBar = () => {
 				{/* <p>Logged-in: {`user.id: ${id} name: ${first_name} ${last_name}`}</p> */}
 				<ul>
 					<li>
-						<NavLink to='/' exact={true} activeClassName='active'>
+						{/* <NavLink to='/' exact={true} activeClassName='active'>
 							Home
 						</NavLink>
 					</li>
@@ -26,7 +26,7 @@ const NavBar = () => {
 					<li>
 						<NavLink to='/sign-up' exact={true} activeClassName='active'>
 							Sign Up
-						</NavLink>
+						</NavLink> */}
 					</li>
 				</ul>
 			</nav>
