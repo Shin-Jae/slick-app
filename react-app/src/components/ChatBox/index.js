@@ -103,7 +103,6 @@ const ChatBox = () => {
         }
 
         if (!Object.keys(channels).length) return null;
-        console.log('current channel', currentChannel)
 
         if (!currentChannel) {
           return (

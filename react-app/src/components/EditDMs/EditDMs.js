@@ -59,8 +59,6 @@ function EditDMModalForm({ onClose, channelId, set }) {
     if (set.has(id) && !remove.has(id)) {
       set.delete(id);
       remove.add(id);
-      console.log('set', set, setArr)
-      console.log('remove', remove)
       if (query === "") {
         return setQuery("-")
       } else {
@@ -104,7 +102,6 @@ function EditDMModalForm({ onClose, channelId, set }) {
               value={query}
               onInput={e => setQuery(e.target.value)}
             />
-            {console.log(setArr.length)}
             <ul className="filtered-list" >
               {query ? filteredUsers.map(user => {
                 if (user.id !== userId) {

@@ -18,7 +18,6 @@
 
 .message__container:hover .input__inactive{
   background-color: #f7f7f7;
-
 }
 
 .message__container:hover {
@@ -36,4 +35,14 @@
   background-color: #fff4cf;
   width: 100%;
   padding: 1em;
+}
+
+.message__icon--name {
+  display: flex;
+  align-items: flex-start;
+}
+
+.message__user--name {
+  font-weight: bold;
+  margin-top: .5em;
 }

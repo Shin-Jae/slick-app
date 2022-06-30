@@ -55,6 +55,7 @@ class User(db.Model, UserMixin):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'email': self.email,
+            'profile_img': self.profile_img,
             'members': [member.to_dict_no_user() for member in self.user_members]
         }
 
@@ -64,6 +65,7 @@ class User(db.Model, UserMixin):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'email': self.email,
+            'profile_img': self.profile_img,
         }
 
 
@@ -109,7 +111,8 @@ class Channel(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False)
 
     # one-to-many relationship with Message
-    messages = db.relationship("Message", back_populates="channel", passive_deletes=True, cascade='save-update,delete,delete-orphan')
+    messages = db.relationship("Message", back_populates="channel",
+                               passive_deletes=True, cascade='save-update,delete,delete-orphan')
 
     # many-to-one relationship with User
     user = db.relationship("User", back_populates="channels")
@@ -129,7 +132,7 @@ class Channel(db.Model):
             "name": self.name,
             "description": self.description,
             "private_chat": self.private_chat,
-            "members": [member.to_dict_no_channel() for member in self.channel_members ]
+            "members": [member.to_dict_no_channel() for member in self.channel_members]
         }
 
     def to_dict_no_user(self):
