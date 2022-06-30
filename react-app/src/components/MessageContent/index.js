@@ -6,18 +6,21 @@ import { useParams } from 'react-router-dom'
 import { updateMessage, deleteMessage, getAllMessages } from '../../store/messages';
 import MessageUserIcon from '../MessageUserIcon';
 
+
 const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
   const { channelId, userId } = useParams()
   const dispatch = useDispatch();
   const allMessages = useSelector((state) => state.messages);
   const allUsers = useSelector((state) => state.search);
   const user = useSelector((state) => state.session.user)
-
   const [originalContent, setOriginalContent] = useState(message.content)
   const [content, setContent] = useState(message.content)
   const [edit, setEdit] = useState(true)
   const [deleted, setDeleted] = useState(false)
   const [showTools, setShowTools] = useState(false)
+  const [rowValue, setRowValue] = useState(5)
+  const [textareaHeight, setTextareaHeight] = useState(message.content.length < 600 ?
+   6 : message.content.length / 131);
   // const [messageUpdated, setMessageUpdated] = useState('')
 
   useEffect(() => {
@@ -80,6 +83,26 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
     setContent(message.content)
   }
 
+  const handleChange = (e) => {
+    setContent(e.target.value)
+    const height = e.target.scrollHeight;
+    let value = e.target.value.length
+    const rowHeight = 15
+    const trows = Math.ceil(value / 140) - 1;
+    console.log('trows:: ', trows)
+    console.log('char count:: ', value)
+    console.log('row value:: ', rowValue)
+    if (trows > rowValue) {
+      setTextareaHeight(textareaHeight + 1);
+      setRowValue(trows);
+    }
+
+    if (trows < rowValue) {
+      setTextareaHeight(Math.ceil(value / 120));
+      setRowValue(trows);
+      if (!trows) trows = 5;
+    }
+  }
   // const timeString = message.created_at.slice(17, 25)
   const time = new Date(message.created_at)
 
@@ -100,10 +123,11 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
       <form>
         <div className={edit ? 'message__textarea--container--inactive' : 'message__textarea--container'}>
           <textarea
+            rows={textareaHeight}
             className={edit ? 'input__inactive' : 'input__active'}
             value={content}
             autofocus
-            onChange={(e) => setContent(e.target.value)}
+            onChange={handleChange}
             disabled={edit}
           />
           {edit && showTools &&
