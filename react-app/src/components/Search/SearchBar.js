@@ -38,7 +38,7 @@ function SearchBar() {
         } else {
             const payload = {
                 name: `private-${userId}-${id}`,
-                description: 'search-prive-dm',
+                description: 'search-private-dm',
                 private_chat: true,
                 owner_id: userId,
                 members: [userId, id]
