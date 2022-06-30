@@ -28,7 +28,7 @@ function SearchBar() {
             return null
         }
     })
-    //if one to one exist the redirect else create dm
+    //if one to one exist then redirect else create dm
     const checkDm = async (id) => {
         if (matchId.includes(id)) {
             let idx = matchId.indexOf(id)
