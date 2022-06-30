@@ -1,8 +1,11 @@
 import './MessageUserIcon.css'
 
-const MessageUserIcon = () => {
+const MessageUserIcon = ({ memberImage }) => {
   return (
-    <h1>here</h1>
+    <figure
+        className='message__icon--user'
+        style={{ backgroundImage: `url( ${memberImage})` }}
+      />
    );
 }
 

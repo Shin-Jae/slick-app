@@ -79,10 +79,17 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
     setContent(message.content)
   }
 
+  const GMTtime = message.created_at
+
+  console.log('local', GMTtime.toLocaleString())
+
   return (
     <div className={edit ? 'message__container' : 'message__container--edit'}>
-      <MessageUserIcon memberImage={allUsers[message.owner_id].profile_img} />
-      <p>{allUsers[message.owner_id].first_name} {allUsers[message.owner_id].last_name}: </p>
+      <div className='message__icon--name'>
+        <MessageUserIcon memberImage={allUsers[message.owner_id].profile_img} />
+        <p className='message__user--name'>{allUsers[message.owner_id].first_name} {allUsers[message.owner_id].last_name}</p>
+        <p className='message__user--time'>Time</p>
+      </div>
       <form>
         <input
           className={edit ? 'input__inactive' : 'input__active'}
