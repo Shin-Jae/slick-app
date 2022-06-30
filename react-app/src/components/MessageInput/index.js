@@ -22,7 +22,15 @@ const MessageInput = ({setMessageReceived, setCreateMessage}) => {
 
   if (!channels[channelId]) return null;
 
-  const { name } = channels[channelId]
+  const { name, members, private_chat } = channels[channelId]
+
+  let privateMembers;
+
+  if (channels[channelId]?.private_chat) {
+    privateMembers = channels[channelId].members.filter(user =>
+      +user.id !== +userId
+    ).map(user => `${user.first_name} ${user.last_name}`).join(', ')
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -57,7 +65,7 @@ const MessageInput = ({setMessageReceived, setCreateMessage}) => {
         <input
           className='message__input'
           type='text'
-          placeholder={`Message #${name}`}
+          placeholder={private_chat ? `Message ${privateMembers}` : `Message #${name}`}
           required
           value={message}
           onChange={(e) => setMessage(e.target.value)}

@@ -27,32 +27,37 @@ function SearchBar() {
 
 
     return (
-        <div>
+        <div className="container-full-search">
             <form>
                 <input
+                    className="input-search-bar-field"
                     type="text"
-                    placeholder="Search"
+                    placeholder="Search Slick"
                     value={query}
                     onInput={e => setQuery(e.target.value)}
                 />
             </form>
-            <ul className="filtered-list" >
-                {query ? filteredUsers.map(user => {
-                    channels.forEach(channel => {
-                        if (channel.members.length <= 2) {
-                            return channel.members.forEach(member => {
-                                if (member.id === user.id && channel.private === true) {
-                                    channelId = channel.id
+            {query ?
+                <div className="container-search-result">
+                    <ul className="filtered-list" >
+                        {query ? filteredUsers.map(user => {
+                            channels.forEach(channel => {
+                                if (channel.members.length <= 2) {
+                                    return channel.members.forEach(member => {
+                                        if (member.id === user.id && channel.private === true) {
+                                            channelId = channel.id
+                                        }
+                                    })
                                 }
+                                if (channelId === undefined) channelId = 1
                             })
-                        }
-                        if (channelId === undefined) channelId = 1
-                    })
-                    return <NavLink to={`/users/${userId}/${channelId}`} key={user.id}><div>{user.first_name} {user.last_name}</div></NavLink>
-                }) : null}
-
-            </ul>
-        </div>
+                            return <NavLink to={`/users/${userId}/${channelId}`} key={user.id}><div>{user.first_name} {user.last_name}</div></NavLink>
+                            // return < button type="button" > hi</button>
+                        }) : null}
+                    </ul>
+                </div>
+                : null}
+        </div >
     )
 }
 

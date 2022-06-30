@@ -23,13 +23,15 @@ const DMs = () => {
 
   return (
     <>
-      <div>DMs</div>
-      <div>
-        <CreateDMModal />
+      <div className='channels__header-container'>
+        <h3>Direct Messages</h3>
+        <div>
+          <CreateDMModal />
+        </div>
       </div>
       <ul className="view-dms" style={{ listStyleType: "none" }}>
         {privateChannels.map(channel =>
-          <DMChannel channel={channel}/>
+          <DMChannel channel={channel} />
         )}
       </ul>
     </>
