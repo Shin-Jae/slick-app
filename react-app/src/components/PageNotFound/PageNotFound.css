@@ -1,0 +1,18 @@
+.redirect {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.redirect__card {
+  padding: 6em;
+  text-align: center;
+}
+
+.redirect__text {
+  padding: .5em;
+  font-size: 1.25em;
+  font-family: 'Montserrat', sans-serif;
+}
