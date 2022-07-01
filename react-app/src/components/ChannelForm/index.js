@@ -139,11 +139,9 @@ const CreateChannelForm = ({ onClose }) => {
               <ul className="filtered-list-channels" >
                 {query ? filteredUsers.map(user => {
                   if (user.id !== userId && !set.has(user.id)) {
-                    return <div key={user.id}>
-                      <div className='single-search-names-container'>
-                        <img src={user.profile_img} alt={user.id} className="search-profile-pics" /><span className='search-names-container search-names-text'> {user.first_name} {user.last_name}</span>
-                        <button className='add-members-btn' type="button" onClick={() => addMembers(user.id)}>+</button>
-                      </div>
+                    return <div key={user.id} className='single-search-names-container'>
+                      <img src={user.profile_img} alt={user.id} className="search-profile-pics" /><span className='search-names-container search-names-text'> {user.first_name} {user.last_name}</span>
+                      <button className='add-members-btn' type="button" onClick={() => addMembers(user.id)}>+</button>
                     </div>
                   }
                 }) : null}

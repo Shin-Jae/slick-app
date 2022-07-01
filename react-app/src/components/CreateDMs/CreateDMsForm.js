@@ -130,12 +130,12 @@ function CreateDMForm({ onClose }) {
         </ul>
         <div>
           {/* <label>Members: </label> */}
-          <div>
+          <div className="added-members-container">
             {setArr.length ? setArr.map(person => {
               if (person !== userId) {
-                return <div key={person}>
-                  <span> {allUsers[person].first_name} {allUsers[person].last_name} </span>
-                  <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
+                return <div key={person} className="single-member-container">
+                  <img src={allUsers[person].profile_img} alt={allUsers[person].id} className="search-profile-pics" /><span className="added-members-names"> {allUsers[person].first_name} {allUsers[person].last_name} </span>
+                  <button className='remove-one-member-btn' type="button" onClick={() => removeMembers(allUsers[person].id)}>x</button>
                 </div>
               }
             }) : null}
@@ -148,17 +148,33 @@ function CreateDMForm({ onClose }) {
               required={!setArr.length}
               onInput={e => setQuery(e.target.value)}
             />
-            <ul className="filtered-list" >
-              {query.length ? filteredUsers.map(user => {
-                if (user.id !== userId) {
-                  return <div key={user.id}>
-                    <span>{user.first_name} {user.last_name}</span>
-                    <button type="button" onClick={() => addMembers(user.id)}>+</button>
-                  </div>
+            {filteredUsers.length !== 0 && filteredUsers.length !== users.length ? <div className='container-add-members'>
+              <ul className="filtered-list" >
+                {query.length ? filteredUsers.map(user => {
+                  if (user.id !== userId && !set.has(user.id)) {
+                    return <div key={user.id} className="single-search-names-container">
+                      <img src={user.profile_img} alt={user.id} className="search-profile-pics" /><span className='search-names-container search-names-text'>{user.first_name} {user.last_name}</span>
+                      <button className='add-members-btn' type="button" onClick={() => addMembers(user.id)}>+</button>
+                    </div>
 
-                }
-              }) : null}
-            </ul>
+                  }
+                }) : null}
+              </ul>
+            </div>
+              : <div className='empty'>
+                <ul className="filtered-list" >
+                  {query.length ? filteredUsers.map(user => {
+                    if (user.id !== userId) {
+                      return <div key={user.id}>
+                        <span>{user.first_name} {user.last_name}</span>
+                        <button type="button" onClick={() => addMembers(user.id)}>+</button>
+                      </div>
+
+                    }
+                  }) : null}
+                </ul>
+              </div>
+            }
           </div>
         </div>
         <input type="hidden" value={private_chat} />
