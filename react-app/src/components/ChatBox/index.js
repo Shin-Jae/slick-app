@@ -130,7 +130,7 @@ const ChatBox = () => {
             />}
           </h2>
           <div className='chatbox__header--buttons-container'>
-            <h2>{
+            <h2 className='h2__edit'>{
             owner &&
             !currentChannel.private_chat &&
             <EditChannelModal
@@ -139,7 +139,7 @@ const ChatBox = () => {
               owner_id={currentChannel.owner_id}
             />}
           </h2>
-          <h2>
+          <h2 className='h2__delete'>
             {+userId === +currentChannel.owner_id &&
               !currentChannel.private_chat &&
               <button
