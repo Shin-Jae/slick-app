@@ -1,0 +1,10 @@
+.dm-blue {
+    display: inline-flex;
+    /* align-items: center; */
+    height: 35px;
+    width: 450px;
+    margin-left: -33px;
+    margin-right: -15px;
+    /* padding-left: 33px; */
+    pointer-events: none;
+}
