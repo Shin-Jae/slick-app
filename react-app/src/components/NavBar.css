@@ -82,3 +82,11 @@
   padding: 0 1em;
   position: relative;
 }
+
+.slick-logo {
+  width:3em;
+  height:2.6em;
+  object-fit: contain;
+  margin-left: 0.6em;
+}
+
