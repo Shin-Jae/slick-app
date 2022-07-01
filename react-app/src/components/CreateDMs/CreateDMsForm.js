@@ -36,7 +36,7 @@ function CreateDMForm({ onClose }) {
       validationErrors.push("Please enter channel's description")
     if (description.length > 255)
       validationErrors.push("Channel Description must be 255 characters or less")
-      if (count < 2)
+    if (count < 2)
       validationErrors.push("Please add a member to the DM")
     setErrors(validationErrors)
   }, [name, description, count, dispatch])
@@ -45,13 +45,13 @@ function CreateDMForm({ onClose }) {
   let matchId;
   channels.forEach(channel => {
     if (channel.private_chat === true) {
-      let count = 0
+      let numOfMembers = 0
 
       if (setArr.length === channel.members.length) {
         channel.members.forEach(member => {
-          if (setArr.includes(member.id)) count++
+          if (setArr.includes(member.id)) numOfMembers++
         })
-        if (count === setArr.length) {
+        if (numOfMembers === setArr.length) {
           matchId = channel.id
         }
       }
@@ -63,6 +63,7 @@ function CreateDMForm({ onClose }) {
 
     if (matchId) {
       onClose(false)
+      set.clear()
       return history.push(`/users/${userId}/${matchId}`)
     }
 
@@ -99,7 +100,7 @@ function CreateDMForm({ onClose }) {
   const removeMembers = (id) => {
     if (set.has(id)) {
       set.delete(id);
-      count -=1
+      count -= 1
       if (query === "") {
         return setQuery("*")
       } else {
