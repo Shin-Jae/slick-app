@@ -2,6 +2,7 @@
   padding: 3em;
   border-radius: 1em;
   text-align: left;
+  width: 450px;
 }
 
 .modal__form-container div {
@@ -16,7 +17,7 @@
   width: 90%;
 }
 
-.modal__form-container button {
+.modal__form-container button:not(.add-members-btn, .remove-one-member-btn) {
   padding: .75em;
   border-radius: .75em;
   color: white;
@@ -25,7 +26,101 @@
   border: transparent;
   margin: 1em;
 }
-.modal__form-container button:hover {
+.modal__form-container button:hover:not(.add-members-btn, .remove-one-member-btn) {
   background-color: #FF197E;
   cursor: pointer
+}
+
+
+/* adding members */
+.container-add-members {
+  background-color: grey;
+  overflow: auto;
+  max-height: 200px;
+  width: 305px;
+  border-radius: .75em;
+}
+
+.search-profile-pics {
+  height: 38px;
+  width: 38px;
+  border-radius: .75em;
+}
+
+.single-search-names-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color .5s;
+  width: 270px;
+}
+
+
+.single-search-names-container:hover {
+  background-color: lightgray;
+}
+
+.search-names-text {
+  text-align: left;
+  width: 170px;
+}
+
+.add-members-btn {
+  text-align: right;
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  transition: .3s;
+}
+
+.add-members-btn:hover {
+  background-color: darkgrey;
+  cursor: pointer;
+}
+
+
+/* already added members */
+.added-members-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: auto;
+  max-height: 125px;
+  width: 430px;
+  margin-left: -34px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.single-member-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 190px;
+  height: 45px;
+  color: white;
+  background-color: grey;
+  border-radius: .75em;
+  margin-top: 5px;
+  transition: .3s;
+}
+
+.single-member-container:hover {
+  background-color: darkgrey;
+}
+
+
+.added-members-names {
+  width: 100px;
+}
+
+.remove-one-member-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  transition: .3s;
+}
+
+.remove-one-member-btn:hover {
+  background-color: lightgray;
+  cursor: pointer;
 }

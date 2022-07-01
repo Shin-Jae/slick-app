@@ -70,14 +70,12 @@ const CreateChannelForm = ({ onClose }) => {
   const filteredUsers = filterUsers(users, query);
 
 
-
-
   const removeMembers = (id) => {
     if (set.has(id)) {
       set.delete(id);
       count -= 1
       if (query === "") {
-        return setQuery("*")
+        setQuery("*")
       } else {
         return setQuery("")
       }
@@ -120,6 +118,16 @@ const CreateChannelForm = ({ onClose }) => {
           ></textarea>
         </div>
         <div>
+          <div className="added-members-container">
+            {setArr.length ? setArr.map(person => {
+              if (person !== userId) {
+                return <div key={`user-${person}`} className="single-member-container">
+                  <img src={allUsers[person].profile_img} alt={allUsers[person].id} className="search-profile-pics" /><span className='added-members-names'> {allUsers[person].first_name} {allUsers[person].last_name} </span>
+                  <button className='remove-one-member-btn' type="button" onClick={() => removeMembers(allUsers[person].id)}>x</button>
+                </div>
+              }
+            }) : null}
+          </div>
           <div>
             <input
               type="text"
@@ -127,26 +135,32 @@ const CreateChannelForm = ({ onClose }) => {
               value={query}
               onInput={e => setQuery(e.target.value)}
             />
-            <div>
-              {setArr.length ? setArr.map(person => {
-                if (person !== userId) {
-                  return <div key={`user-${person}`}>
-                    <div>-- {allUsers[person].first_name} {allUsers[person].last_name} </div>
-                    <button type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
-                  </div>
-                }
-              }) : null}
+            {filteredUsers.length !== 0 && filteredUsers.length !== users.length ? <div className='container-add-members'>
+              <ul className="filtered-list-channels" >
+                {query ? filteredUsers.map(user => {
+                  if (user.id !== userId && !set.has(user.id)) {
+                    return <div key={user.id}>
+                      <div className='single-search-names-container'>
+                        <img src={user.profile_img} alt={user.id} className="search-profile-pics" /><span className='search-names-container search-names-text'> {user.first_name} {user.last_name}</span>
+                        <button className='add-members-btn' type="button" onClick={() => addMembers(user.id)}>+</button>
+                      </div>
+                    </div>
+                  }
+                }) : null}
+              </ul>
             </div>
-            <ul className="filtered-list" >
-              {query ? filteredUsers.map(user => {
-                if (user.id !== userId) {
-                  return <div key={user.id}>
-                    <div >{user.first_name} {user.last_name}</div>
-                    <button type="button" onClick={() => addMembers(user.id)}>+</button>
-                  </div>
-                }
-              }) : null}
-            </ul>
+              : <div className='empty'>
+                <ul className="filtered-list-channels" >
+                  {query ? filteredUsers.map(user => {
+                    if (user.id !== userId) {
+                      return <div key={user.id}>
+                        <span >{user.first_name} {user.last_name}</span>
+                        <button type="button" onClick={() => addMembers(user.id)}>+</button>
+                      </div>
+                    }
+                  }) : null}
+                </ul>
+              </div>}
           </div>
         </div>
         <div>
