@@ -1,6 +1,6 @@
 .main-display {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 4fr;
   position: absolute;
   top: 3em; /* Header Height */
   bottom: 0; /* Footer Height */
@@ -10,13 +10,20 @@
 
 .main-display__sidebar {
   background-color: #f2f2f2;
-  max-width: 20em;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   padding: 1em;
+  overflow-x: hidden;
 }
 
 .main-display__chatbox {
 
+}
+
+@media screen and ( min-width: 1600px ){
+  .main-display {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+  }
 }
