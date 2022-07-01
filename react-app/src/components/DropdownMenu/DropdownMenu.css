@@ -1,8 +1,11 @@
 .navbar__profile {
   margin-right: 8em;
+  cursor: pointer;
+  border-radius: 50%;
 }
 
 .navbar__dropdown {
+  background-color: white;
   text-align: center;
   position: absolute;
   right: 9em;
@@ -10,6 +13,8 @@
   border: 1px solid rgb(231, 231, 231);
   border-radius: 1em;
   padding: 2em;
+  box-shadow: 0 3px 7px rgba(33,33,33,.2);
+  z-index: 3;
 }
 
 .navbar__dropdown--text {
@@ -19,4 +24,25 @@
 
 .drop-down-menu-box {
   padding: 5px 0px 5px 0px;
+}
+
+.navbar__dowpdown--button {
+  margin: 1em;
+  padding: .75em;
+  border-radius: .5em;
+  border: transparent;
+  background-color: #00D2C8;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.navbar__dropdown--email {
+  border-bottom: 1px solid rgb(207, 207, 207)
+
+}
+
+.navbar__dowpdown--button:hover {
+  background-color: #00F1E6;
 }

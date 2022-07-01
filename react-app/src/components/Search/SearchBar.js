@@ -56,7 +56,7 @@ function SearchBar() {
     }
   }
 
-  const handleNoUsers = () => {
+  const handleNoUsers = (e) => {
     const found = users.find(user =>
       user.first_name.toLowerCase() === query.toLowerCase().trim() ||
       user.last_name.toLowerCase() === query.toLowerCase().trim()
@@ -77,27 +77,25 @@ function SearchBar() {
 
   return (
     <div className="container-full-search">
-      <form>
-        <input
-          className="input-search-bar-field"
-          type="text"
-          placeholder="Search Slick"
-          value={query}
-          onInput={e => setQuery(e.target.value)}
-          onChange={handleNoUsers}
-        />
-      </form>
+      <input
+        className="input-search-bar-field"
+        type="text"
+        placeholder="Search Slick"
+        value={query}
+        onInput={e => setQuery(e.target.value)}
+        onChange={handleNoUsers}
+      />
       {query ?
         <div className="container-search-result">
           <ul className="filtered-list" >
             {query ? filteredUsers.map(user => {
               if (user.id !== userId) {
                 return <li key={user.id}
-                className='search__icon--name'
+                  className='search__icon--name'
                 >
                   <SearchIcon
                     className='search__icon--image'
-                    image={user.profile_img}/>
+                    image={user.profile_img} />
                   <button
                     className="nav-search-results"
                     type="button" onClick={() => checkDm(user.id)}>{user.first_name} {user.last_name}

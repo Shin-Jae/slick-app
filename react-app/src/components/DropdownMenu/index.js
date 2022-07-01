@@ -52,8 +52,12 @@ const DropdownMenu = () => {
           <p className='navbar__dropdown--email navbar__dropdown--text'>
             {user.email}
           </p>
-          <div className='navbar__dropdown-logout'>
-            <button onClick={logout}>Log Out</button>
+          <div className='navbar__dropdown--logout'>
+            <button
+              onClick={logout}
+              className='navbar__dowpdown--button'>
+              Log Out
+            </button>
           </div>
         </div>
       )}
