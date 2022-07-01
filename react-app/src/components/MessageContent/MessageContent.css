@@ -120,6 +120,12 @@
   background-color: #157500;
   transition: 0.2s;
 }
+.btn__disabled {
+  color: rgb(231, 231, 231);
+  border: 1px solid #CBCBCB;
+  font-weight: bold;
+  background-color: #CBCBCB;
+}
 
 .message__edit--btn-save:hover {
   background-color: #1A9200;
