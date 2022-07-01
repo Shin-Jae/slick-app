@@ -140,7 +140,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
             onChange={handleChange}
             disabled={edit}
           />
-          {edit && showTools &&
+          {user.id === message.owner_id && edit && showTools &&
             <div className='message__tools--container'>
               {user.id === message.owner_id &&
                 <button

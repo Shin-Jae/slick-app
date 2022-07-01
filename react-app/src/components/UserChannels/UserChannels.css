@@ -12,8 +12,8 @@
 }
 
 .channels__header-text {
-  padding-top: .35em;
-  padding-bottom: .35em;
+  padding-top: .45em;
+  padding-bottom: .45em;
   white-space: nowrap;
 }
 
@@ -24,10 +24,9 @@
 .button__create-channel {
   background-color: transparent;
   border: transparent;
-  padding: .25em;
-  border-radius: .5em;
+  padding: .45em;
+  border-radius: 1em;
   transition: 0.2s;
-  /* color: transparent; */
 }
 
 .button__create-channel:hover {
