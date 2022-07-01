@@ -20,7 +20,7 @@ const DropdownMenu = () => {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
-    history.push('/login')
+    history.push('/')
   };
 
   useEffect(() => {
