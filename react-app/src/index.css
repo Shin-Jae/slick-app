@@ -34,3 +34,7 @@ ul {
   display: table;
   margin: 0 auto;
 }
+
+.no__display {
+  display: hidden;
+}

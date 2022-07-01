@@ -24,7 +24,7 @@ const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
 
   useEffect(() => {
     const validationErrors = []
-    if (message.length > 2000)
+    if (message.length >= 1999)
       validationErrors.push('Please keep message to under 2000 characters')
     setErrors(validationErrors)
   }, [message, dispatch])
@@ -80,6 +80,7 @@ const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
     let trows;
     if (value < 140) {
       trows = 2;
+      setTextareaHeight(1)
     } else {
       trows = Math.ceil(value / 140);
     }
@@ -91,24 +92,31 @@ const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
     if (trows < rowValue) {
       setTextareaHeight(Math.ceil(value / 120));
       setRowValue(trows);
-      if (!trows) trows = 5;
+      if (!trows) trows = 2;
     }
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      handleSubmit(e);
+    }
+  };
+
   return (
     <>
+      <div className='message__input--container'>
       {errors[0] &&
-        <div className='error__container'>
+        <div className='message__error'>
           <p className='error__text'>{`${errors}`}</p>
         </div>}
-      <div className='message__input--container'>
 
         <form className='message__form' onSubmit={handleSubmit}>
           <textarea
             className='message__input'
             type='text'
             placeholder={private_chat ? `Message ${privateMembers}` : `Message #${name}`}
-            required
+            onKeyPress={handleKeyPress}
+            maxLength='2000'
             rows={textareaHeight}
             value={message}
             onChange={handleChange}
@@ -118,10 +126,10 @@ const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
             type='submit'
             className={
               message.trim().length &&
-                message.length < 2000 ?
+                message.length <= 1999 ?
                 'message__input--btn message__input--btn-active' :
                 'message__input--btn btn__disabled'}
-            disabled={!message.trim().length}>
+            disabled={!message.trim().length || message.trim().length >= 1999}>
             <span
               class="material-symbols-outlined">
               send
