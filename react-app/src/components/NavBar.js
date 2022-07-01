@@ -1,19 +1,21 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import LogoutButton from './auth/LogoutButton';
+import DropdownMenu from './DropdownMenu';
 import './NavBar.css'
 import Search from './Search';
 import { useHistory } from 'react-router-dom';
 import slickicon from "../images/slickicon.png"
 
-const NavBar = ({ loaded }) => {
+
+const NavBar = ({ loaded }) => {  
   const user = useSelector((state) => state.session.user)
   const history = useHistory()
   let sessionNav;
   const homePage = () => {
     history.push(`/users/${user.id}`)
-  }
+  }  
+
   if (user) {
     const { id, first_name, last_name } = user;
     sessionNav = (
@@ -24,10 +26,10 @@ const NavBar = ({ loaded }) => {
         style={{ cursor: "pointer" }}
         alt=''
         src={slickicon}
-        onClick={homePage}></img>
+        onClick={homePage} />
         <p>Welcome {`${first_name} ${last_name}!`}</p>
         <Search />
-        <LogoutButton />
+        <DropdownMenu />
       </>
     )
   } else {
