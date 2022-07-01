@@ -13,6 +13,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
   const allMessages = useSelector((state) => state.messages);
   const allUsers = useSelector((state) => state.search);
   const user = useSelector((state) => state.session.user)
+  const [errors, setErrors] = useState([])
   const [originalContent, setOriginalContent] = useState(message.content)
   const [content, setContent] = useState(message.content)
   const [edit, setEdit] = useState(true)
@@ -20,7 +21,8 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
   const [showTools, setShowTools] = useState(false)
   const [rowValue, setRowValue] = useState(5)
   const [textareaHeight, setTextareaHeight] = useState(message.content.length < 600 ?
-   6 : message.content.length / 131);
+    2 : message.content.length / 131);
+  const [spaceCheck, setSpaceCheck] = useState(message.content.trim().length)
   // const [messageUpdated, setMessageUpdated] = useState('')
 
   useEffect(() => {
@@ -29,6 +31,13 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
       setDeleted(false)
     }
   }, [deleted]);
+
+  useEffect(() => {
+    const validationErrors = []
+    if (content.length > 2000)
+      validationErrors.push('Please keep message to under 2000 characters')
+    setErrors(validationErrors)
+  }, [content, dispatch])
 
   const handleEdit = (e) => {
     e.preventDefault()
@@ -55,7 +64,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
     e.preventDefault()
 
     const payload = {
-      content,
+      content: content.trim(),
       owner_id: message.owner_id,
       channel_id: message.channel_id,
       created_at: message.created_at,
@@ -64,16 +73,19 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
 
     let updatedMessage;
 
-    try {
-      updatedMessage = await dispatch(updateMessage(payload, message.id));
-    } catch (error) {
-      alert(error)
+    if (!errors.length) {
+      try {
+        updatedMessage = await dispatch(updateMessage(payload, message.id));
+      } catch (error) {
+        setErrors([])
+      }
     }
 
     if (updatedMessage) {
       setEdit(true);
       setOriginalContent(updatedMessage.content);
       setUpdateComplete(updatedMessage)
+      setContent(updatedMessage.content)
     }
   }
 
@@ -85,13 +97,9 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
 
   const handleChange = (e) => {
     setContent(e.target.value)
-    const height = e.target.scrollHeight;
+    setSpaceCheck(e.target.value.trim().length)
     let value = e.target.value.length
-    const rowHeight = 15
-    const trows = Math.ceil(value / 140) - 1;
-    console.log('trows:: ', trows)
-    console.log('char count:: ', value)
-    console.log('row value:: ', rowValue)
+    let trows = Math.ceil(value / 140) - 1;
     if (trows > rowValue) {
       setTextareaHeight(textareaHeight + 1);
       setRowValue(trows);
@@ -108,13 +116,16 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
 
   const convertedTimeString = time.toLocaleTimeString('en-US',
     { hour12: true, hour: 'numeric', minute: 'numeric' });
-
   return (
     <div
       className={edit ? 'message__container' : 'message__container--edit'}
       onMouseEnter={() => setShowTools(true)}
       onMouseLeave={() => setShowTools(false)}
     >
+      {errors[0] &&
+        <div className='error__container'>
+          <p className='error__text'>{`${errors}`}</p>
+        </div>}
       <div className='message__icon--name'>
         <MessageUserIcon memberImage={allUsers[message.owner_id].profile_img} />
         <p className='message__user--name'>{allUsers[message.owner_id].first_name} {allUsers[message.owner_id].last_name}</p>
@@ -126,7 +137,6 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
             rows={textareaHeight}
             className={edit ? 'input__inactive' : 'input__active'}
             value={content}
-            autofocus
             onChange={handleChange}
             disabled={edit}
           />
@@ -158,7 +168,10 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
             <div className='message__edits--container'>
               {user.id === message.owner_id &&
                 <button
-                  className='message__edit--btn message__edit--btn-save'
+                  disabled={!spaceCheck}
+                  className={spaceCheck ?
+                    'message__edit--btn message__edit--btn-save' :
+                    'btn__disabled message__edit--btn'}
                   onClick={handleSave} type='submit'>
                   Save
                 </button>}

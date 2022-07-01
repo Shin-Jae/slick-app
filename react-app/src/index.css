@@ -20,3 +20,17 @@ ul {
   padding-inline-start: 0px;
   list-style: none;
 }
+
+.error__text {
+  color: rgb(245, 83, 83);
+  font-weight: bold;
+}
+
+.error__container {
+  background-color: rgba(245, 83, 83, .2);
+  padding: .5em;
+  max-width: 24em;
+  border-radius: .5em;
+  display: table;
+  margin: 0 auto;
+}

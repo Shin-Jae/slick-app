@@ -7,17 +7,22 @@
   width: 70%;
   margin-left: 2em;
   margin-right: 2em;
-  height: 100%;
+  /* height: 90%; */
+  position: relative;
 }
 
 .message__input {
+  font-size: 1em;
+  display: flex;
+  overflow: hidden;
   outline: none;
   border: 1px ;
   border-radius: 1em;
-  height: 100%;
+  /* height: 90%; */
+  resize: none;
   width: 15em;
-  padding-top: 4em;
-  padding-bottom: 4em;
+  padding-top: 2em;
+  padding-bottom: 2em;
   padding-left: 1em;
   width: 90%;
 }
@@ -28,4 +33,26 @@
 
 .message__form {
   width: 100%;
+  /* height: 90%; */
+  display: flex;
+}
+
+.message__input--btn {
+  display: flex;
+  align-items: center;
+  padding: .5em 1em;
+  border-radius: .5em;
+  border: 1px solid #898989;
+  margin: .5em;
+  position: absolute;
+  right: 3em;
+  bottom: 1em;
+}
+
+.message__input--btn-active {
+  color: white;
+  font-weight: bold;
+  border: 1px solid #157500;;
+  background-color: #157500;
+  transition: 0.2s;
 }

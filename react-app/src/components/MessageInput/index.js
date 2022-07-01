@@ -10,15 +10,24 @@ import './MessageInput.css'
 
 // let socket;
 
-const MessageInput = ({setMessageReceived, setCreateMessage}) => {
+const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
   const dispatch = useDispatch()
   const channels = useSelector((state) => state.channels)
   const messages = useSelector((state) => state.messages)
-
+  const [rowValue, setRowValue] = useState(5)
+  const [spaceCheck, setSpaceCheck] = useState(0)
   const { userId, channelId } = useParams()
-
+  const [textareaHeight, setTextareaHeight] = useState(1);
   const [message, setMessage] = useState('')
   const [newMessageId, setNewMessageId] = useState('')
+  const [errors, setErrors] = useState([])
+
+  useEffect(() => {
+    const validationErrors = []
+    if (message.length > 2000)
+      validationErrors.push('Please keep message to under 2000 characters')
+    setErrors(validationErrors)
+  }, [message, dispatch])
 
   if (!channels[channelId]) return null;
 
@@ -36,7 +45,7 @@ const MessageInput = ({setMessageReceived, setCreateMessage}) => {
     e.preventDefault()
 
     const payload = {
-      content: message,
+      content: message.trim(),
       owner_id: userId,
       channel_id: channelId,
       created_at: new Date(),
@@ -44,14 +53,19 @@ const MessageInput = ({setMessageReceived, setCreateMessage}) => {
     }
 
     let newMessage;
-    try {
-      newMessage = await dispatch(createNewMessage(payload));
-    } catch (error) {
-      alert(error)
+
+    if (!errors.length) {
+      try {
+        newMessage = await dispatch(createNewMessage(payload));
+      } catch (error) {
+        setErrors([])
+      }
     }
 
     if (newMessage) {
-      setNewMessageId(newMessage.id)
+      setNewMessageId(newMessage.id);
+      setTextareaHeight(1);
+      setErrors([])
     }
 
     // socket.emit("chat", payload);
@@ -59,20 +73,64 @@ const MessageInput = ({setMessageReceived, setCreateMessage}) => {
     setMessage('');
   }
 
+  const handleChange = (e) => {
+    setMessage(e.target.value)
+    setSpaceCheck(e.target.value.trim().length)
+    let value = e.target.value.length
+    let trows;
+    if (value < 140) {
+      trows = 2;
+    } else {
+      trows = Math.ceil(value / 140);
+    }
+    if (trows > rowValue) {
+      setTextareaHeight(textareaHeight + 1);
+      setRowValue(trows);
+    }
+
+    if (trows < rowValue) {
+      setTextareaHeight(Math.ceil(value / 120));
+      setRowValue(trows);
+      if (!trows) trows = 5;
+    }
+  }
+
   return (
-    <div className='message__input--container'>
-      <form className='message__form' onSubmit={handleSubmit}>
-        <input
-          className='message__input'
-          type='text'
-          placeholder={private_chat ? `Message ${privateMembers}` : `Message #${name}`}
-          required
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <button type='submit' className='btn' disabled={!message}>Send</button>
-      </form>
-    </div>
+    <>
+      {errors[0] &&
+        <div className='error__container'>
+          <p className='error__text'>{`${errors}`}</p>
+        </div>}
+      <div className='message__input--container'>
+
+        <form className='message__form' onSubmit={handleSubmit}>
+          <textarea
+            className='message__input'
+            type='text'
+            placeholder={private_chat ? `Message ${privateMembers}` : `Message #${name}`}
+            required
+            rows={textareaHeight}
+            value={message}
+            onChange={handleChange}
+          // onChange={(e) => setMessage(e.target.value)}
+          />
+          <button
+            type='submit'
+            className={
+              message.trim().length &&
+                message.length < 2000 ?
+                'message__input--btn message__input--btn-active' :
+                'message__input--btn btn__disabled'}
+            disabled={!message.trim().length}>
+            <span
+              class="material-symbols-outlined">
+              send
+            </span>
+            Send
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 
