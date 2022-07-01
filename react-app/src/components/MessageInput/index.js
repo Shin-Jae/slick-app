@@ -10,12 +10,13 @@ import './MessageInput.css'
 
 // let socket;
 
-const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
+const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
   const dispatch = useDispatch()
   const channels = useSelector((state) => state.channels)
   const messages = useSelector((state) => state.messages)
   const [rowValue, setRowValue] = useState(5)
   const [spaceCheck, setSpaceCheck] = useState(0)
+  const user = useSelector(state => state.session.user);
   const { userId, channelId } = useParams()
   const [textareaHeight, setTextareaHeight] = useState(1);
   const [message, setMessage] = useState('')
@@ -63,6 +64,8 @@ const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
     }
 
     if (newMessage) {
+      setTyping(false)
+      setUserTyping('')
       setNewMessageId(newMessage.id);
       setTextareaHeight(1);
       setErrors([])
@@ -74,6 +77,11 @@ const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
   }
 
   const handleChange = (e) => {
+    setTyping(e.target.value.length)
+    if (e.target.value.length < 1) {
+      setTyping(false)
+    }
+    setUserTyping(user)
     setMessage(e.target.value)
     setSpaceCheck(e.target.value.trim().length)
     let value = e.target.value.length

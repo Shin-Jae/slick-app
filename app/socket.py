@@ -28,3 +28,7 @@ def handle_update(data):
 @socketio.on('delete')
 def handle_delete():
     socketio.emit('delete', broadcast=True)
+
+@socketio.on('typing')
+def handle_start_typing(data):
+    socketio.emit('typing', data, broadcast=True)

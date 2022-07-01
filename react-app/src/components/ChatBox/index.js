@@ -32,6 +32,10 @@ const ChatBox = () => {
   const [createMessage, setCreateMessage] = useState('')
   const [onDelete, setOnDelete] = useState(false)
   const [owner, setOwner] = useState(false)
+  const [typing, setTyping] = useState(false)
+  const [otherTyping, setOtherTyping] = useState('')
+  const [userTyping, setUserTyping] = useState('')
+
   // const [name, setName] = useState("")
   //   const [description, setDescription] = useState("")
 
@@ -49,69 +53,81 @@ const ChatBox = () => {
     setOwner(currentChannel?.owner_id == parseInt(userId))
   }, [dispatch, userId, channelId, messageReceived, messageUpdated, updateComplete, onDelete, deleted]);
 
+  let timeout;
+  clearTimeout(timeout)
+
+  if (otherTyping.typing) {
+    timeout = setTimeout(() => {
+      setTyping(false);
+    }, 3000);
+  }
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [dispatch, channelId, messageReceived]);
 
-  // useEffect(() => {
-    //   if (channels[channelId]) {
-      //     setName(channels[channelId].name)
-      //     setDescription(channels[channelId].description)
-      //   }
-      // })
+  useEffect(() => {
+    socket = io();
 
-      useEffect(() => {
-        socket = io();
+    socket.emit('typing', {
+      id: userTyping.id,
+      userName: `${userTyping.first_name} ${userTyping.last_name}`,
+      typing: typing > 1,
+      channel: currentChannel.id
+    })
 
-        // socket.emit('update', updateComplete)
-        // socket.on('update', (data) => {
-          //   setMessageUpdated(data)
-          // });
+    clearTimeout(timeout)
 
-          socket.emit('chat', createMessage)
-          socket.on("chat", (data) => {
-            setMessageReceived(data)
-          })
+    socket.on('typing', (data) => {
+      setOtherTyping(data)
+      clearTimeout(timeout)
+    })
 
-          socket.emit('delete')
-          socket.on("delete", (data) => {
-            setOnDelete(false)
-          })
-          return (() => {
-            socket.disconnect()
-          })
-        }, [updateComplete, createMessage, onDelete])
 
-        const removingChannel = async (deletechannelId) => {
+    socket.emit('chat', createMessage)
+    socket.on("chat", (data) => {
+      setMessageReceived(data)
+    })
 
-          let deletedChannel;
-          try {
-            deletedChannel = await dispatch(deleteChannel(deletechannelId));
+    socket.emit('delete')
+    socket.on("delete", (data) => {
+      setOnDelete(false)
+    })
+    return (() => {
+      socket.disconnect()
+    })
+  }, [updateComplete, createMessage, onDelete, typing, userTyping])
 
-          } catch (error) {
-            alert(error)
-          }
+  const removingChannel = async (deletechannelId) => {
 
-          if (deletedChannel) {
-            setDeleted(true)
-            if (deletedChannel.id == channelId) {
-              history.push(`/users/${logInId}`)
-            }
-          }
-          setDeleted(false)
+    let deletedChannel;
+    try {
+      deletedChannel = await dispatch(deleteChannel(deletechannelId));
 
-        }
+    } catch (error) {
+      alert(error)
+    }
 
-        if (!Object.keys(channels).length) return null;
+    if (deletedChannel) {
+      setDeleted(true)
+      if (deletedChannel.id == channelId) {
+        history.push(`/users/${logInId}`)
+      }
+    }
+    setDeleted(false)
 
-        if (!currentChannel) {
-          return (
-            <Redirect to={`/users/${logInId}`}/>
-          )
-        }
+  }
 
-        return (
-          <div className='chatbox'>
+  if (!Object.keys(channels).length) return null;
+
+  if (!currentChannel) {
+    return (
+      <Redirect to={`/users/${logInId}`} />
+    )
+  }
+
+  return (
+    <div className='chatbox'>
       <div className='chatbox__header'>
         <div className='chatbox__header--text-container'>
           <h2 className='chatbox__header--text'>
@@ -131,26 +147,26 @@ const ChatBox = () => {
           </h2>
           <div className='chatbox__header--buttons-container'>
             <h2 className='h2__edit'>{
-            owner &&
-            !currentChannel.private_chat &&
-            <EditChannelModal
-              channelId={currentChannel.id}
-              userId={userId}
-              owner_id={currentChannel.owner_id}
-            />}
-          </h2>
-          <h2 className='h2__delete'>
-            {+userId === +currentChannel.owner_id &&
+              owner &&
               !currentChannel.private_chat &&
-              <button
-                className='chatbox__header--buttons'
-                onClick={() => removingChannel(currentChannel.id)}
-                style={{ cursor: "pointer" }}>
-                <span class="material-symbols-outlined">
-                  delete
-                </span>
-              </button>}
-          </h2>
+              <EditChannelModal
+                channelId={currentChannel.id}
+                userId={userId}
+                owner_id={currentChannel.owner_id}
+              />}
+            </h2>
+            <h2 className='h2__delete'>
+              {+userId === +currentChannel.owner_id &&
+                !currentChannel.private_chat &&
+                <button
+                  className='chatbox__header--buttons'
+                  onClick={() => removingChannel(currentChannel.id)}
+                  style={{ cursor: "pointer" }}>
+                  <span class="material-symbols-outlined">
+                    delete
+                  </span>
+                </button>}
+            </h2>
           </div>
 
         </div>
@@ -166,7 +182,17 @@ const ChatBox = () => {
         <div ref={bottomRef} />
       </div>
       <div className='chatbox__input'>
-        <MessageInput setMessageReceived={setMessageReceived} setCreateMessage={setCreateMessage} />
+        {otherTyping.typing &&
+          +otherTyping.id !== +userId &&
+          +otherTyping.channel == +currentChannel.id &&
+          <p className='chatbox__typing'>{otherTyping.userName} is typing...</p>
+        }
+        <MessageInput
+          setMessageReceived={setMessageReceived}
+          setCreateMessage={setCreateMessage}
+          setTyping={setTyping}
+          setUserTyping={setUserTyping}
+        />
       </div>
     </div>
   );
