@@ -2,9 +2,18 @@
     display: inline-flex;
     /* align-items: center; */
     height: 35px;
-    width: 450px;
+    width: 350px;
     margin-left: -33px;
     margin-right: -15px;
-    /* padding-left: 33px; */
+    padding-left: 10px;
     pointer-events: none;
+    transition: 0.1;
 }
+
+@media screen and (max-width: 1300px) {
+    .dm-blue {
+      /* max-width: 100%; */
+      margin-left: -33px;
+      padding-left: 33px;
+    }
+  }

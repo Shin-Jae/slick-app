@@ -5,7 +5,6 @@ import { createOneChannel, getAllChannels } from "../../store/channels";
 import SearchIcon from "../SearchIcon";
 
 
-
 function SearchBar() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -93,11 +92,11 @@ function SearchBar() {
             {query ? filteredUsers.map(user => {
               if (user.id !== userId) {
                 return <li key={user.id}
-                className='search__icon--name'
+                  className='search__icon--name'
                 >
                   <SearchIcon
                     className='search__icon--image'
-                    image={user.profile_img}/>
+                    image={user.profile_img} />
                   <button
                     className="nav-search-results"
                     type="button" onClick={() => checkDm(user.id)}>{user.first_name} {user.last_name}

@@ -8,7 +8,8 @@
 
 .dms__list-item:hover {
   background-color: #FFEE40;
-  width: 340px;
+  width: 330px;
+  max-width: 330px;
   margin-left: -33px;
   padding-left: 33px;
   font-weight: bold;
@@ -24,4 +25,14 @@
 
 .dms__list-item--name-container {
   width: 12em;
+}
+
+.dms__list-item--icon-container {
+  margin-left: -9px;
+  margin-right: -5px;
+}
+
+.one-dm {
+  font-size: 15px;
+  font-family: sans-serif;
 }

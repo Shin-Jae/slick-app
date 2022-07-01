@@ -14,11 +14,13 @@
   flex-direction: column;
   justify-content: space-around;
   padding: 1em;
+  max-width: 260px;
   overflow-x: hidden;
+  z-index: 2;
 }
 
 .main-display__chatbox {
-
+  /* margin-left: -28px; */
 }
 
 @media screen and ( min-width: 1600px ){

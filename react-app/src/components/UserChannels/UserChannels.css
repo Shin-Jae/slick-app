@@ -2,6 +2,11 @@
   position: relative;
 }
 
+.main-channels__header-container {
+  font-size: 15px;
+  font-family: Slack-Lato,Slack-Fractions,appleLogo,sans-serif;;
+}
+
 .channels__header-container {
   display: flex;
   justify-content: space-between;
@@ -13,8 +18,11 @@
 
 .channels__header-text {
   padding-top: .45em;
-  padding-bottom: .45em;
+  padding-bottom: .1em;
+  padding-left: 1.2em;
   white-space: nowrap;
+  font-size: 15px;
+  font-family: sans-serif;
 }
 
 .button__create-channel--hidden {
@@ -24,7 +32,7 @@
 .button__create-channel {
   background-color: transparent;
   border: transparent;
-  padding: .45em;
+  /* padding: .45em; */
   border-radius: 1em;
   transition: 0.2s;
 }
@@ -37,7 +45,7 @@
 }
 
 .view-channels {
-  padding-left: .5em;
+  /* padding-left: .5em; */
 }
 
 .one-channel-container {
@@ -70,4 +78,8 @@
   padding-left: 33px;
   min-width: 100%;
   pointer-events: none;
+}
+
+.hashtag-channels {
+  margin-right: 10px;
 }
