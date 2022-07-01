@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 import { useSelector } from 'react-redux';
 import './DropdownMenu.css'
+import SearchIcon from '../SearchIcon'
 
 const DropdownMenu = () => {
   const user = useSelector((state) => state.session.user)
@@ -19,7 +20,6 @@ const DropdownMenu = () => {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
-    
     history.push('/login')
   };
 
@@ -37,39 +37,28 @@ const DropdownMenu = () => {
 
 
   return (
-    <div className='profile-button'>
-      <div className='profile-dropdown'>
-        <div children='profile-dropdown-interior'>
-           <img
-        className='profile_img'
+    <>
+      <div
+        className='navbar__profile'
         onClick={openMenu}
-        style={{ cursor: "pointer" }}
-        alt=''
-        src={user.profile_img} />
-        </div>
+      >
+        <SearchIcon image={user.profile_img} />
       </div>
-
-     
-
       {showMenu && (
-      <div className='drop-down-menu'>
-        <div className='drop-down-menu-detail'>
-          <div className='drop-down-menu-box'>
-            <div className="user_detail">Hi {`${user.first_name} ${user.last_name}!`}!</div>
-            <div className='log_out_button'> <button onClick={logout}
-              
-              style={{ cursor: 'pointer' }} >Log Out of Slick</button>
-            </div>
+        <div className='navbar__dropdown'>
+          <p className="navbar__dropdown--user navbar__dropdown--text">
+            Hi {`${user.first_name} ${user.last_name} !`}
+          </p>
+          <p className='navbar__dropdown--email navbar__dropdown--text'>
+            {user.email}
+          </p>
+          <div className='navbar__dropdown-logout'>
+            <button onClick={logout}>Log Out</button>
           </div>
-
         </div>
-      </div>
-
-
-
       )}
-    </div>
-
+    </>
   )
 }
+
 export default DropdownMenu
