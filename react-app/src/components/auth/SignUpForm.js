@@ -149,8 +149,10 @@ const SignUpForm = () => {
         <div className='header-left-col'></div>
         <NavLink exact to="/" className='header-center-col'>slick</NavLink>
         <div className='header-right-col'>
-          Already have an account?
-          <div><NavLink to="/login">Sign in instead</NavLink></div>
+          <div className='link-to-other-form'>
+            Already have an account?
+          </div>
+          <div><NavLink to="/">Sign in instead</NavLink></div>
         </div>
       </header>
       <div className='text-sign-in'>

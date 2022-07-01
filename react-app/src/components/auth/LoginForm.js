@@ -55,8 +55,12 @@ const LoginForm = () => {
         <div className='header-left-col'></div>
         <NavLink exact to="/" className='header-center-col'>slick</NavLink>
         <div className='header-right-col'>
-          New to Slick?
-          <div><NavLink to="/sign-up">Create an account</NavLink></div>
+          <div className='link-to-other-form'>
+            New to Slick?
+          </div>
+          <div>
+            <NavLink to="/sign-up">Create an account</NavLink>
+          </div>
         </div>
       </header>
       <div className='text-sign-in'>

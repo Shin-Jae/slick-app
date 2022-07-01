@@ -121,6 +121,6 @@
 @media screen and ( max-width: 1400px ){
   .chatbox__input {
     width: 95%;
-    margin-left: 20px;
+    margin-left: 40px;
   }
 }
