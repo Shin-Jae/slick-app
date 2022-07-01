@@ -11,6 +11,9 @@ function CreateDMForm({ onClose }) {
   const history = useHistory()
   const [errors, setErrors] = useState([])
 
+  const userChannels = useSelector((state) => state.channels);
+  const channels = Object.values(userChannels);
+
   //used for search
   const userId = useSelector((state) => state.session.user.id)
   const [query, setQuery] = useState("")
@@ -20,6 +23,8 @@ function CreateDMForm({ onClose }) {
   const name = `private for ${userId}`
   const description = `dm description ${userId}`
   const private_chat = true
+
+  let setArr = [...set]
 
   useEffect(() => {
     const validationErrors = []
@@ -31,13 +36,37 @@ function CreateDMForm({ onClose }) {
       validationErrors.push("Please enter channel's description")
     if (description.length > 255)
       validationErrors.push("Channel Description must be 255 characters or less")
-      if (count < 2)
+    if (count < 2)
       validationErrors.push("Please add a member to the DM")
     setErrors(validationErrors)
   }, [name, description, count, dispatch])
 
+  //check if dm already exists
+  let matchId;
+  channels.forEach(channel => {
+    if (channel.private_chat === true) {
+      let numOfMembers = 0
+
+      if (setArr.length === channel.members.length) {
+        channel.members.forEach(member => {
+          if (setArr.includes(member.id)) numOfMembers++
+        })
+        if (numOfMembers === setArr.length) {
+          matchId = channel.id
+        }
+      }
+    }
+  })
+
   const channelSubmission = async (e) => {
     e.preventDefault()
+
+    if (matchId) {
+      onClose(false)
+      set.clear()
+      return history.push(`/users/${userId}/${matchId}`)
+    }
+
     const payload = {
       name,
       description,
@@ -67,12 +96,11 @@ function CreateDMForm({ onClose }) {
   }
   const filteredUsers = filterUsers(users, query);
 
-  let setArr = [...set]
 
   const removeMembers = (id) => {
     if (set.has(id)) {
       set.delete(id);
-      count -=1
+      count -= 1
       if (query === "") {
         return setQuery("*")
       } else {
