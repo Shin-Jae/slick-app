@@ -32,7 +32,7 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar loaded={loaded} />
-      <Route exact path='/login'>
+      <Route exact path='/'>
         <LoginForm />
       </Route>
       <Route exact path='/sign-up'>

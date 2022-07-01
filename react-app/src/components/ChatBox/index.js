@@ -73,7 +73,7 @@ const ChatBox = () => {
       id: userTyping.id,
       userName: `${userTyping.first_name} ${userTyping.last_name}`,
       typing: typing > 1,
-      channel: currentChannel.id
+      channel: currentChannel?.id
     })
 
     clearTimeout(timeout)
