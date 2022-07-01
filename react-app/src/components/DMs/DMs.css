@@ -8,6 +8,10 @@
 
 .dms__list-item:hover {
   background-color: #FFEE40;
+  width: 340px;
+  margin-left: -33px;
+  padding-left: 33px;
+  font-weight: bold;
 }
 
 .dms__list-item--icon-name {
