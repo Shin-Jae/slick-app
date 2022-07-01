@@ -75,6 +75,11 @@
   z-index: 1;
 }
 
+.chatbox__typing {
+  font-weight: bold;
+  margin: 0 0 .5em 3em;
+  color: #444444;
+}
 ::-webkit-scrollbar {
   width: 20px;
 }
