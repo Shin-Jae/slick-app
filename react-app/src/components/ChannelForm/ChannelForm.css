@@ -1,7 +1,7 @@
 .modal__form-container {
   padding: 3em;
   border-radius: 1em;
-  text-align: left;
+  text-align: center;
   width: 450px;
 }
 
@@ -123,4 +123,8 @@
 .remove-one-member-btn:hover {
   background-color: lightgray;
   cursor: pointer;
+}
+
+.create__channel--textarea {
+  resize: none;
 }
