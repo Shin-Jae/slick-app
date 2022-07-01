@@ -24,7 +24,7 @@ const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
 
   useEffect(() => {
     const validationErrors = []
-    if (message.length >= 1999)
+    if (message.length > 1999)
       validationErrors.push('Please keep message to under 2000 characters')
     setErrors(validationErrors)
   }, [message, dispatch])
@@ -97,18 +97,20 @@ const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
   }
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      handleSubmit(e);
+    if (e.target.value.length <= 1999) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        handleSubmit(e);
+      }
     }
   };
 
   return (
     <>
       <div className='message__input--container'>
-      {errors[0] &&
-        <div className='message__error'>
-          <p className='error__text'>{`${errors}`}</p>
-        </div>}
+        {errors[0] &&
+          <div className='message__error'>
+            <p className='error__text'>{`${errors}`}</p>
+          </div>}
 
         <form className='message__form' onSubmit={handleSubmit}>
           <textarea
@@ -129,7 +131,7 @@ const MessageInput = ({ setMessageReceived, setCreateMessage }) => {
                 message.length <= 1999 ?
                 'message__input--btn message__input--btn-active' :
                 'message__input--btn btn__disabled'}
-            disabled={!message.trim().length || message.trim().length >= 1999}>
+            disabled={!message.trim().length || message.trim().length > 1999}>
             <span
               class="material-symbols-outlined">
               send
