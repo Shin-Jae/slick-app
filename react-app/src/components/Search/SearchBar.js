@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from "react-router-dom";
 import { createOneChannel, getAllChannels } from "../../store/channels";
 import SearchIcon from "../SearchIcon";
-import { CommandCompleteMessage } from "pg-protocol/dist/messages";
+
 
 
 function SearchBar() {
