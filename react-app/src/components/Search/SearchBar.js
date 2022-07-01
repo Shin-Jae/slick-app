@@ -5,7 +5,6 @@ import { createOneChannel, getAllChannels } from "../../store/channels";
 import SearchIcon from "../SearchIcon";
 
 
-
 function SearchBar() {
   const history = useHistory();
   const dispatch = useDispatch();

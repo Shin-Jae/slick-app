@@ -4,10 +4,12 @@
   border-radius: 1em;
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 79%;
   margin-left: 2em;
   margin-right: 2em;
   position: relative;
+  height: 110px;
+  margin-left: -10px;
 }
 
 .message__input {

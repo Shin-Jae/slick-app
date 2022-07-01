@@ -29,27 +29,27 @@ const UserChannels = () => {
   if (!Object.keys(allUsers).length) return null;
 
   return (
-    <>
+    <div className='main-channels__header-container'>
       <div className='channels__header-container'
         onMouseEnter={(e) => setHoverDisplay(true)}
         onMouseLeave={(e) => setHoverDisplay(false)}
       >
-        <h3 className='channels__header-text'>Channels</h3>
+        <p className='channels__header-text'>Channels</p>
         <CreateChannelModal hoverDisplay={hoverDisplay} />
       </div>
       <ul className="view-channels" style={{ listStyleType: "none" }}>
         {channels.map(channel =>
           !channel.private_chat &&
-          <NavLink activeClassName="blue" activeStyle={{ fontWeight: 'bold', backgroundColor: '#1164A3', color: 'white' }} exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}  >
+          <NavLink activeClassName="blue" activeStyle={{ backgroundColor: '#1164A3', color: 'white' }} exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}  >
             <div className='one-channel-container' >
               <li className="one-channel" key={`channel-${channel.id}`}>
-                {`# ${channel.name}`}
+                <span className='hashtag-channels'>#</span>{`${channel.name}`}
               </li>
             </div>
           </NavLink>
         )}
       </ul>
-    </>
+    </div>
   );
 }
 

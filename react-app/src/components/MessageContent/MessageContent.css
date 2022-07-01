@@ -3,12 +3,14 @@
   border: none;
   width: 100%;
   padding: 1em;
-  font-size: 1em;
+  font-size: 15px;
   transition: 0.2s;
   color: black;
   resize: none;
   overflow: hidden;
   display: flex;
+  margin-left: 45px;
+  margin-top: -32px;
 }
 
 .input__active {
@@ -65,12 +67,12 @@
 
 .message__user--name {
   font-weight: bold;
-  margin-top: .5em;
+  margin-top: .15em;
 }
 
 .message__user--time {
   font-size: .75em;
-  margin-top: .90em;
+  margin-top: .35em;
   margin-left: 1em;
   color: #898989;
 }

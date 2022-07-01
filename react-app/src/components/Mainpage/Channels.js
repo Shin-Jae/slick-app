@@ -1,12 +1,13 @@
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
 import ChatBox from "../ChatBox";
 import './Channels.css'
 import DMs from '../DMs';
 import UserChannels from '../UserChannels';
+import CreateDMModal from "../CreateDMs";
 
 function Channels() {
   const { userId, channelId } = useParams();
@@ -22,6 +23,8 @@ function Channels() {
   const allMessages = useSelector((state) => state.messages);
   // const messages = Object.values(allMessages);
 
+  const [hoverDisplay, setHoverDisplay] = useState(false)
+
   useEffect(() => {
     dispatch(getAllChannels(userId));
     dispatch(getAllMessages(userId, channelId))
@@ -32,6 +35,10 @@ function Channels() {
   return (
     <div className='main-display'>
       <div className='main-display__sidebar'>
+        {/* <div>Hello</div>
+        DMs
+        <CreateDMModal hoverDisplay={hoverDisplay} />
+        <p>--------------</p> */}
         <div>
           <UserChannels />
         </div>
@@ -42,7 +49,7 @@ function Channels() {
       <div className='main-display__chatbox'>
         {channelId && <ChatBox />}
       </div>
-    </div>
+    </div >
   )
 }
 

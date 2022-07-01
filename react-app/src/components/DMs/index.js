@@ -28,7 +28,7 @@ const DMs = () => {
         onMouseEnter={(e) => setHoverDisplay(true)}
         onMouseLeave={(e) => setHoverDisplay(false)}
       >
-        <h3 className='channels__header-text'>Direct Messages</h3>
+        <p className='channels__header-text'>Direct Messages</p>
         <div>
           <CreateDMModal hoverDisplay={hoverDisplay} />
         </div>

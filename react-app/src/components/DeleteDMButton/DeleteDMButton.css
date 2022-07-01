@@ -20,10 +20,23 @@
   position: absolute;
   right: 1em;
   top: -1em;
-  transition: 0.2s
+  transition: 0.2s;
+  margin-right: 50px;
   /* margin-right: 3em; */
 }
 
 .deleteDM__button:hover {
-  background-color: #ffda08
+  background-color: #ffda08;
+}
+
+@media screen and (max-width: 1300px) {
+  .deleteDM__button {
+    margin-right: 125px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .deleteDM__button {
+    margin-right: 140px;
+  }
 }

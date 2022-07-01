@@ -1,11 +1,15 @@
 .chatbox__header {
+  /* padding-bottom: 4em; */
   background-color: white;
   z-index: 3;
+  /* height: 7em; */
   display: flex;
   align-items: center;
 }
 
+
 .chatbox__header--text {
+
 }
 
 .chatbox__header--text-container {
@@ -22,26 +26,26 @@
 .h2__edit {
   position: absolute;
   right: 0;
-  margin: 0.25em;
+  margin: .25em;
   bottom: -1em;
 }
 
 .h2__delete {
   position: absolute;
-  margin: 0.25em;
+  margin: .25em;
   bottom: -1em;
 }
 
 .chatbox__header--buttons {
   background-color: transparent;
   border: transparent;
-  padding: 0.25em 0.45em;
-  border-radius: 0.25em;
+  padding: .25em .45em;
+  border-radius: .25em;
   transition: 0.2s;
 }
 
 .chatbox__header--buttons:hover {
-  background-color: #eeeeee;
+  background-color: #EEEEEE;
   border: transparent;
 }
 
@@ -58,6 +62,7 @@
   background-color: transparent;
 }
 
+
 .chatbox__input {
   position: fixed;
   background-color: white;
@@ -67,11 +72,14 @@
 }
 
 .chatbox__messages {
-  border-top: 1px #dedede solid;
+  /* border-bottom: 1px #dedede solid; */
+  /* border-top: 1px #dedede solid; */
   position: fixed;
-  min-width: 80%;
-  max-height: 76%;
-  overflow-y: scroll;
+  /* top: 12em; */
+  max-height: 67%;
+  min-width: 82.5%;
+  margin-left: -37px;
+  overflow-x: hidden;
   z-index: 1;
 }
 
@@ -103,20 +111,16 @@
   background-color: #a8bbbf;
 }
 
-@media screen and (min-width: 1600px) {
+@media screen and ( max-width: 1400px ){
   .chatbox__messages {
-    min-width: 83%;
+    min-width: 78%;
+    margin-left: -5px;
   }
 }
 
-@media screen and (max-height: 800px) {
-  .chatbox__messages {
-    max-height: 70%;
-  }
-}
-
-@media screen and (max-height: 300px) {
-  .chatbox__messages {
-    max-height: 25%;
+@media screen and ( max-width: 1400px ){
+  .chatbox__input {
+    width: 95%;
+    margin-left: 20px;
   }
 }
