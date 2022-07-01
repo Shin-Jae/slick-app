@@ -14,6 +14,7 @@ const CreateChannelForm = ({ onClose }) => {
   const [description, setDescription] = useState("")
   const privatechat = false
   const [errors, setErrors] = useState([])
+  const [trySubmit, setTrySubmit] = useState(false)
 
   //used for search
   const userId = useSelector((state) => state.session.user.id)
@@ -35,7 +36,7 @@ const CreateChannelForm = ({ onClose }) => {
     if (count < 2)
       validationErrors.push("Please add a member to the channel")
     setErrors(validationErrors)
-  }, [name, description, count, dispatch])
+  }, [name, description, count, ,trySubmit, dispatch])
 
   const channelSubmission = async (e) => {
     e.preventDefault()
@@ -46,15 +47,18 @@ const CreateChannelForm = ({ onClose }) => {
       owner_id: userId,
       members: setArr
     }
-
-    const createdChannel = await dispatch(createOneChannel(userId, payload))
-    if (createdChannel) {
-      setErrors([])
-      set.clear()
-      count = 1
-      await dispatch(getAllChannels(userId))
-      history.push(`/users/${userId}/${createdChannel.id}`)
-      onClose(false)
+    setTrySubmit(true)
+    if (!errors.length) {
+      const createdChannel = await dispatch(createOneChannel(userId, payload))
+      if (createdChannel) {
+        setErrors([])
+        setTrySubmit(false)
+        set.clear()
+        count = 1
+        await dispatch(getAllChannels(userId))
+        history.push(`/users/${userId}/${createdChannel.id}`)
+        onClose(false)
+      }
     }
   }
 
@@ -96,11 +100,12 @@ const CreateChannelForm = ({ onClose }) => {
     <div className='modal__form-container'>
       <form onSubmit={channelSubmission}>
         <h1>Create New Channel</h1>
-        <ul>{errors.map((error) => (
-          <li className="error_info" key={error}>
+        {errors[0] && trySubmit &&
+        <ul className='error__container'>{errors.map((error) => (
+          <li className="error_info error__text" key={error}>
             {error}
           </li>))}
-        </ul>
+        </ul>}
         <input type="hidden" value={privatechat} />
         <div>
           <input
@@ -112,6 +117,7 @@ const CreateChannelForm = ({ onClose }) => {
         </div>
         <div>
           <textarea
+            className='create__channel--textarea'
             placeholder='Description'
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -131,7 +137,7 @@ const CreateChannelForm = ({ onClose }) => {
           <div>
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search Members"
               value={query}
               onInput={e => setQuery(e.target.value)}
             />
@@ -162,7 +168,7 @@ const CreateChannelForm = ({ onClose }) => {
           </div>
         </div>
         <div>
-          <button type="submit" disabled={errors.length > 0}> Create Channel
+          <button type="submit"> Create Channel
           </button>
         </div>
       </form>
