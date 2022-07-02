@@ -10,7 +10,7 @@ import MessageContent from '../MessageContent'
 import EditDMModal from '../EditDMs';
 import { deleteChannel } from '../../store/channels';
 import { io } from 'socket.io-client';
-
+import Typing from '../Typing'
 
 let socket;
 
@@ -162,7 +162,7 @@ const ChatBox = () => {
                   className='chatbox__header--buttons'
                   onClick={() => removingChannel(currentChannel.id)}
                   style={{ cursor: "pointer" }}>
-                  <span class="material-symbols-outlined">
+                  <span className="material-symbols-outlined">
                     delete
                   </span>
                 </button>}
@@ -185,7 +185,12 @@ const ChatBox = () => {
         {otherTyping.typing &&
           +otherTyping.id !== +userId &&
           +otherTyping.channel == +currentChannel.id &&
-          <p className='chatbox__typing'>{otherTyping.userName} is typing...</p>
+          <div className='chatbox__typing--container'>
+            {/* <p className='chatbox__typing'>{otherTyping.userName} is typing...</p> */}
+
+              <Typing person={otherTyping.userName}/>
+
+          </div>
         }
         <MessageInput
           setMessageReceived={setMessageReceived}

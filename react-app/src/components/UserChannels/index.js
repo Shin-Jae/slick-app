@@ -40,7 +40,7 @@ const UserChannels = () => {
       <ul className="view-channels" style={{ listStyleType: "none" }}>
         {channels.map(channel =>
           !channel.private_chat &&
-          <NavLink activeClassName="blue" activeStyle={{
+          <NavLink key={channel.id} activeClassName="blue" activeStyle={{
             backgroundColor: '#15D4FF',
             color: 'white'
             }} exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}  >

@@ -4,6 +4,7 @@ import { Redirect, NavLink } from 'react-router-dom';
 import { signUp } from '../../store/session';
 import './LoginForm.css';
 import './SignUpForm.css';
+import slickicon from "../../images/slickicon.png"
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
@@ -170,7 +171,7 @@ const SignUpForm = () => {
     <div className='container-login-page'>
       <header className='container-login-header'>
         <div className='header-left-col'></div>
-        <NavLink exact to="/" className='header-center-col'>slick</NavLink>
+        <NavLink exact to="/" className='header-center-col'></NavLink>
         <div className='header-right-col'>
           <div className='link-to-other-form'>
             Already have an account?
@@ -181,13 +182,18 @@ const SignUpForm = () => {
       <div className='text-sign-in'>
         <h1>Join <span className='text-sign-in-slick'>Slick</span> today</h1>
         <p className='text-sign-in-suggest'>We suggest using the email address you use at work</p>
+        <img
+        className='slick-logo3'
+        alt=''
+        src={slickicon} />
       </div>
       <form onSubmit={onSignUp} className='form-container'>
+      {errors[0] &&
         <div className='error__container'>
           {errors.map((error, ind) => (
             <p key={ind} className='error__text'>{error}</p>
           ))}
-        </div>
+        </div>}
         <div className='input'>
           <input
             className='login-input-field'
@@ -238,7 +244,7 @@ const SignUpForm = () => {
             placeholder='Confirm password'
           ></input>
         </div>
-        <label>Profile Image</label>
+        <h4>Please select a profile image</h4>
         <div className='input'>
           <input
             className='login-input-field'

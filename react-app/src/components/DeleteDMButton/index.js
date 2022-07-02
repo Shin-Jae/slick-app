@@ -50,7 +50,7 @@ const DeleteDMButton = ({ currentChannelId, showDelete }) => {
         className='deleteDM__button'
         onClick={() => handleDelete(currentChannelId)}
       >
-        <span class="material-symbols-outlined">close</span>
+        <span className="material-symbols-outlined">close</span>
       </button>
     </div>
   );

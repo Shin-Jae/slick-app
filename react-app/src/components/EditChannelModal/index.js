@@ -15,7 +15,7 @@ const EditChannelModal = ({ userId, channelId, owner_id }) => {
   return (
     <>
       {+userId === +owner_id && (<button className='chatbox__header--buttons' onClick={() => setShowModal(true)} style={{ cursor: 'pointer' }} >
-        <span class="material-symbols-outlined">edit</span>
+        <span className="material-symbols-outlined">edit</span>
       </button>)}
       {showModal && (
         <Modal onClose={() => setShowModal(false)} >

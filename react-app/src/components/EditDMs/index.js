@@ -14,7 +14,6 @@ const EditDMModal = ({ channelId }) => {
     return (
         <>
             <div>
-                {/* <button onClick={() => setShowModal(true)}><span class="material-symbols-outlined">edit</span></button> */}
                 {showModal && (
                     <Modal onClose={() => setShowModal(false)}>
                         <EditDMModalForm onClose={() => setShowModal(false)} showModal={showModal} channelId={channelId} set={set} />

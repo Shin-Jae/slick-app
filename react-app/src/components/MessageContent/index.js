@@ -149,7 +149,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
                   onClick={handleEdit}
                   type='submit'>
                   <span
-                    class="material-symbols-outlined message__tools--tool-icons">
+                    className="material-symbols-outlined message__tools--tool-icons">
                     edit
                   </span>
                 </button>}
@@ -159,7 +159,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
                   onClick={handleDelete}
                   type='submit'>
                   <span
-                    class="material-symbols-outlined message__tools--tool-icons">
+                    className="material-symbols-outlined message__tools--tool-icons">
                     delete
                   </span>
                 </button>}
