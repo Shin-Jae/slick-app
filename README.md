@@ -1,29 +1,63 @@
-# Flask React Project
+# Eventfind
+Welcome to slick! This project is inspired by [Slack](https://slack.com/) where users have the immersive experience of channels, direct message, live server, and searching other users to begin a chat.
 
-This is the starter for the Flask React project.
+## Link to Livesite
+[slick](https://app-slick.herokuapp.com/)
 
-## Getting started
-1. Clone this repository (only this branch)
+## Technologies Used
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="javascript" title="javascript" width="60" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg" style="width:60px;" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" style="width:60px;" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg" alt="socketio" title="socketio" width="60" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original-wordmark.svg" alt="html5" title="html5" width="60" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original-wordmark.svg" alt="css3" title="css3" width="60" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg" style="width:60px;" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" style="width:60px;" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlalchemy/sqlalchemy-original.svg" style="width:60px;" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain-wordmark.svg" style="width:60px;" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" style="width:60px;" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original-wordmark.svg" style="width:60px;" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/heroku/heroku-plain-wordmark.svg" style="width:60px;" />
 
+
+## Getting Started
+1. Clone this repistory
+
+    ```bash
+    https://github.com/walkeradkins/slick-app.git
+    ```
+
+2. Install the project's backend dependencies at root directory
+
+    ```bash
+    pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
+    ```
+
+    ```bash
+    pipenv install psycopg2-binary
+    ```
+
+3. Navigate to react-app direct and install the project's frontend dependencies
+
+    ```bash
+    npm install
+    ```
+
+4. Add an .env file in root file containing the variables from the .env.example file
+
+5. Create user and database based on what you setup in .env file
    ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
+   psql -c "CREATE USER <database_username> PASSWORD '<password>' CREATEDB"
+   ```
+   ```bash
+   psql -c "CREATE DATABASE <database_name> WITH OWNER <database_username>"
    ```
 
-2. Install dependencies
+6. Use the following commands to apply the provided database migrations and seeder.
 
-      ```bash
-      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-      ```
-
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
-
-5. Get into your pipenv, migrate your database, seed your database, and run your flask app
-
-   ```bash
+    ```bash
    pipenv shell
-   ```
+   ```  
 
    ```bash
    flask db upgrade
@@ -33,88 +67,50 @@ This is the starter for the Flask React project.
    flask seed all
    ```
 
+8. You can now test the application. (Please make sure to flask run on root directory and npm start on react-app directory!!!)
    ```bash
    flask run
    ```
 
-6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+    ```bash
+    npm start
+    ```
 
-***
+9. You can sign in via Demo User or create an account yourself
 
+## Database Schema
+![slack_clone_screenshot](https://user-images.githubusercontent.com/95553923/174687114-0b2b7241-129b-4767-9e06-b5b0bacaf4eb.png)
 
-*IMPORTANT!*
-   psycopg2-binary MUST remain a dev dependency because you can't install it on alpine-linux.
-   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
-***
+## Features
+1. Users
+* User can log in, and log out of the site
+* User can sign up as a new user
+* User can also choose to log in as a demo user.
+2. Channels
+* Logged-in users can create, edit, and delete channels
+* Logged-in users can add members when they are creating or editing channels
+* Logged-in users will only see the channels that they belong
+3. Message
+* Every user can send individual direct message(DM) or group message to other users
+* Inside the DM channel, logged-in users can create, edit, and delete their own message
+4. Live Server
+* When two logged-in users are chatting, both of them will see the chat being updated 
+5. Seach
+* All logged-in users can search other users
 
-### Dev Containers (OPTIONAL for M1 Users)
-The following instructions detail an *optional* development setup for M1 Mac users having issues with the `psycopg` package.
+## Homepage
 
-1. Make sure you have the [Microsoft Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension installed.
-2. Make sure you have [Docker](https://www.docker.com/products/docker-desktop/) installed on your computer.
-3. Clone the repository (only this branch)
-   ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
-   ```
-4. Open the repo in VS Code.
-5. Click "Open in Container" when VS Code prompts to open container in the bottom right hand corner.
-6. **Be Patient!** The initial install will take a LONG time, it's building a container that has postgres preconfigured and even installing all your project dependencies. (For both flask and react!)
+## Channel Page
 
-   **Note:** This will take much less time on future starts because everything will be cached.
+## Direct Message Page
 
-7. Once everything is up, be sure to make a `.env` file based on `.env.example` in both the root directory and the *react-app* directory before running your app. You do not need a `DATABASE_URL` in the `.env` file if you are using this Docker setup for development - the URL is already set in the image (see `.devcontainer/Dockerfile` for the URL).
+## Search
 
-8. Get into your pipenv, migrate your database, seed your database, and run your flask app
-
-   ```bash
-   pipenv shell
-   ```
-
-   ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
-   flask run
-   ```
-
-9. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
-
-<br>
-
-## Deploy to Heroku
-This repo comes configured with Github Actions. When you push to your main branch, Github will automatically pull your code, package and push it to Heroku, and then release the new image and run db migrations.
-
-1. Write your Dockerfile. In order for the Github action to work effectively, it must have a configured Dockerfile. Follow the comments found in this [Dockerfile](./Dockerfile) to write your own!
-
-2. Create a new project on Heroku.
-
-3. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres".
-
-4. Configure production environment variables. In your Heroku app settings -> config variables you should have two environment variables set:
-
-   |    Key          |    Value    |
-   | -------------   | ----------- |
-   | `DATABASE_URL`  | Autogenerated when adding postgres to Heroku app |
-   | `SECRET_KEY`    | Random string full of entropy |
-
-5. Generate a Heroku OAuth token for your Github Action. To do so, log in to Heroku via your command line with `heroku login`. Once you are logged in, run `heroku authorizations:create`. Copy the GUID value for the Token key.
-
-6. In your Github Actions Secrets you should have two environment variables set. You can set these variables via your Github repository settings -> secrets -> actions. Click "New respository secret" to create
-each of the following variables:
-
-   |    Key            |    Value    |
-   | -------------     | ----------- |
-   | `HEROKU_API_KEY`  | Heroku Oauth Token (from step 6)|
-   | `HEROKU_APP_NAME` | Heroku app name    |
-
-7. Push to your `main` branch! This will trigger the Github Action to build your Docker image and deploy your application to the Heroku container registry. Please note that the Github Action will automatically upgrade your production database with `flask db upgrade`. However, it will *not* automatically seed your database. You must manually seed your production database if/when you so choose (see step 8).
-
-8. *Attention!* Please run this command *only if you wish to seed your production database*: `heroku run -a HEROKU_APP_NAME flask seed all`
+## Future Implementations
+1. Notifications
+* Users should be able to see the notifications of new messages
+2. Reactions
+* Users should be able to react a message using an emoji
 
 ## Helpful commands
 |    Command            |    Purpose    |
