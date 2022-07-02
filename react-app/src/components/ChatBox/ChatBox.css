@@ -66,19 +66,16 @@
 .chatbox__input {
   position: fixed;
   background-color: white;
+  padding-left: 2em;
   bottom: 2em;
   z-index: 2;
-  width: 100%;
+  width: 98%;
 }
 
 .chatbox__messages {
-  /* border-bottom: 1px #dedede solid; */
-  /* border-top: 1px #dedede solid; */
   position: fixed;
-  /* top: 12em; */
-  max-height: 67%;
-  min-width: 82.5%;
-  margin-left: -37px;
+  max-height: 76%;
+  min-width: 80%;
   overflow-x: hidden;
   z-index: 1;
 }
@@ -111,16 +108,14 @@
   background-color: #a8bbbf;
 }
 
-@media screen and ( max-width: 1400px ){
+@media screen and ( max-height: 500px ){
   .chatbox__messages {
-    min-width: 78%;
-    margin-left: -5px;
+    max-height: 55%;
   }
 }
 
-@media screen and ( max-width: 1400px ){
-  .chatbox__input {
-    width: 95%;
-    margin-left: 20px;
+@media screen and ( max-height: 700px ){
+  .chatbox__messages {
+    max-height: 66%;
   }
 }
