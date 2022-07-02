@@ -1,35 +1,27 @@
-.dms__list-item {
+.one-dm {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: space-between;
   transition: 0.2s;
+  width: 100%;
+  position: relative;
 }
 
-.dms__list-item:hover {
+.one-dm:hover {
   background-color: #FFEE40;
-  width: 330px;
-  max-width: 330px;
-  margin-left: -33px;
-  padding-left: 33px;
   font-weight: bold;
 }
 
 .dms__list-item--icon-name {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
-  width: 100%
+  width: 85%;
 }
 
-.dms__list-item--name-container {
-  width: 12em;
-}
-
-.dms__list-item--icon-container {
-  margin-left: -9px;
-  margin-right: -5px;
+.dms__list-item {
+  width: 100%;
 }
 
 .one-dm {
