@@ -22,15 +22,31 @@ const SignUpForm = () => {
 
   const onSignUp = async (e) => {
     e.preventDefault();
-
+    const validationErrors = []
+    if (!first_name)
+    validationErrors.push("Please provide your first name")
+    if (!last_name)
+    validationErrors.push("Please provide your last name")
+    if (!email)
+    validationErrors.push("Please enter your email")
+    if (!password)
+    validationErrors.push("Please enter password")
+    if (!repeatPassword)
+    validationErrors.push("Please enter the same password again")
+    if(password !== repeatPassword) validationErrors.push("Passwords field must match repeat password field.")
+    if (!imageProfile )
+    validationErrors.push("Please choose your favorite avatar")
+    if(validationErrors.length > 0){
+      setErrors(validationErrors)
+      return
+    }
     if (password === repeatPassword) {
       const data = await dispatch(signUp(first_name, last_name, email, password, profile_img));
       if (data) {
         setErrors(data)
-      }
-    }
+      }  
   };
-
+  }
   const updateFirstName = (e) => {
     setFirstName(e.target.value);
   };
@@ -149,8 +165,10 @@ const SignUpForm = () => {
         <div className='header-left-col'></div>
         <NavLink exact to="/" className='header-center-col'>slick</NavLink>
         <div className='header-right-col'>
-          Already have an account?
-          <div><NavLink to="/login">Sign in instead</NavLink></div>
+          <div className='link-to-other-form'>
+            Already have an account?
+          </div>
+          <div><NavLink to="/">Sign in instead</NavLink></div>
         </div>
       </header>
       <div className='text-sign-in'>
@@ -214,8 +232,7 @@ const SignUpForm = () => {
             type='password'
             name='repeat_password'
             onChange={updateRepeatPassword}
-            value={repeatPassword}
-            required={true}
+            value={repeatPassword}            
             placeholder='Confirm password'
           ></input>
         </div>

@@ -5,6 +5,7 @@ import { login } from '../../store/session';
 import "./LoginForm.css"
 
 const LoginForm = () => {
+  
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,7 +47,7 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to={`/users/${user.id}`} />;
+    return <Redirect to={`/users/${user.id}`} />;    
   }
 
   return (
@@ -55,8 +56,12 @@ const LoginForm = () => {
         <div className='header-left-col'></div>
         <NavLink exact to="/" className='header-center-col'>slick</NavLink>
         <div className='header-right-col'>
-          New to Slick?
-          <div><NavLink to="/sign-up">Create an account</NavLink></div>
+          <div className='link-to-other-form'>
+            New to Slick?
+          </div>
+          <div>
+            <NavLink to="/sign-up">Create an account</NavLink>
+          </div>
         </div>
       </header>
       <div className='text-sign-in'>
