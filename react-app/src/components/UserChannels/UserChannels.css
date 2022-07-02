@@ -60,16 +60,10 @@
 .one-channel-container:hover {
   background-color: #FFEE40;
   display: inline-flex;
-  width: 350px;
-  margin-left: -33px;
-  padding-left: 33px;
+  width: 100%;
   font-weight: bold;
-  /* pointer-events: fill; */
-
+  pointer-events: fill;
 }
-
-/* .one-channel-link {
-} */
 
 .blue {
   display: inline-flex;
@@ -83,5 +77,10 @@
 }
 
 .hashtag-channels {
-  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.hashtag__icon {
+  margin-right: .5em;
 }

@@ -43,10 +43,15 @@ const UserChannels = () => {
           <NavLink key={channel.id} activeClassName="blue" activeStyle={{
             backgroundColor: '#15D4FF',
             color: 'white'
-            }} exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}  >
+          }} exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}  >
             <div className='one-channel-container' >
               <li className="one-channel" key={`channel-${channel.id}`}>
-                <span className='hashtag-channels'>#</span>{`${channel.name}`}
+                <span className='hashtag-channels'>
+                  <span className="material-symbols-outlined hashtag__icon">
+                    tag
+                  </span>
+                {`${channel.name}`}
+                </span>
               </li>
             </div>
           </NavLink>

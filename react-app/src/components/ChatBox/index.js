@@ -133,7 +133,12 @@ const ChatBox = () => {
           <h2 className='chatbox__header--text'>
             {privateMembers ?
               (`${privateMembers}`) :
-              (`#${currentChannel.name}`)
+              <div className='chatbox__header--text-container-icons'>
+                <span className="material-symbols-outlined">
+                  tag
+                </span>
+                {currentChannel.name}
+              </div>
             }
           </h2>
         </div>
@@ -188,7 +193,7 @@ const ChatBox = () => {
           <div className='chatbox__typing--container'>
             {/* <p className='chatbox__typing'>{otherTyping.userName} is typing...</p> */}
 
-              <Typing person={otherTyping.userName}/>
+            <Typing person={otherTyping.userName} />
 
           </div>
         }
