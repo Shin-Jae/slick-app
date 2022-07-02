@@ -232,8 +232,7 @@ const SignUpForm = () => {
             type='password'
             name='repeat_password'
             onChange={updateRepeatPassword}
-            value={repeatPassword}
-            required={true}
+            value={repeatPassword}            
             placeholder='Confirm password'
           ></input>
         </div>
