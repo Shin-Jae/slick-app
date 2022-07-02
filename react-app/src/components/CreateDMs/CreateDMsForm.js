@@ -10,6 +10,7 @@ function CreateDMForm({ onClose }) {
   const dispatch = useDispatch()
   const history = useHistory()
   const [errors, setErrors] = useState([])
+  const [submitted, setSubmitted] = useState(false)
 
   const userChannels = useSelector((state) => state.channels);
   const channels = Object.values(userChannels);
@@ -33,13 +34,12 @@ function CreateDMForm({ onClose }) {
     }
   }, [resetMem])
 
-
   useEffect(() => {
     const validationErrors = []
     if (count < 2)
       validationErrors.push("Please add a member to the DM")
     setErrors(validationErrors)
-  }, [name, description, count, dispatch])
+  }, [name, description, count, submitted, dispatch])
 
   //check if dm already exists
   let matchId;
@@ -60,6 +60,7 @@ function CreateDMForm({ onClose }) {
 
   const channelSubmission = async (e) => {
     e.preventDefault()
+    setSubmitted(true)
 
     if (matchId) {
       onClose(false)
@@ -76,13 +77,16 @@ function CreateDMForm({ onClose }) {
       members: setArr
     }
 
-    const createdChannel = await dispatch(createOneChannel(userId, payload))
-    if (createdChannel) {
-      setErrors([])
-      set.clear();
-      await dispatch(getAllChannels(userId))
-      history.push(`/users/${userId}/${createdChannel.id}`)
-      onClose(false)
+    if (setArr.length > 1) {
+      const createdChannel = await dispatch(createOneChannel(userId, payload))
+      if (createdChannel) {
+        setErrors([])
+        setSubmitted(false)
+        set.clear();
+        await dispatch(getAllChannels(userId))
+        history.push(`/users/${userId}/${createdChannel.id}`)
+        onClose(false)
+      }
     }
   }
 
@@ -110,7 +114,8 @@ function CreateDMForm({ onClose }) {
     }
   }
 
-  const addMembers = (id) => {
+  const addMembers = (e, id) => {
+    e.preventDefault();
     if (!set.size) set.add(userId)
 
     if (!set.has(id)) {
@@ -125,6 +130,7 @@ function CreateDMForm({ onClose }) {
       <form onSubmit={channelSubmission}>
         <h1>Create New DM</h1>
         {errors[0] &&
+          submitted &&
           <div className='error__container'>
             <ul>{errors.map((error) => (
               <li className="error__text"
@@ -160,9 +166,8 @@ function CreateDMForm({ onClose }) {
                   if (user.id !== userId && !set.has(user.id)) {
                     return <div key={user.id} className="single-search-names-container">
                       <img src={user.profile_img} alt={user.id} className="search-profile-pics" /><span className='search-names-container search-names-text'>{user.first_name} {user.last_name}</span>
-                      <button className='add-members-btn' type="button" onClick={() => addMembers(user.id)}>+</button>
+                      <button className='add-members-btn' type="button" onClick={(e) => addMembers(e, user.id)}>+</button>
                     </div>
-
                   }
                 }) : null}
               </ul>
@@ -171,7 +176,10 @@ function CreateDMForm({ onClose }) {
         </div>
         <input type="hidden" value={private_chat} />
         <div>
-          <button type="submit" disabled={errors.length > 0}>Send DM</button>
+          <button
+            type="submit"
+            disabled={errors.length > 0}
+          >Send DM</button>
         </div>
       </form>
     </div>
