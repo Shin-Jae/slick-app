@@ -80,7 +80,7 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
       set.delete(id);
       remove.add(id);
       if (query === "") {
-        return setQuery("-")
+        return setQuery("*")
       } else {
         return setQuery("")
       }
@@ -139,8 +139,9 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
             value={query}
             onInput={e => setQuery(e.target.value)}
           />
-          {filteredUsers.length !== 0 && filteredUsers.length !== users.length ? <div className='container-add-members'>
+          <div className={filteredUsers.length !== 0 && filteredUsers.length !== users.length ? 'container-add-members' : 'empty'}>
             <ul className="filtered-list" >
+              {query === "*" ? setQuery("") : null}
               {query ? filteredUsers.map(user => {
                 if (user.id !== userId && !set.has(user.id)) {
                   return <div key={user.id} className='single-search-names-container'>
@@ -151,18 +152,6 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
               }) : null}
             </ul>
           </div>
-            : <div className='empty'>
-              <ul className="filtered-list-channels" >
-                {query ? filteredUsers.map(user => {
-                  if (user.id !== userId) {
-                    return <div key={user.id}>
-                      <span >{user.first_name} {user.last_name}</span>
-                      <button type="button" onClick={() => addMembers(user.id)}>+</button>
-                    </div>
-                  }
-                }) : null}
-              </ul>
-            </div>}
         </div>
         <div>
           <button type="submit" disabled={errors.length > 0} style={{ cursor: "pointer" }}> Update Channel</button>

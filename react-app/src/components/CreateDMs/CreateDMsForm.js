@@ -128,7 +128,7 @@ function CreateDMForm({ onClose }) {
           <div className='error__container'>
             <ul>{errors.map((error) => (
               <li className="error__text"
-              key={error}>
+                key={error}>
                 {error}
               </li>))}
             </ul>
@@ -153,8 +153,9 @@ function CreateDMForm({ onClose }) {
               required={!setArr.length}
               onInput={e => setQuery(e.target.value)}
             />
-            {filteredUsers.length !== 0 && filteredUsers.length !== users.length ? <div className='container-add-members'>
+            <div className={filteredUsers.length !== 0 && filteredUsers.length !== users.length ? 'container-add-members' : 'empty'}>
               <ul className="filtered-list" >
+                {query === "*" ? setQuery("") : null}
                 {query.length ? filteredUsers.map(user => {
                   if (user.id !== userId && !set.has(user.id)) {
                     return <div key={user.id} className="single-search-names-container">
@@ -166,20 +167,6 @@ function CreateDMForm({ onClose }) {
                 }) : null}
               </ul>
             </div>
-              : <div className='empty'>
-                <ul className="filtered-list" >
-                  {query.length ? filteredUsers.map(user => {
-                    if (user.id !== userId) {
-                      return <div key={user.id}>
-                        <span>{user.first_name} {user.last_name}</span>
-                        <button type="button" onClick={() => addMembers(user.id)}>+</button>
-                      </div>
-
-                    }
-                  }) : null}
-                </ul>
-              </div>
-            }
           </div>
         </div>
         <input type="hidden" value={private_chat} />

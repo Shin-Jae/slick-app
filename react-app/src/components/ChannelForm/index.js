@@ -18,7 +18,7 @@ const CreateChannelForm = ({ onClose }) => {
 
   //used for search
   const userId = useSelector((state) => state.session.user.id)
-  const [query, setQuery] = useState("")
+  let [query, setQuery] = useState("")
   const allUsers = useSelector((state) => state.search);
   const users = Object.values(allUsers);
   let setArr = [...set]
@@ -79,7 +79,6 @@ const CreateChannelForm = ({ onClose }) => {
   }
   const filteredUsers = filterUsers(users, query);
 
-
   const removeMembers = (id) => {
     if (set.has(id)) {
       set.delete(id);
@@ -119,7 +118,6 @@ const CreateChannelForm = ({ onClose }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}>
           </input>
-
         </div>
         <div>
           <textarea
@@ -147,8 +145,9 @@ const CreateChannelForm = ({ onClose }) => {
               value={query}
               onInput={e => setQuery(e.target.value)}
             />
-            {filteredUsers.length !== 0 && filteredUsers.length !== users.length ? <div className='container-add-members'>
+            <div className={filteredUsers.length !== 0 && filteredUsers.length !== users.length ? 'container-add-members' : 'empty'}>
               <ul className="filtered-list-channels" >
+                {query === "*" ? setQuery("") : null}
                 {query ? filteredUsers.map(user => {
                   if (user.id !== userId && !set.has(user.id)) {
                     return <div key={user.id} className='single-search-names-container'>
@@ -159,18 +158,6 @@ const CreateChannelForm = ({ onClose }) => {
                 }) : null}
               </ul>
             </div>
-              : <div className='empty'>
-                <ul className="filtered-list-channels" >
-                  {query ? filteredUsers.map(user => {
-                    if (user.id !== userId) {
-                      return <div key={user.id}>
-                        <span >{user.first_name} {user.last_name}</span>
-                        <button type="button" onClick={() => addMembers(user.id)}>+</button>
-                      </div>
-                    }
-                  }) : null}
-                </ul>
-              </div>}
           </div>
         </div>
         <div>
