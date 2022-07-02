@@ -5,6 +5,7 @@ import { login } from '../../store/session';
 import "./LoginForm.css"
 
 const LoginForm = () => {
+  
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,7 +47,7 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to={`/users/${user.id}`} />;
+    return <Redirect to={`/users/${user.id}`} />;    
   }
 
   return (
