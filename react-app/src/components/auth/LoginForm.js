@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
 import "./LoginForm.css"
+import slickicon from "../../images/slickicon.png"
+
 
 const LoginForm = () => {
-  
+
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,14 +49,14 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to={`/users/${user.id}`} />;    
+    return <Redirect to={`/users/${user.id}`} />;
   }
 
   return (
     <div className='container-login-page'>
       <header className='container-login-header'>
         <div className='header-left-col'></div>
-        <NavLink exact to="/" className='header-center-col'>slick</NavLink>
+        <NavLink exact to="/" className='header-center-col'></NavLink>
         <div className='header-right-col'>
           <div className='link-to-other-form'>
             New to Slick?
@@ -67,6 +69,10 @@ const LoginForm = () => {
       <div className='text-sign-in'>
         <h1>Sign in to <span className='text-sign-in-slick'>Slick</span></h1>
         <p className='text-sign-in-suggest'>Welcome back to Slick</p>
+        <img
+        className='slick-logo3'
+        alt=''
+        src={slickicon} />
       </div>
       <form onSubmit={onLogin} className='form-container'>
         <div className='container-demo-users'>
@@ -97,13 +103,15 @@ const LoginForm = () => {
           <div className='content-rule-center'> OR </div>
           <hr className='horizontal-line line-right'></hr>
         </div>
-        <div>
+        {errors[0] &&
+        <div className='error__container'>
           {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+            <div key={ind} className='error__text'>{error}</div>
           ))}
         </div>
+        }
         <div>
-          <label htmlFor='email'><span className='input-login-text'>Email</span></label>
+          {/* <label htmlFor='email'><span className='input-login-text'>Email</span></label> */}
           <div className='input'>
             <input
               className='login-input-field'
@@ -116,7 +124,7 @@ const LoginForm = () => {
           </div>
         </div>
         <div>
-          <label htmlFor='password'><span className='input-login-text'>Password</span></label>
+          {/* <label htmlFor='password'><span className='input-login-text'>Password</span></label> */}
           <div className='input'>
             <input
               className='login-input-field'

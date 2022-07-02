@@ -124,11 +124,15 @@ function CreateDMForm({ onClose }) {
     <div className='modal__form-container'>
       <form onSubmit={channelSubmission}>
         <h1>Create New DM</h1>
-        <ul>{errors.map((error) => (
-          <li className="error_info">
-            {error}
-          </li>))}
-        </ul>
+        {errors[0] &&
+          <div className='error__container'>
+            <ul>{errors.map((error) => (
+              <li className="error__text"
+              key={error}>
+                {error}
+              </li>))}
+            </ul>
+          </div>}
         <div>
           {/* <label>Members: </label> */}
           <div className="added-members-container">

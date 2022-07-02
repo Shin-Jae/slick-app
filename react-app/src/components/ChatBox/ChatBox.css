@@ -5,6 +5,7 @@
   /* height: 7em; */
   display: flex;
   align-items: center;
+  border-bottom: #dbdbdb 1px solid;
 }
 
 
@@ -75,16 +76,25 @@
 .chatbox__messages {
   position: fixed;
   max-height: 76%;
-  min-width: 80%;
+  width: 83%;
   overflow-x: hidden;
   z-index: 1;
 }
 
+/* .chatbox__typing--container {
+  display: flex;
+  flex-direction: row;
+  border: red 1px solid;
+
+} */
+
 .chatbox__typing {
   font-weight: bold;
-  margin: 0 0 .5em 3em;
+  margin: 0 0 .5em;
   color: #444444;
+  position: absolute;
 }
+
 ::-webkit-scrollbar {
   width: 20px;
 }
@@ -120,9 +130,8 @@
   }
 }
 
-@media screen and ( max-width: 1400px ){
-  .chatbox__input {
-    width: 95%;
-    margin-left: 40px;
+@media screen and ( max-width: 1600px ){
+  .chatbox__messages {
+    width: 80%;
   }
 }

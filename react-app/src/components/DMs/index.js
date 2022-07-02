@@ -35,7 +35,7 @@ const DMs = () => {
       </div>
       <ul className="view-dms view-channels" style={{ listStyleType: "none" }}>
         {privateChannels.map(channel =>
-          <DMChannel channel={channel} />
+          <DMChannel channel={channel} key={channel.id}/>
         )}
       </ul>
     </div>

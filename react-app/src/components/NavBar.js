@@ -33,11 +33,9 @@ const NavBar = ({ loaded }) => {
   } else {
     sessionNav = (
       <img
-      className='slick-logo2'
-      style={{ cursor: "pointer" }}
-      alt=''
-      src={slickicon}
-      onClick={homePage} />
+        className='slick-logo2'
+        alt=''
+        src={slickicon} />
     )
   }
   return (

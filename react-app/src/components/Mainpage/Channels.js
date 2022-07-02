@@ -35,10 +35,6 @@ function Channels() {
   return (
     <div className='main-display'>
       <div className='main-display__sidebar'>
-        {/* <div>Hello</div>
-        DMs
-        <CreateDMModal hoverDisplay={hoverDisplay} />
-        <p>--------------</p> */}
         <div>
           <UserChannels />
         </div>

@@ -11,7 +11,7 @@ const CreateDMModal = ({ hoverDisplay }) => {
           className={hoverDisplay ? 'button__create-channel' : 'button__create-channel--hidden'}
           onClick={() => setShowModal(true)}
         >
-          <span class="material-symbols-outlined">add</span>
+          <span className="material-symbols-outlined">add</span>
         </button>
         {showModal && (
           <Modal onClose={() => setShowModal(false)}>

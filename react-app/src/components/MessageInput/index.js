@@ -141,7 +141,7 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
                 'message__input--btn btn__disabled'}
             disabled={!message.trim().length || message.trim().length > 1999}>
             <span
-              class="material-symbols-outlined">
+              className="material-symbols-outlined">
               send
             </span>
             Send

@@ -1,134 +1,152 @@
 .container-login-page {
-    font-family: Slack-Larsseit,Helvetica Neue,Helvetica,Segoe UI,Tahoma,Arial,sans-serif;
+  font-family: Slack-Larsseit, Helvetica Neue, Helvetica, Segoe UI, Tahoma,
+    Arial, sans-serif;
 }
 
 .container-login-header {
-    align-items: center;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 100%;
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
 }
 
 .header-center-col {
-    text-align: center;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    font-size: 35px;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 35px;
 }
 
 .link-to-other-form {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .header-right-col {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-right: 15px;
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 15px;
+  margin-top: 20px;
 }
 
 .text-sign-in {
-    text-align: center;
-    font-size: 20px;
+  text-align: center;
+  font-size: 20px;
 }
 .text-sign-in-slick {
-    color: #4a154b;
+  color: #f91690;
 }
 .text-sign-in-suggest {
-    font-size: 15px;
-    color: grey;
-    margin-bottom: 25px;
+  font-size: 15px;
+  color: grey;
+  margin-bottom: 25px;
 }
 
 .form-container {
-    text-align: center;
-    margin: 0 auto;
-    max-width: 400px;
-    width: 400px;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 400px;
+  width: 400px;
 }
 
 .container-content-rule {
-    display: flex;
-    align-items: center;
-    margin-top: 24px;
-    margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
 .line-left {
-    flex-grow: 1;
-    margin: 0;
+  flex-grow: 1;
+  margin: 0;
 }
 
 .content-rule-center {
-    padding: 0 20px;
+  padding: 0 20px;
 }
 
 .line-right {
-    flex-grow: 1;
-    margin: 0;
+  flex-grow: 1;
+  margin: 0;
 }
 
 .horizontal-line {
-    border: none;
-    border-top: 1px solid #ddd;
-    clear: both;
+  border: none;
+  border-top: 1px solid #ddd;
+  clear: both;
 }
 
 .input {
-    padding: 11px 0px 13px;
+  padding: 11px 0px 13px;
 }
 
 /* demo users */
 .demo-login-btn {
-    font-size: 18px;
-    line-height: 1.33333333;
-    height: 42px;
-    width: 370px;
-    padding-left: 11px;
-    border-radius: 5px;
-    margin-top: 20px;
-    font-weight: bold;
+  font-size: 18px;
+  line-height: 1.33333333;
+  height: 42px;
+  width: 370px;
+  padding-left: 11px;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.demo-login-btn:hover {
+  background-color: rgb(241, 241, 241);
 }
 
 .demo-user-1 {
-    border: 2px solid #4285f4;
-    background-color: white;
-    color: #4285f4;
+  border: 2px solid #4285f4;
+  background-color: white;
+  color: #4285f4;
 }
 
 .demo-user-2 {
-    border: 2px solid #9a0101;
-    background-color: white;
-    color: #9a0101;
+  border: 2px solid #9a0101;
+  background-color: white;
+  color: #9a0101;
 }
 
 .demo-user-3 {
-    border: 2px solid black;
-    background-color: white;
-    color: black;
+  border: 2px solid black;
+  background-color: white;
+  color: black;
 }
 
 /* login email/password field box */
 .login-input-field {
-    font-size: 18px;
-    line-height: 1.33333333;
-    height: 42px;
-    width: 370px;
-    padding-left: 11px;
-    border: 1px solid lightgrey;
-    border-radius: 5px;
+  font-size: 18px;
+  line-height: 1.33333333;
+  height: 42px;
+  width: 370px;
+  padding-left: 11px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
 }
 
 .login-btn {
-    font-size: 18px;
-    height: 44px;
-    width: 390px;
-    border: 1px solid lightgrey;
-    background-color: #4a154b;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    margin-top: 18px;
+  font-size: 18px;
+  height: 44px;
+  width: 390px;
+  border: 1px solid lightgrey;
+  background-color: #15d4ff;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 18px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.login-btn:hover {
+  background-color: #42e9ff;
+}
+
+.slick-logo3 {
+  width: 3em;
+  height: 2.6em;
+  object-fit: contain;
 }
