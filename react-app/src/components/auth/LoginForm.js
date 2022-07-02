@@ -5,7 +5,7 @@ import { login } from '../../store/session';
 import "./LoginForm.css"
 
 const LoginForm = () => {
-  
+
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,7 +47,7 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to={`/users/${user.id}`} />;    
+    return <Redirect to={`/users/${user.id}`} />;
   }
 
   return (
@@ -97,13 +97,13 @@ const LoginForm = () => {
           <div className='content-rule-center'> OR </div>
           <hr className='horizontal-line line-right'></hr>
         </div>
-        <div>
+        <div className='error__container'>
           {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+            <div key={ind} className='error__text'>{error}</div>
           ))}
         </div>
         <div>
-          <label htmlFor='email'><span className='input-login-text'>Email</span></label>
+          {/* <label htmlFor='email'><span className='input-login-text'>Email</span></label> */}
           <div className='input'>
             <input
               className='login-input-field'
@@ -116,7 +116,7 @@ const LoginForm = () => {
           </div>
         </div>
         <div>
-          <label htmlFor='password'><span className='input-login-text'>Password</span></label>
+          {/* <label htmlFor='password'><span className='input-login-text'>Password</span></label> */}
           <div className='input'>
             <input
               className='login-input-field'

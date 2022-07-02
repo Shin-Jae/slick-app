@@ -126,9 +126,10 @@
     height: 44px;
     width: 390px;
     border: 1px solid lightgrey;
-    background-color: #4a154b;
+    background-color: #15D4FF;
     color: white;
     font-weight: bold;
     border-radius: 5px;
     margin-top: 18px;
+    cursor: pointer;
 }

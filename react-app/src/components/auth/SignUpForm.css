@@ -1,6 +1,5 @@
 .container-signup-profile-img {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     justify-content: center;
     margin-top: 20px;
 }
@@ -18,12 +17,17 @@
 }
 
 .signup-profile-img {
-    height: 160px;
-    width: 210px;
-    margin: 2px 4px 0 2px;
-    transition: border .5s;
+    height: 5em;
+    width: 5em;
+    margin: .75em;
+    border-radius: 50%;
 }
 
 .signup-profile-img:hover {
-    border: 5px solid #4a154b;
+    border: 5px solid #15D4FF;
+    cursor: pointer;
+  }
+
+.picked__img {
+  border: 5px solid #15D4FF;
 }
