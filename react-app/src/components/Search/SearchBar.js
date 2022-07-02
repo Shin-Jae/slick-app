@@ -79,7 +79,7 @@ function SearchBar() {
       <input
         className="input-search-bar-field"
         type="text"
-        placeholder="Search Slick"
+        placeholder="Search Slick Members"
         value={query}
         onInput={e => setQuery(e.target.value)}
         onChange={handleNoUsers}

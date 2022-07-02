@@ -18,7 +18,7 @@ const CreateChannelForm = ({ onClose }) => {
 
   //used for search
   const userId = useSelector((state) => state.session.user.id)
-  let [query, setQuery] = useState("")
+  const [query, setQuery] = useState("")
   const allUsers = useSelector((state) => state.search);
   const users = Object.values(allUsers);
   let setArr = [...set]
@@ -133,7 +133,7 @@ const CreateChannelForm = ({ onClose }) => {
               if (person !== userId) {
                 return <div key={`user-${person}`} className="single-member-container">
                   <img src={allUsers[person].profile_img} alt={allUsers[person].id} className="search-profile-pics" /><span className='added-members-names'> {allUsers[person].first_name} {allUsers[person].last_name} </span>
-                  <button className='remove-one-member-btn' type="button" onClick={() => removeMembers(allUsers[person].id)}>x</button>
+                  <button className='remove-one-member-btn' type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
                 </div>
               }
             }) : null}
@@ -141,7 +141,7 @@ const CreateChannelForm = ({ onClose }) => {
           <div>
             <input
               type="text"
-              placeholder="Search Members"
+              placeholder="Add Members"
               value={query}
               onInput={e => setQuery(e.target.value)}
             />
