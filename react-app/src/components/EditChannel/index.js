@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
@@ -20,6 +19,8 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
   const allUsers = useSelector((state) => state.search);
   const users = Object.values(allUsers);
 
+  let setLength = set.size;
+
   useEffect(() => {
     const validationErrors = []
     if (!name)
@@ -30,8 +31,10 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
       validationErrors.push("Please enter channel's description")
     if (description.length > 255)
       validationErrors.push("Channel Description must be 255 characters or less")
+    if (setLength <= 1)
+      validationErrors.push("Please add a member or members")
     setErrors(validationErrors)
-  }, [name, description, dispatch])
+  }, [name, description, setLength, dispatch])
 
   useEffect(() => {
     if (channel) {
@@ -52,7 +55,7 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
     }
     const updatedChannel = await dispatch(updateChannel(channelId, payload))
     if (updatedChannel) {
-      set.clear();
+      // set.clear();
       remove.clear();
       setErrors([])
       await dispatch(getAllChannels(userId))
@@ -76,7 +79,10 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
   let removeArr = [...remove];
 
   const removeMembers = (id) => {
-    if (set.has(id) && !remove.has(id)) {
+    if (set.has(id) && remove.has(id)) {
+      set.delete(id);
+      return setQuery("*")
+    } else if (set.has(id) && !remove.has(id)) {
       set.delete(id);
       remove.add(id);
       if (query === "") {
@@ -139,7 +145,7 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
             value={query}
             onInput={e => setQuery(e.target.value)}
           />
-          <div className={filteredUsers.length !== 0 && filteredUsers.length !== users.length ? 'container-add-members' : 'empty'}>
+          <div className={(filteredUsers.length !== 0 && filteredUsers.length !== users.length) ? 'container-add-members' : 'empty'}>
             <ul className="filtered-list" >
               {query === "*" ? setQuery("") : null}
               {query ? filteredUsers.map(user => {
