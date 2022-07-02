@@ -140,7 +140,7 @@ function CreateDMForm({ onClose }) {
               if (person !== userId) {
                 return <div key={person} className="single-member-container">
                   <img src={allUsers[person].profile_img} alt={allUsers[person].id} className="search-profile-pics" /><span className="added-members-names"> {allUsers[person].first_name} {allUsers[person].last_name} </span>
-                  <button className='remove-one-member-btn' type="button" onClick={() => removeMembers(allUsers[person].id)}>x</button>
+                  <button className='remove-one-member-btn' type="button" onClick={() => removeMembers(allUsers[person].id)}> - </button>
                 </div>
               }
             }) : null}
