@@ -23,19 +23,19 @@ function CreateDMForm({ onClose }) {
   const name = `private for ${userId}`
   const description = `dm description ${userId}`
   const private_chat = true
+  const [resetMem, setResetMem] = useState(false)
 
   let setArr = [...set]
 
   useEffect(() => {
+    if (resetMem === false) {
+      set.clear();
+    }
+  }, [resetMem])
+
+
+  useEffect(() => {
     const validationErrors = []
-    if (!name)
-      validationErrors.push("Please enter a channel name")
-    if (name.length > 100)
-      validationErrors.push('Channel Name must be 100 characters or less')
-    if (!description)
-      validationErrors.push("Please enter channel's description")
-    if (description.length > 255)
-      validationErrors.push("Channel Description must be 255 characters or less")
     if (count < 2)
       validationErrors.push("Please add a member to the DM")
     setErrors(validationErrors)
@@ -63,6 +63,7 @@ function CreateDMForm({ onClose }) {
 
     if (matchId) {
       onClose(false)
+      setResetMem(false)
       set.clear()
       return history.push(`/users/${userId}/${matchId}`)
     }

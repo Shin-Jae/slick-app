@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { createOneChannel, getAllChannels } from "../../store/channels"
 
-let set = new Set()
 let count = 1
+let set = new Set()
 const CreateChannelForm = ({ onClose }) => {
   const dispatch = useDispatch()
   const history = useHistory()
@@ -36,7 +36,13 @@ const CreateChannelForm = ({ onClose }) => {
     if (count < 2)
       validationErrors.push("Please add a member to the channel")
     setErrors(validationErrors)
-  }, [name, description, count, ,trySubmit, dispatch])
+  }, [name, description, count, , trySubmit, dispatch])
+
+  useEffect(() => {
+    if (trySubmit === false) {
+      set.clear();
+    }
+  }, [trySubmit])
 
   const channelSubmission = async (e) => {
     e.preventDefault()
@@ -101,11 +107,11 @@ const CreateChannelForm = ({ onClose }) => {
       <form onSubmit={channelSubmission}>
         <h1>Create New Channel</h1>
         {errors[0] && trySubmit &&
-        <ul className='error__container'>{errors.map((error) => (
-          <li className="error_info error__text" key={error}>
-            {error}
-          </li>))}
-        </ul>}
+          <ul className='error__container'>{errors.map((error) => (
+            <li className="error_info error__text" key={error}>
+              {error}
+            </li>))}
+          </ul>}
         <input type="hidden" value={privatechat} />
         <div>
           <input
