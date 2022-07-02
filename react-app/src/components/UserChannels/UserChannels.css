@@ -1,5 +1,6 @@
 .user__channels-display {
   position: relative;
+  width: 100%;
 }
 
 .main-channels__header-container {
@@ -45,7 +46,7 @@
 }
 
 .view-channels {
-  /* padding-left: .5em; */
+  padding-left: .5em;
 }
 
 .one-channel-container {

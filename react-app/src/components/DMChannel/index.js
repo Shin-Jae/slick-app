@@ -18,7 +18,13 @@ const DMChannel = ({ channel }) => {
         onMouseEnter={(e) => setShowDelete(true)}
         onMouseLeave={(e) => setShowDelete(false)}
       >
-        <NavLink activeClassName="dm-blue" activeStyle={{ fontWeight: 'bold', backgroundColor: '#1164A3', color: 'white' }} exact to={`/users/${id}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
+        <NavLink activeClassName="dm-blue" activeStyle={{
+          fontWeight: 'bold',
+          backgroundColor: '#15D4FF',
+          color: 'white',
+          paddingLeft: '2em',
+        }}
+          exact to={`/users/${id}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
           <div className='dms__list-item--icon-name'>
             <div className='dms__list-item--icon-container'>
               <UserIcon members={channel.members} />
@@ -32,7 +38,7 @@ const DMChannel = ({ channel }) => {
             </div>
           </div>
         </NavLink>
-        <div >
+        <div className='dm__delete-container'>
           <DeleteDMButton currentChannelId={channel.id} showDelete={showDelete} />
         </div>
       </div>

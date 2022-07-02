@@ -1,7 +1,7 @@
 .input__inactive {
   background-color: white;
   border: none;
-  width: 100%;
+  width: 95%;
   padding: 1em;
   font-size: 15px;
   transition: 0.2s;
@@ -19,7 +19,7 @@
   font-size: 1em;
   border-radius: 1em;
   min-height: 5em;
-  width: 100%;
+  width: 95%;
   padding: 1em;
   resize: none;
   transition: 0.2s;

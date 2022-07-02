@@ -34,7 +34,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
 
   useEffect(() => {
     const validationErrors = []
-    if (content.length > 2000)
+    if (content.length > 1999)
       validationErrors.push('Please keep message to under 2000 characters')
     setErrors(validationErrors)
   }, [content, dispatch])
@@ -135,6 +135,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
         <div className={edit ? 'message__textarea--container--inactive' : 'message__textarea--container'}>
           <textarea
             rows={textareaHeight}
+            maxLength='2000'
             className={edit ? 'input__inactive' : 'input__active'}
             value={content}
             onChange={handleChange}
