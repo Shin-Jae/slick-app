@@ -9,8 +9,9 @@
 }
 
 
-.chatbox__header--text {
-
+.chatbox__header--text-container-icons {
+  display: flex;
+  align-items: center;
 }
 
 .chatbox__header--text-container {

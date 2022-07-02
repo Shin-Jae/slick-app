@@ -11,6 +11,19 @@ const DMChannel = ({ channel }) => {
   const [showDelete, setShowDelete] = useState(false)
   const { email, id } = useSelector((state) => state.session.user);
 
+  let DMNames = [];
+
+  channel.members.forEach(member => {
+    if (member.email !== email) {
+      DMNames.push(member.first_name)
+    }
+  })
+
+  let DMString = DMNames.join(', ');
+
+  if (DMNames.length > 2) {
+    DMString = `${DMNames[0]}, ${DMNames[2]} ...`
+  }
 
   return (
     <li className="one-dm" key={`channel-${channel.id}`}>
@@ -30,11 +43,7 @@ const DMChannel = ({ channel }) => {
               <UserIcon members={channel.members} />
             </div>
             <div className='dms__list-item--name-container'>
-              {channel.members.map(member => {
-                if (member.email !== email) {
-                  return <span key={`${member.id}`}> {member.first_name}</span>
-                }
-              })}
+              {DMString}
             </div>
           </div>
         </NavLink>
