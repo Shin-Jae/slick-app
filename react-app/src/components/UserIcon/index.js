@@ -1,6 +1,7 @@
 import './UserIcon.css'
 
 const UserIcon = ({ members }) => {
+
   if (members.length <= 2) {
     return (
       <figure

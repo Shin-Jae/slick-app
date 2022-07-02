@@ -38,3 +38,14 @@ ul {
 .no__display {
   display: hidden;
 }
+
+.try button {
+  color: black
+}
+
+.btn__disabled {
+  color: rgb(231, 231, 231);
+  border: 1px solid #CBCBCB;
+  font-weight: bold;
+  background-color: #CBCBCB;
+}
