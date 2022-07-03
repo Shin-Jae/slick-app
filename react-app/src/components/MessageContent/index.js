@@ -7,7 +7,7 @@ import { updateMessage, deleteMessage, getAllMessages } from '../../store/messag
 import MessageUserIcon from '../MessageUserIcon';
 
 
-const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
+const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpdated, setPrevMessage }) => {
   const { channelId, userId } = useParams()
   const dispatch = useDispatch();
   const allMessages = useSelector((state) => state.messages);
@@ -42,6 +42,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
   const handleEdit = (e) => {
     e.preventDefault()
     setEdit(!edit)
+    setPrevMessage(message.content)
   }
 
   const handleDelete = async (e) => {
@@ -76,6 +77,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete }) => {
     if (!errors.length) {
       try {
         updatedMessage = await dispatch(updateMessage(payload, message.id));
+        setMessageUpdated(updatedMessage.content)
       } catch (error) {
         setErrors([])
       }
