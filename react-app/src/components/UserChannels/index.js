@@ -12,14 +12,11 @@ const UserChannels = () => {
   const dispatch = useDispatch();
 
   const allChannels = useSelector((state) => state.channels);
+  console.log(Object.values(allChannels).length)
   const allUsers = useSelector((state) => state.search);
   const channels = Object.values(allChannels);
   const logInId = useSelector((state) => state.session.user.id)
   const [hoverDisplay, setHoverDisplay] = useState(false)
-  // const user = useSelector((state) => state.session.user)
-  // const userEmail = useSelector((state) => state.session.user.email);
-  // const allMessages = useSelector((state) => state.messages);
-  // const messages = Object.values(allMessages);
 
   useEffect(() => {
     dispatch(getAllChannels(logInId));
@@ -27,6 +24,8 @@ const UserChannels = () => {
   }, [dispatch, logInId, channelId]);
 
   if (!Object.keys(allUsers).length) return null;
+
+  console.log('channels::: ', channels)
 
   return (
     <div className='main-channels__header-container'>

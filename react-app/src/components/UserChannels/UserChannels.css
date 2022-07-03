@@ -51,10 +51,8 @@
 }
 
 .one-channel-container {
-  /* margin-bottom: .5em; */
   min-width: 100%;
   padding: .5em;
-  transition: 0.2s;
 }
 
 .one-channel-container:hover {
@@ -62,7 +60,6 @@
   display: inline-flex;
   width: 100%;
   font-weight: bold;
-  pointer-events: fill;
 }
 
 .blue {
