@@ -11,13 +11,22 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const privatechat = false
-  const userId = useSelector((state) => state.session.user.id)
   const [errors, setErrors] = useState([])
+  const [found, setFound] = useState('')
+  const userId = useSelector((state) => state.session.user.id)
 
   //used for search
   const [query, setQuery] = useState("")
   const allUsers = useSelector((state) => state.search);
   const users = Object.values(allUsers);
+
+  const handleNoUsers = (e) => {
+    const found = users.find(user =>
+      user.first_name.toLowerCase() === query.toLowerCase().trim() ||
+      user.last_name.toLowerCase() === query.toLowerCase().trim()
+    )
+    setFound(found)
+  }
 
   let setLength = set.size;
 
@@ -144,6 +153,7 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
             placeholder="Search"
             value={query}
             onInput={e => setQuery(e.target.value)}
+            onChange={handleNoUsers}
           />
           <div className={(filteredUsers.length !== 0 && filteredUsers.length !== users.length) ? 'container-add-members' : 'empty'}>
             <ul className="filtered-list" >
@@ -157,6 +167,9 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
                 }
               }) : null}
             </ul>
+            {!found && !filteredUsers.length &&
+              <h4 className='no__users--text-channels'>No users by that name</h4>
+            }
           </div>
         </div>
         <div>
