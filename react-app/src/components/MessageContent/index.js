@@ -26,7 +26,8 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
   // const [messageUpdated, setMessageUpdated] = useState('')
 
   useEffect(() => {
-    dispatch(getAllMessages(user.id, channelId))
+    if (channelId)
+      dispatch(getAllMessages(user.id, channelId))
     return () => {
       setDeleted(false)
     }

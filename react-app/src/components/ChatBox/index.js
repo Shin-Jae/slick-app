@@ -48,7 +48,9 @@ const ChatBox = () => {
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
-    dispatch(getAllMessages(userId, channelId))
+    if (channelId) {
+      dispatch(getAllMessages(userId, channelId))
+    }
     setOwner(currentChannel?.owner_id == parseInt(userId))
   }, [dispatch, userId, channelId, messageReceived, updateComplete, onDelete, deleted]);
 

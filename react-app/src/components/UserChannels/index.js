@@ -12,7 +12,6 @@ const UserChannels = () => {
   const dispatch = useDispatch();
 
   const allChannels = useSelector((state) => state.channels);
-  console.log(Object.values(allChannels).length)
   const allUsers = useSelector((state) => state.search);
   const channels = Object.values(allChannels);
   const logInId = useSelector((state) => state.session.user.id)
@@ -20,12 +19,12 @@ const UserChannels = () => {
 
   useEffect(() => {
     dispatch(getAllChannels(logInId));
-    dispatch(getAllMessages(logInId, channelId))
+    if (channelId) {
+      dispatch(getAllMessages(logInId, channelId))
+    }
   }, [dispatch, logInId, channelId]);
 
   if (!Object.keys(allUsers).length) return null;
-
-  console.log('channels::: ', channels)
 
   return (
     <div className='main-channels__header-container'>
@@ -49,7 +48,7 @@ const UserChannels = () => {
                   <span className="material-symbols-outlined hashtag__icon">
                     tag
                   </span>
-                {`${channel.name}`}
+                  {`${channel.name}`}
                 </span>
               </li>
             </div>

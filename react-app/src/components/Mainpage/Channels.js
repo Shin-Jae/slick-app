@@ -27,7 +27,9 @@ function Channels() {
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
-    dispatch(getAllMessages(userId, channelId))
+    if (channelId) {
+      dispatch(getAllMessages(userId, channelId))
+    }
   }, [dispatch, userId, channelId]);
 
   if (!Object.keys(allUsers).length) return null;

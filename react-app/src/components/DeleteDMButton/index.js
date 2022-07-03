@@ -15,7 +15,9 @@ const DeleteDMButton = ({ currentChannelId, showDelete }) => {
 
   useEffect(() => {
     dispatch(getAllChannels(logInId));
-    dispatch(getAllMessages(logInId, currentChannelId))
+    if (currentChannelId) {
+      dispatch(getAllMessages(logInId, currentChannelId))
+    }
   }, [dispatch, deleted]);
 
   const handleDelete = async (currentChannelId) => {

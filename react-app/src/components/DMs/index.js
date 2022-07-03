@@ -19,7 +19,9 @@ const DMs = () => {
 
   useEffect(() => {
     dispatch(getAllChannels(id));
-    dispatch(getAllMessages(id, channelId))
+    if (channelId) {
+      dispatch(getAllMessages(id, channelId))
+    }
   }, [dispatch, id, channelId]);
 
   return (
@@ -35,7 +37,7 @@ const DMs = () => {
       </div>
       <ul className="view-dms view-channels" style={{ listStyleType: "none" }}>
         {privateChannels.map(channel =>
-          <DMChannel channel={channel} key={channel.id}/>
+          <DMChannel channel={channel} key={channel.id} />
         )}
       </ul>
     </div>
