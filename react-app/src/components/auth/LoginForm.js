@@ -23,23 +23,18 @@ const LoginForm = () => {
   };
 
   const demoUser1 = async (e) => {
-    e.preventDefault()
-    // setEmail('demo@aa.io');
-    // setPassword('password')
+    e.preventDefault()    
     await dispatch(login('demo@aa.io', 'password'));
   }
 
   const demoUser2 = async (e) => {
-    e.preventDefault()
-    setEmail('Tony@ironman.io');
-    setPassword('password')
+    e.preventDefault()   
     await dispatch(login('Tony@ironman.io', 'password'));
   }
 
   const demoUser3 = async (e) => {
-    setEmail('bill@microsoft.com');
-    setPassword('password')
-    await dispatch(login(email, password));
+    e.preventDefault()
+    await dispatch(login('bill@microsoft.com', 'password'));
   }
 
   const updateEmail = (e) => {
