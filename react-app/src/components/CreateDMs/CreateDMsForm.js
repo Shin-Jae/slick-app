@@ -11,6 +11,7 @@ function CreateDMForm({ onClose }) {
   const history = useHistory()
   const [errors, setErrors] = useState([])
   const [submitted, setSubmitted] = useState(false)
+  const [found, setFound] = useState('')
 
   const userChannels = useSelector((state) => state.channels);
   const channels = Object.values(userChannels);
@@ -101,6 +102,14 @@ function CreateDMForm({ onClose }) {
   }
   const filteredUsers = filterUsers(users, query);
 
+  const handleNoUsers = (e) => {
+    const found = users.find(user =>
+      user.first_name.toLowerCase() === query.toLowerCase().trim() ||
+      user.last_name.toLowerCase() === query.toLowerCase().trim()
+    )
+    setFound(found)
+  }
+
 
   const removeMembers = (id) => {
     if (set.has(id)) {
@@ -158,6 +167,7 @@ function CreateDMForm({ onClose }) {
               value={query}
               required={!setArr.length}
               onInput={e => setQuery(e.target.value)}
+              onChange={handleNoUsers}
             />
             <div className={filteredUsers.length !== 0 && filteredUsers.length !== users.length ? 'container-add-members' : 'empty'}>
               <ul className="filtered-list" >
@@ -171,6 +181,9 @@ function CreateDMForm({ onClose }) {
                   }
                 }) : null}
               </ul>
+              {!found && !filteredUsers.length &&
+                <h4 className='no-users-text-create'>No users by that name</h4>
+              }
             </div>
           </div>
         </div>

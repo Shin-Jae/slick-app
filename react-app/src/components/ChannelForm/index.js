@@ -15,6 +15,7 @@ const CreateChannelForm = ({ onClose }) => {
   const privatechat = false
   const [errors, setErrors] = useState([])
   const [trySubmit, setTrySubmit] = useState(false)
+  const [found, setFound] = useState('')
 
   //used for search
   const userId = useSelector((state) => state.session.user.id)
@@ -78,6 +79,14 @@ const CreateChannelForm = ({ onClose }) => {
     })
   }
   const filteredUsers = filterUsers(users, query);
+
+  const handleNoUsers = (e) => {
+    const found = users.find(user =>
+      user.first_name.toLowerCase() === query.toLowerCase().trim() ||
+      user.last_name.toLowerCase() === query.toLowerCase().trim()
+    )
+    setFound(found)
+  }
 
   const removeMembers = (id) => {
     if (set.has(id)) {
@@ -144,6 +153,7 @@ const CreateChannelForm = ({ onClose }) => {
               placeholder="Add Members"
               value={query}
               onInput={e => setQuery(e.target.value)}
+              onChange={handleNoUsers}
             />
             <div className={filteredUsers.length !== 0 && filteredUsers.length !== users.length ? 'container-add-members' : 'empty'}>
               <ul className="filtered-list-channels" >
@@ -157,6 +167,9 @@ const CreateChannelForm = ({ onClose }) => {
                   }
                 }) : null}
               </ul>
+              {!found && !filteredUsers.length &&
+                <h4 className='no-users-text-create'>No users by that name</h4>
+              }
             </div>
           </div>
         </div>
