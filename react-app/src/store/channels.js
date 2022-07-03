@@ -65,7 +65,7 @@ export const deleteChannel = (channelId) => async dispatch => {
         method: 'DELETE'
     });
     if (response.ok) {
-        const deletedChannel = await response.json();        
+        const deletedChannel = await response.json();
         dispatch(removeChannel(deleteChannel))
         return deletedChannel
     }
@@ -87,7 +87,7 @@ const channelReducer = (state = initialState, action) => {
             updatedState[action.channels.id] = action.channels;
             return updatedState
         case DELETE_CHANNEL:
-            const newState = {...state}            
+            const newState = {...state}
             delete newState[action.channel.id];
             return newState
         default:

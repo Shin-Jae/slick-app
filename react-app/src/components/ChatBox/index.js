@@ -29,15 +29,14 @@ const ChatBox = () => {
   const [messageReceived, setMessageReceived] = useState('')
   const [updateComplete, setUpdateComplete] = useState('')
   const [messageUpdated, setMessageUpdated] = useState('')
+  const [prevMessage, setPrevMessage] = useState('')
   const [createMessage, setCreateMessage] = useState('')
   const [onDelete, setOnDelete] = useState(false)
   const [owner, setOwner] = useState(false)
   const [typing, setTyping] = useState(false)
   const [otherTyping, setOtherTyping] = useState('')
   const [userTyping, setUserTyping] = useState('')
-
-  // const [name, setName] = useState("")
-  //   const [description, setDescription] = useState("")
+  const [notification, setNotification] = useState('')
 
   let privateMembers;
 
@@ -51,7 +50,7 @@ const ChatBox = () => {
     dispatch(getAllChannels(userId));
     dispatch(getAllMessages(userId, channelId))
     setOwner(currentChannel?.owner_id == parseInt(userId))
-  }, [dispatch, userId, channelId, messageReceived, messageUpdated, updateComplete, onDelete, deleted]);
+  }, [dispatch, userId, channelId, messageReceived, updateComplete, onDelete, deleted]);
 
   let timeout;
   clearTimeout(timeout)
@@ -83,10 +82,23 @@ const ChatBox = () => {
       clearTimeout(timeout)
     })
 
+    // socket.emit('update', {
+    //   old_message: prevMessage,
+    //   new_message: messageUpdated
+    // })
+
+    // socket.on('update', (data) => {
+    //   setMessageUpdated(data.new_message)
+    // })
 
     socket.emit('chat', createMessage)
     socket.on("chat", (data) => {
       setMessageReceived(data)
+      // if (channels[messageReceived.channel_id]) {
+      //   channels[messageReceived.channel_id]['notify'] = true
+      //   setNotification(channels[messageReceived.channel_id])
+      //   console.log('notification', notification)
+      // }
     })
 
     socket.emit('delete')
@@ -180,7 +192,13 @@ const ChatBox = () => {
         <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>
           {messages.map(message =>
             <li className="one-message" key={`message-${message.id}`}>
-              <MessageContent message={message} setUpdateComplete={setUpdateComplete} setOnDelete={setOnDelete} />
+              <MessageContent
+                message={message}
+                setUpdateComplete={setUpdateComplete}
+                setOnDelete={setOnDelete}
+                setMessageUpdated={setMessageUpdated}
+                setPrevMessage={setPrevMessage}
+              />
             </li>
           )}
         </ul>
@@ -191,10 +209,7 @@ const ChatBox = () => {
           +otherTyping.id !== +userId &&
           +otherTyping.channel == +currentChannel.id &&
           <div className='chatbox__typing--container'>
-            {/* <p className='chatbox__typing'>{otherTyping.userName} is typing...</p> */}
-
             <Typing person={otherTyping.userName} />
-
           </div>
         }
         <MessageInput
