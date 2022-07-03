@@ -9,7 +9,6 @@ function CreateDMForm({ onClose }) {
   const dispatch = useDispatch()
   const history = useHistory()
   const [errors, setErrors] = useState([])
-  // const [submitted, setSubmitted] = useState(false)
   const [resetMem, setResetMem] = useState(false)
   const [found, setFound] = useState('')
 
