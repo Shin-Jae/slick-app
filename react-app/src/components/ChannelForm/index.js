@@ -37,7 +37,7 @@ const CreateChannelForm = ({ onClose }) => {
     if (count < 2)
       validationErrors.push("Please add a member to the channel")
     setErrors(validationErrors)
-  }, [name, description, count, , trySubmit, dispatch])
+  }, [name, description, count, trySubmit, dispatch])
 
   useEffect(() => {
     if (trySubmit === false) {
