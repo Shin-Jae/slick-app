@@ -82,8 +82,7 @@ def deleteChannel(channelId):
     for message in channel.messages:
         db.session.delete(message)
         db.session.commit()
-    print('children:: ', channel.channel_members)
-
+    # print('children:: ', channel.channel_members)
     db.session.delete(channel)
     db.session.commit()
     return channel.to_dict()
