@@ -6,11 +6,11 @@ import { createOneChannel, getAllChannels } from "../../store/channels"
 const set = new Set();
 let count = 1
 function CreateDMForm({ onClose }) {
-
   const dispatch = useDispatch()
   const history = useHistory()
   const [errors, setErrors] = useState([])
-  const [submitted, setSubmitted] = useState(false)
+  // const [submitted, setSubmitted] = useState(false)
+  const [resetMem, setResetMem] = useState(false)
   const [found, setFound] = useState('')
 
   const userChannels = useSelector((state) => state.channels);
@@ -25,22 +25,22 @@ function CreateDMForm({ onClose }) {
   const name = `private for ${userId}`
   const description = `dm description ${userId}`
   const private_chat = true
-  const [resetMem, setResetMem] = useState(false)
 
   let setArr = [...set]
+
+  useEffect(() => {
+    const validationErrors = []
+    if (count < 2) {
+      validationErrors.push("Please add a member to the DM")
+    }
+    setErrors(validationErrors)
+  }, [count, resetMem])
 
   useEffect(() => {
     if (resetMem === false) {
       set.clear();
     }
   }, [resetMem])
-
-  useEffect(() => {
-    const validationErrors = []
-    if (count < 2)
-      validationErrors.push("Please add a member to the DM")
-    setErrors(validationErrors)
-  }, [name, description, count, submitted, dispatch])
 
   //check if dm already exists
   let matchId;
@@ -61,7 +61,6 @@ function CreateDMForm({ onClose }) {
 
   const channelSubmission = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
 
     if (matchId) {
       onClose(false)
@@ -77,13 +76,14 @@ function CreateDMForm({ onClose }) {
       owner_id: userId,
       members: setArr
     }
-
+    setResetMem(true)
     if (setArr.length > 1) {
       const createdChannel = await dispatch(createOneChannel(userId, payload))
       if (createdChannel) {
         setErrors([])
-        setSubmitted(false)
+        setResetMem(false)
         set.clear();
+        count = 1
         await dispatch(getAllChannels(userId))
         history.push(`/users/${userId}/${createdChannel.id}`)
         onClose(false)
@@ -137,17 +137,14 @@ function CreateDMForm({ onClose }) {
   return (
     <div className='modal__form-container'>
       <form onSubmit={channelSubmission}>
-        <h1>Create New DM</h1>
-        {errors[0] &&
-          submitted &&
-          <div className='error__container'>
-            <ul>{errors.map((error) => (
-              <li className="error__text"
-                key={error}>
-                {error}
-              </li>))}
-            </ul>
-          </div>}
+        <h1>Send New DM</h1>
+        {errors[0] && resetMem &&
+          <ul className='error__container'>{errors.map((error) => (
+            <li className="error__text "
+              key={error}>
+              {error}
+            </li>))}
+          </ul>}
         <div>
           {/* <label>Members: </label> */}
           <div className="added-members-container">
@@ -163,9 +160,9 @@ function CreateDMForm({ onClose }) {
           <div>
             <input
               type="text"
-              placeholder="Add Members"
+              placeholder="Search Members"
               value={query}
-              required={!setArr.length}
+              // required={!setArr.length}
               onInput={e => setQuery(e.target.value)}
               onChange={handleNoUsers}
             />
@@ -191,7 +188,6 @@ function CreateDMForm({ onClose }) {
         <div>
           <button
             type="submit"
-            disabled={errors.length > 0}
           >Send DM</button>
         </div>
       </form>
