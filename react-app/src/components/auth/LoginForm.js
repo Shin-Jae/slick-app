@@ -114,6 +114,7 @@ const LoginForm = () => {
               className='login-input-field'
               name='email'
               type='text'
+              required
               placeholder='name@work-email.com'
               value={email}
               onChange={updateEmail}
@@ -127,6 +128,7 @@ const LoginForm = () => {
               className='login-input-field'
               name='password'
               type='password'
+              required
               placeholder='Your password'
               value={password}
               onChange={updatePassword}
@@ -136,8 +138,8 @@ const LoginForm = () => {
             <button type='submit' className='login-btn'>Login</button>
           </div>
         </div>
-      </form>
       <AboutLinks />
+      </form>
     </div>
   );
 };

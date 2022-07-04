@@ -1,9 +1,9 @@
 .about__links--container {
   display: flex;
   justify-content: center;
-  position: fixed;
-  bottom: 0;
+  bottom: 0em;
   left: 0;
+  margin-top: 5em;
   width: 100%;
 }
 

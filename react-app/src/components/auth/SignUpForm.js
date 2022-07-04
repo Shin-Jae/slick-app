@@ -184,17 +184,17 @@ const SignUpForm = () => {
         <h1>Join <span className='text-sign-in-slick'>Slick</span> today</h1>
         <p className='text-sign-in-suggest'>We suggest using the email address you use at work</p>
         <img
-        className='slick-logo3'
-        alt=''
-        src={slickicon} />
+          className='slick-logo3'
+          alt=''
+          src={slickicon} />
       </div>
       <form onSubmit={onSignUp} className='form-container'>
-      {errors[0] &&
-        <div className='error__container'>
-          {errors.map((error, ind) => (
-            <p key={ind} className='error__text'>{error}</p>
-          ))}
-        </div>}
+        {errors[0] &&
+          <div className='error__container'>
+            {errors.map((error, ind) => (
+              <p key={ind} className='error__text'>{error}</p>
+            ))}
+          </div>}
         <div className='input'>
           <input
             className='login-input-field'
@@ -274,28 +274,28 @@ const SignUpForm = () => {
                 src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1"}
                 alt="2"
                 className={pickedImage === 'profileImg2' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
-                />
+              />
             </span>
             <span onClick={profileImg3}>
               <img
                 src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1"}
                 alt="3"
                 className={pickedImage === 'profileImg3' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
-                />
+              />
             </span>
             <span onClick={profileImg4}>
               <img
                 src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1"}
                 alt="4"
                 className={pickedImage === 'profileImg4' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
-                />
+              />
             </span>
             <span onClick={profileImg5}>
               <img
                 src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1"}
                 alt="5"
                 className={pickedImage === 'profileImg5' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
-                />
+              />
             </span>
             <span onClick={profileImg6}>
               <img
@@ -308,8 +308,8 @@ const SignUpForm = () => {
           {/* : null} */}
         </div>
         <button type='submit' className='login-btn'>Sign Up</button>
+        <AboutLinks />
       </form>
-      <AboutLinks />
     </div>
   );
 };
