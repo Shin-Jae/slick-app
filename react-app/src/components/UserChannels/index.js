@@ -1,11 +1,10 @@
 import './UserChannels.css'
 import CreateChannelModal from '../ChannelModal'
-import { NavLink, useParams, useHistory } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
-import EditChannelModal from "../EditChannelModal";
 
 const UserChannels = () => {
   const { userId, channelId } = useParams();

@@ -97,16 +97,14 @@ const messageReducer = (state = initialState, action) => {
         messages[message.id] = message;
       }
       return { ...messages };
-
     case CREATE_MESSAGE:
       if (!state[action.message.id]) {
         const newState = {
           ...state,
           [action.message.id]: action.message
         }
-        return newState;
-      }
-
+        return newState
+      };
     case UPDATE_MESSAGE:
       const updatedState = {
         ...state,
@@ -116,12 +114,10 @@ const messageReducer = (state = initialState, action) => {
         }
       }
       return updatedState;
-
     case DELETE_MESSAGE:
       const newState = { ...state };
       delete newState[action.deletedMessage.id];
       return newState;
-
     default:
       return state;
   }

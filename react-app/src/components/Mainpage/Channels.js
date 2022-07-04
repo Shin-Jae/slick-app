@@ -1,29 +1,19 @@
-import { useSelector, useDispatch, useStore } from "react-redux";
-import { NavLink, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
 import ChatBox from "../ChatBox";
 import './Channels.css'
 import DMs from '../DMs';
 import UserChannels from '../UserChannels';
-import CreateDMModal from "../CreateDMs";
 
 function Channels() {
   const { userId, channelId } = useParams();
   const dispatch = useDispatch();
 
-  const allChannels = useSelector((state) => state.channels);
   const allUsers = useSelector((state) => state.search);
-  const channels = Object.values(allChannels);
-  // const user = useSelector((state) => state.session.user);
 
-  const userEmail = useSelector((state) => state.session.user.email);
-
-  const allMessages = useSelector((state) => state.messages);
-  // const messages = Object.values(allMessages);
-
-  const [hoverDisplay, setHoverDisplay] = useState(false)
 
   useEffect(() => {
     dispatch(getAllChannels(userId));

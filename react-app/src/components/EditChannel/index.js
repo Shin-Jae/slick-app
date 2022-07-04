@@ -117,8 +117,8 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
     <div div className='modal__form-container'>
       <form onSubmit={editChannelSubmission}>
         <h1>Edit Channel</h1>
-        <ul className="validation-errors">{errors.map((error) => (
-          <li key={error}>
+        <ul className="error__container">{errors.map((error) => (
+          <li className="error_info error__text" key={error}>
             {error}
           </li>))}
         </ul>

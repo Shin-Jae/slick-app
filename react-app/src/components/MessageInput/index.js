@@ -1,8 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { getAllChannels } from '../../store/channels';
-import { getAllMessages } from '../../store/messages';
 import { useState, useEffect } from 'react'
 import { createNewMessage } from '../../store/messages';
 import './MessageInput.css'
@@ -13,7 +11,6 @@ import './MessageInput.css'
 const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
   const dispatch = useDispatch()
   const channels = useSelector((state) => state.channels)
-  const messages = useSelector((state) => state.messages)
   const [rowValue, setRowValue] = useState(5)
   const [spaceCheck, setSpaceCheck] = useState(0)
   const user = useSelector(state => state.session.user);
@@ -32,7 +29,7 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
 
   if (!channels[channelId]) return null;
 
-  const { name, members, private_chat } = channels[channelId]
+  const { name, private_chat } = channels[channelId]
 
   let privateMembers;
 

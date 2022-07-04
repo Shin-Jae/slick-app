@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory, Redirect } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { getAllChannels } from '../../store/channels';
-import { getAllMessages, updateMessage } from '../../store/messages';
+import { getAllMessages } from '../../store/messages';
 import EditChannelModal from '../EditChannelModal';
 import MessageContent from '../MessageContent'
 import EditDMModal from '../EditDMs';
@@ -36,7 +36,6 @@ const ChatBox = () => {
   const [typing, setTyping] = useState(false)
   const [otherTyping, setOtherTyping] = useState('')
   const [userTyping, setUserTyping] = useState('')
-  const [notification, setNotification] = useState('')
 
   let privateMembers;
 
@@ -51,7 +50,7 @@ const ChatBox = () => {
     if (channelId) {
       dispatch(getAllMessages(userId, channelId))
     }
-    setOwner(currentChannel?.owner_id == parseInt(userId))
+    setOwner(currentChannel?.owner_id === parseInt(userId))
   }, [dispatch, userId, channelId, messageReceived, updateComplete, onDelete, deleted]);
 
   let timeout;
@@ -124,7 +123,7 @@ const ChatBox = () => {
 
     if (deletedChannel) {
       setDeleted(true)
-      if (deletedChannel.id == channelId) {
+      if (deletedChannel.id === parseInt(channelId)) {
         history.push(`/users/${logInId}`)
       }
     }

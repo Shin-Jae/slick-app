@@ -9,7 +9,7 @@ import DMChannel from '../DMChannel';
 
 const DMs = () => {
   const dispatch = useDispatch();
-  const { userId, channelId } = useParams();
+  const { channelId } = useParams();
   const allChannels = useSelector((state) => state.channels);
   const channels = Object.values(allChannels);
   const { id } = useSelector((state) => state.session.user);
