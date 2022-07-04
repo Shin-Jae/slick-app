@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import DropdownMenu from './DropdownMenu';
 import './NavBar.css'
@@ -17,7 +16,6 @@ const NavBar = ({ loaded }) => {
   }
 
   if (user) {
-    const { id, first_name, last_name } = user;
     sessionNav = (
       <>
         <img

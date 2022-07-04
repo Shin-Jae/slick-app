@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { getAllChannels, updateChannel } from "../../store/channels"
@@ -113,7 +113,7 @@ function EditDMModalForm({ onClose, channelId, set }) {
               }) : null}
             </ul>
           </div>
-          <button type="submit" disabled={setArr.length == 1}>Edit members</button>
+          <button type="submit" disabled={setArr.length === 1 || setArr.length === '1'}>Edit members</button>
         </div>
       </form>
     </div>

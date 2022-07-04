@@ -1,7 +1,7 @@
 import Channels from "./Channels";
 // import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useParams, Redirect } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import UnauthorizedUser from "../UnauthorizedUser";
 // import { getAllChannels } from '../../store/channels';
 

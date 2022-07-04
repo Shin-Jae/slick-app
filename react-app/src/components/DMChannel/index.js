@@ -2,7 +2,6 @@ import './DMChannel.css'
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from 'react';
-import EditDMModal from '../EditDMs';
 import DeleteDMButton from '../DeleteDMButton';
 import UserIcon from '../UserIcon';
 

@@ -1,16 +1,12 @@
 import './MessageContent.css'
-import MessageInput from '../MessageInput/';
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { updateMessage, deleteMessage, getAllMessages } from '../../store/messages';
+import { updateMessage, deleteMessage } from '../../store/messages';
 import MessageUserIcon from '../MessageUserIcon';
 
 
 const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpdated, setPrevMessage }) => {
-  const { channelId, userId } = useParams()
   const dispatch = useDispatch();
-  const allMessages = useSelector((state) => state.messages);
   const allUsers = useSelector((state) => state.search);
   const user = useSelector((state) => state.session.user)
   const [errors, setErrors] = useState([])
