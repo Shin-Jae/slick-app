@@ -303,8 +303,8 @@ const SignUpForm = () => {
           {/* : null} */}
         </div>
         <button type='submit' className='login-btn'>Sign Up</button>
+        <AboutLinks />
       </form>
-      <AboutLinks />
     </div>
   );
 };
