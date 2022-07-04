@@ -115,6 +115,15 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
       if (!trows) trows = 5;
     }
   }
+
+  const handleKeyPress = (e) => {
+    if (e.target.value.length <= 1999) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        handleSave(e);
+      }
+    }
+  };
+
   // const timeString = message.created_at.slice(17, 25)
   const time = new Date(message.created_at)
 
@@ -142,6 +151,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
             maxLength='2000'
             className={edit ? 'input__inactive' : 'input__active'}
             value={content}
+            onKeyPress={handleKeyPress}
             onChange={handleChange}
             disabled={edit}
           />
