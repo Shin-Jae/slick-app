@@ -1,0 +1,19 @@
+.about__links--container {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.about__links--text {
+  margin: 1em 3em 2em;
+  color: grey;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.about__links--text:hover {
+  text-shadow: 0 0 1px grey;
+}

@@ -4,7 +4,7 @@ import { NavLink, Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
 import "./LoginForm.css"
 import slickicon from "../../images/slickicon.png"
-
+import AboutLinks from '../AboutLinks';
 
 const LoginForm = () => {
 
@@ -23,12 +23,12 @@ const LoginForm = () => {
   };
 
   const demoUser1 = async (e) => {
-    e.preventDefault()    
+    e.preventDefault()
     await dispatch(login('demo@aa.io', 'password'));
   }
 
   const demoUser2 = async (e) => {
-    e.preventDefault()   
+    e.preventDefault()
     await dispatch(login('Tony@ironman.io', 'password'));
   }
 
@@ -137,6 +137,7 @@ const LoginForm = () => {
           </div>
         </div>
       </form>
+      <AboutLinks />
     </div>
   );
 };

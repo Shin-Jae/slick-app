@@ -5,6 +5,7 @@ import { signUp } from '../../store/session';
 import './LoginForm.css';
 import './SignUpForm.css';
 import slickicon from "../../images/slickicon.png"
+import AboutLinks from '../AboutLinks';
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
@@ -308,6 +309,7 @@ const SignUpForm = () => {
         </div>
         <button type='submit' className='login-btn'>Sign Up</button>
       </form>
+      <AboutLinks />
     </div>
   );
 };
