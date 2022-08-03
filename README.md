@@ -88,17 +88,28 @@ Welcome to slick! This project is inspired by [Slack](https://slack.com/) where 
 * User can log in, and log out of the site
 * User can sign up as a new user
 * User can also choose to log in as a demo user.
+
+<img width="1135" alt="Screen Shot 2022-08-03 at 7 01 31 PM" src="https://user-images.githubusercontent.com/95829246/182727196-94b24a8f-7868-4e75-8a04-24b809183f54.png">
+
 2. Channels
 * Logged-in users can create, edit, and delete channels
 * Logged-in users can add members when they are creating or editing channels
 * Logged-in users will only see the channels that they belong
+
+<img width="653" alt="Screen Shot 2022-08-03 at 7 02 37 PM" src="https://user-images.githubusercontent.com/95829246/182727234-6b548a15-5443-4c78-b03d-2ce462781321.png">
+
 3. Message
 * Every user can send individual direct message(DM) or group message to other users
 * Inside the DM channel, logged-in users can create, edit, and delete their own message
 4. Live Server
 * When two logged-in users are chatting, both of them will see the chat being updated 
-5. Seach
+
+<img width="1437" alt="Screen Shot 2022-08-03 at 7 02 54 PM" src="https://user-images.githubusercontent.com/95829246/182727277-6e8d34da-56e9-469f-a441-51ea6fcc9a50.png">
+
+5. Search
 * All logged-in users can search other users
+
+<img width="471" alt="Screen Shot 2022-08-03 at 7 04 55 PM" src="https://user-images.githubusercontent.com/95829246/182727351-1211ee40-62f8-4869-9a60-c44f173d5dbc.png">
 
 ## Homepage
 
