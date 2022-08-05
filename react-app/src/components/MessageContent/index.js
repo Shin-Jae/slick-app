@@ -19,16 +19,6 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
   const [textareaHeight, setTextareaHeight] = useState(message.content.length < 600 ?
     2 : message.content.length / 131);
   const [spaceCheck, setSpaceCheck] = useState(message.content.trim().length)
-  // const [messageUpdated, setMessageUpdated] = useState('')
-
-  // useEffect(() => {
-  //   if (channelId)
-  //   dispatch(getAllMessages(user.id, channelId))
-  //   console.log('ok ok ok ok')
-  //   return () => {
-  //     setDeleted(false)
-  //   }
-  // }, [deleted]);
 
   useEffect(() => {
     const validationErrors = []

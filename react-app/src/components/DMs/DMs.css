@@ -1,31 +1,32 @@
 .one-dm {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: space-between;
-  transition: 0.2s;
-  width: 100%;
+  font-size: 15px;
   position: relative;
 }
 
-.one-dm:hover {
+.dms__list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: space-evenly;
+}
+
+.dms__list-item--icon-name {
+  padding-left: 1em;
+
+}
+
+.dms__list-item:hover {
   background-color: #FFEE40;
-  font-weight: bold;
+  text-shadow: 1px 0 0 currentColor;
 }
 
 .dms__list-item--icon-name {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 85%;
+  /* width: 85%; */
 }
 
-.dms__list-item {
+.dms__link {
   width: 100%;
-  margin-bottom: .25em;
-}
-
-.one-dm {
-  font-size: 15px;
-  font-family: sans-serif;
 }

@@ -13,18 +13,32 @@
   justify-content: space-between;
   align-items: center;
   margin: .5em;
-  /* position: absolute; */
   top: 0;
 }
 
+.channels__header-right {
+  display: flex;
+  align-items: center;
+  padding: .2em;
+}
+
+.arrow__dropdown {
+  padding: .1em;
+  border-radius: .15em;
+  cursor: pointer;
+  margin-right: .15em;
+}
+
+.arrow__dropdown:hover {
+  background-color: rgb(168, 168, 168);
+}
+
 .channels__header-text {
-  padding-top: .45em;
-  padding-bottom: .1em;
-  padding-left: 1.2em;
   white-space: nowrap;
   font-size: 15px;
   margin: .25em 0;
   font-family: sans-serif;
+  cursor: pointer;
 }
 
 .button__create-channel--hidden {
@@ -34,7 +48,6 @@
 .button__create-channel {
   background-color: transparent;
   border: transparent;
-  /* padding: .45em; */
   border-radius: 1em;
   transition: 0.2s;
 }
@@ -46,20 +59,17 @@
   cursor: pointer;
 }
 
-.view-channels {
-  padding-left: .5em;
-}
-
 .one-channel-container {
   min-width: 100%;
-  padding: .5em;
+  display: inline-flex;
+  padding: .25em;
+  padding-left: 1em;
 }
 
 .one-channel-container:hover {
   background-color: #FFEE40;
-  display: inline-flex;
   width: 100%;
-  font-weight: bold;
+  text-shadow: 1px 0 0 currentColor;
 }
 
 .blue {

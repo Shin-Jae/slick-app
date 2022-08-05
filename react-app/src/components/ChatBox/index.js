@@ -63,8 +63,12 @@ const ChatBox = () => {
   }
 
   useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'auto' });
+  }, [dispatch, currentChannel]);
+
+  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [dispatch, channelId, messageReceived]);
+  }, [dispatch, messageReceived]);
 
   useEffect(() => {
     socket = io();
@@ -139,6 +143,60 @@ const ChatBox = () => {
     )
   }
 
+  const getDate = (message) => {
+    const { created_at } = message;
+    return created_at.slice(0, 11)
+  }
+
+  const getHumanDate = (message) => {
+    let messageArray = message.split(' ');
+    const days = {
+      'Mon': 'Monday',
+      'Tue': 'Tuesday',
+      'Wed': 'Wednesday',
+      'Thu': 'Thursday',
+      'Fri': 'Friday',
+      'Sat': 'Saturday',
+      'Sun': 'Sunday'
+    }
+
+    const months = {
+      'Jan': 'January',
+      'Feb': 'February',
+      'Mar': 'March',
+      'Apr': 'April',
+      'May': 'May',
+      'Jun': 'June',
+      'Jul': 'July',
+      'Aug': 'August',
+      'Sep': 'September',
+      'Oct': 'October',
+      'Nov': 'November',
+      'Dec': 'December'
+    }
+
+    const numberSuffix = {
+      0: 'th',
+      1: 'st',
+      2: 'nd',
+      3: 'rd',
+      4: 'th',
+      5: 'th',
+      6: 'th',
+      7: 'th',
+      8: 'th',
+      9: 'th',
+    }
+
+    let day = days[messageArray[0].slice(0, 3)];
+    let date = +messageArray[1];
+    let month = months[messageArray[2]];
+    date = date.toString();
+    const dateSuffix = (numberSuffix[date[date.length - 1]]);
+    const fullDateString = `${day}, ${month} ${date}${dateSuffix}`
+    return fullDateString;
+  }
+
   return (
     <div className='chatbox'>
       <div className='chatbox__header'>
@@ -191,7 +249,12 @@ const ChatBox = () => {
       </div>
       <div className='chatbox__messages'>
         <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>
-          {messages.map(message =>
+          {messages.length > 0 &&
+            <div className='date__line'>
+              <p className='date__string'>{getHumanDate(messages[0].created_at)}</p>
+            </div>
+          }
+          {messages.map((message, i) =>
             <li className="one-message" key={`message-${message.id}`}>
               <MessageContent
                 message={message}
@@ -200,6 +263,13 @@ const ChatBox = () => {
                 setMessageUpdated={setMessageUpdated}
                 setPrevMessage={setPrevMessage}
               />
+              {
+                i > 0 &&
+                getDate(messages[i - 1]) !== getDate(message) &&
+                <div className='date__line'>
+                  <p className='date__string'>{getHumanDate(message.created_at)}</p>
+                </div>
+              }
             </li>
           )}
         </ul>

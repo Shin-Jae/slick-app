@@ -13,7 +13,7 @@ ReactDOM.render(
     <Provider store={store}>
       <ModalProvider>
         <App />
-      </ModalProvider>        
+      </ModalProvider>
       </Provider>
   </React.StrictMode>,
   document.getElementById('root')

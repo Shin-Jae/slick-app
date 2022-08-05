@@ -14,6 +14,7 @@ const UserChannels = () => {
   const allUsers = useSelector((state) => state.search);
   const channels = Object.values(allChannels);
   const logInId = useSelector((state) => state.session.user.id)
+  const [hide, setHide] = useState(false)
   const [hoverDisplay, setHoverDisplay] = useState(false)
 
   useEffect(() => {
@@ -23,6 +24,10 @@ const UserChannels = () => {
     }
   }, [dispatch, logInId, channelId]);
 
+  const handleToggle = () => {
+    setHide(prev => !prev)
+  }
+
   if (!Object.keys(allUsers).length) return null;
 
   return (
@@ -31,17 +36,40 @@ const UserChannels = () => {
         onMouseEnter={(e) => setHoverDisplay(true)}
         onMouseLeave={(e) => setHoverDisplay(false)}
       >
-        <p className='channels__header-text'>Channels</p>
+        <div className='channels__header-right'>
+          <span
+            className="material-symbols-outlined arrow__dropdown"
+            onClick={handleToggle}
+            style={
+              hide ?
+                {
+                  transform: 'rotate(-90deg)',
+                  transition: 'transform 300ms ease'
+                } :
+                {
+                  transform: 'rotate(0deg)',
+                  transition: 'transform 300ms ease'
+                }
+            }
+          >
+            arrow_drop_down
+          </span>
+          <p
+            className='channels__header-text'
+            onClick={handleToggle}
+          >Channels</p>
+        </div>
         <CreateChannelModal hoverDisplay={hoverDisplay} />
       </div>
-      <ul className="view-channels" style={{ listStyleType: "none" }}>
+      <ul
+        className="view-channels"
+        style={hide ? { visibility: 'hidden' } : null}
+      >
         {channels.map(channel =>
           !channel.private_chat &&
-          <NavLink key={channel.id} activeClassName="blue" activeStyle={{
-            backgroundColor: '#15D4FF',
-            color: 'white'
-          }} exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}  >
-            <div className='one-channel-container' >
+          <NavLink key={channel.id} activeClassName="dm-blue" activeStyle={{ color: 'white' }}
+            exact to={`/users/${userId}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}  >
+            <div className='one-channel-container'>
               <li className="one-channel" key={`channel-${channel.id}`}>
                 <span className='hashtag-channels'>
                   <span className="material-symbols-outlined hashtag__icon">
