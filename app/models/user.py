@@ -77,6 +77,7 @@ class Message(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     channel_id = db.Column(db.Integer,  db.ForeignKey(
         'channels.id', ondelete="CASCADE"), nullable=False)
+    image = db.Column(db.String(2000))
     created_at = db.Column(db.DateTime(timezone=False), nullable=False)
     updated_at = db.Column(db.DateTime(timezone=False), nullable=False)
 
@@ -95,6 +96,7 @@ class Message(db.Model):
             "content": self.content,
             "owner_id": self.owner_id,
             "channel_id": self.channel_id,
+            "image": self.image,
             "created_at": self.created_at
         }
 

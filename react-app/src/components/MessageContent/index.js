@@ -141,6 +141,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
             onChange={handleChange}
             disabled={edit}
           />
+          <div className='message-image-container'><img className='message-image' src={message.image} alt="" /></div>
           {user.id === message.owner_id && edit && showTools &&
             <div className='message__tools--container'>
               {user.id === message.owner_id &&

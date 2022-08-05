@@ -49,13 +49,13 @@ export const updateMessage = (payload, messageId) => async dispatch => {
   }
 }
 
-export const createNewMessage = (payload) => async dispatch => {
+export const createNewMessage = (formData) => async dispatch => {
   const response = await fetch(`/api/messages`, {
     method: 'POST',
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload)
+    // headers: {
+    //   "Content-Type": "application/json",
+    // },
+    body: formData
   });
 
   if (response.ok) {

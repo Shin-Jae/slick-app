@@ -20,6 +20,10 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
   const [newMessageId, setNewMessageId] = useState('')
   const [errors, setErrors] = useState([])
 
+  const [image, setImage] = useState('');
+  const [imageLoading, setImageLoading] = useState(false);
+  const [choseImage, setChoseImage] = useState(false);
+
   useEffect(() => {
     const validationErrors = []
     if (message.length > 1999)
@@ -42,20 +46,31 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const payload = {
-      content: message.trim(),
-      owner_id: userId,
-      channel_id: channelId,
-      created_at: new Date(),
-      updated_at: new Date()
-    }
+    const formData = new FormData();
+    formData.append("content", message.trim());
+    formData.append("owner_id", userId);
+    formData.append("channel_id", channelId);
+    formData.append("image", image);
+    formData.append("created_at", new Date());
+    formData.append("updated_at", new Date());
+
+    setImageLoading(true);
+
+    // const payload = {
+    //   content: message.trim(),
+    //   owner_id: userId,
+    //   channel_id: channelId,
+    //   created_at: new Date(),
+    //   updated_at: new Date()
+    // }
 
     let newMessage;
 
     if (!errors.length) {
       try {
-        newMessage = await dispatch(createNewMessage(payload));
+        newMessage = await dispatch(createNewMessage(formData));
       } catch (error) {
+        setImageLoading(false);
         setErrors([])
       }
     }
@@ -64,13 +79,22 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
       setTyping(false)
       setUserTyping('')
       setNewMessageId(newMessage.id);
+      setImageLoading(false);
+      setImage(null);
+      setChoseImage(false);
       setTextareaHeight(1);
       setErrors([])
     }
 
     // socket.emit("chat", payload);
-    setCreateMessage(payload)
+    setCreateMessage(formData)
     setMessage('');
+  }
+
+  const updateImage = (e) => {
+    const file = e.target.files[0];
+    setChoseImage(true)
+    setImage(file);
   }
 
   const handleChange = (e) => {
@@ -129,6 +153,25 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
             onChange={handleChange}
           // onChange={(e) => setMessage(e.target.value)}
           />
+          <div className='add-img-container'>
+            <label className='choose-image'>
+              <div className=''>
+                <input
+                  type="file"
+                  accept="image/*"
+
+                  onChange={updateImage}
+                  hidden
+                /></div>
+              <span className='plus-sign'>+</span>
+            </label>
+            {choseImage &&
+              <div className='selected-img'>
+                <span class="iconify" data-icon="akar-icons:circle-check-fill"></span>
+              </div>
+            }
+            {(imageLoading) && image && <p className='loading'>Loading Image...</p>}
+          </div>
           <button
             type='submit'
             className={
