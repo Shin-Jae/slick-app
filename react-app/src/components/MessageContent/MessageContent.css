@@ -152,3 +152,14 @@
   bottom: 1em;
   right: 3em;
 }
+
+.message-image {
+  max-width: 350px;
+  max-height: 350px;
+  border-radius: 5%;
+}
+
+.message-image-container {
+  margin-left: 60px;
+  margin-top: -15px;
+}

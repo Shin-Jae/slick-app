@@ -41,6 +41,7 @@ def upgrade():
     sa.Column('content', sa.String(length=2000), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('channel_id', sa.Integer(), nullable=False),
+    sa.Column('image', sa.String(length=2000)),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['channel_id'], ['channels.id'], ),
