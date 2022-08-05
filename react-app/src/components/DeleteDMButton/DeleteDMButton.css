@@ -13,22 +13,6 @@
   cursor: pointer;
   position: absolute;
   right: 0em;
-  top: -2.3em;
+  top: .15em;
   transition: 0.2s;
 }
-
-/* .deleteDM__button:hover {
-  background-color: #ffda08;
-} */
-
-/* @media screen and (max-width: 1300px) {
-  .deleteDM__button {
-    margin-right: 3em;
-  }
-}
-
-@media screen and (max-width: 1000px) {
-  .deleteDM__button {
-    margin-right: 8em;
-  }
-} */

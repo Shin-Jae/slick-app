@@ -12,16 +12,67 @@
   background-color: #f2f2f2;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  /* padding: 1em; */
-  /* max-width: 260px; */
+  justify-content: space-between;
   overflow-x: hidden;
+  border-right: rgb(131, 131, 131) 1px solid;
   z-index: 2;
 }
 
-/* .main-display__chatbox {
-  margin-left: -28px;
-} */
+.sidebar__info {
+  margin: 2em .5em;
+}
+
+.sidebar__info-item {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar__info-text {
+  padding: 0 1em;
+}
+
+.underline {
+  border-bottom: .5px solid rgb(216, 216, 216);
+  margin: 2em 0;
+}
+
+.footer__header {
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  margin: 0 0 .75em;
+}
+
+.footer__header > p {
+  margin-left: .5em;
+}
+
+.sidebar__footer {
+  border-top: .5px solid rgb(216, 216, 216);
+  padding: 2em 1em;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
+
+.linked__in {
+  display: flex;
+  align-items: center;
+}
+
+.linked__in > p {
+  margin: .25em .75em;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.linked__in > p:hover {
+  text-shadow: 0 0 1px rgb(54, 54, 54);
+}
+
+.linkedin__icon {
+  color: #0a66c2;
+}
 
 @media screen and ( min-width: 1600px ){
   .main-display {
