@@ -25,7 +25,7 @@ function Channels() {
   }, [dispatch, userId, channelId]);
 
   if (!Object.keys(allUsers).length) return null;
-
+  // check
   return (
     <div className='main-display'>
       <div className='main-display__sidebar'>
