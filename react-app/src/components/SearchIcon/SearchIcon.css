@@ -12,3 +12,18 @@
   padding-top: 100%;
   content: '';
 }
+
+.default-pro-nav {
+  background-color: green;
+  padding: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: .5px solid transparent;
+  height: 40px;
+  width: 45px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  }

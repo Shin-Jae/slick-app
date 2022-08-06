@@ -31,3 +31,43 @@
 .picked__img {
   border: 5px solid #15D4FF;
 }
+
+/* aws profile img */
+.profile-img-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+.img-btn-container {
+  margin-top: 10px;
+}
+
+.check-icon {
+  height: 30px;
+  width: 30px;
+}
+
+.upload-profile-img {
+  border: 1px solid white;
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 5px;
+  background-color: gold;
+  margin-top: 10px;
+  filter: brightness(1.0);
+  transition: .5s;
+}
+
+.upload-profile-img:hover {
+  cursor: pointer;
+  filter: brightness(0.7);
+}
+
+.profile-loading {
+  font-weight: bold;
+}

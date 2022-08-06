@@ -15,12 +15,16 @@ const SignUpForm = () => {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [profile_img, setProfileImg] = useState('');
-  const [imageProfile, setImageProfile] = useState("");
-  const [pickedImage, setPickedImage] = useState(null);
+  // const [imageProfile, setImageProfile] = useState("");
+  // const [pickedImage, setPickedImage] = useState(null);
+
+  const [imageLoading, setImageLoading] = useState(false);
+  const [choseImage, setChoseImage] = useState(false);
+
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
-  let pictures = ["%curious%george%with%cool%binoculars%", "%courage%the%cowardly%dog", "%storm%trooper%", "%ninja%with%kunai%", "%happy%minion%looking%up%", "5%sleeping%koala%on%branch%", ""]
+  // let pictures = ["%curious%george%with%cool%binoculars%", "%courage%the%cowardly%dog", "%storm%trooper%", "%ninja%with%kunai%", "%happy%minion%looking%up%", "5%sleeping%koala%on%branch%", ""]
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -36,14 +40,22 @@ const SignUpForm = () => {
     if (!repeatPassword)
       validationErrors.push("Please enter the same password again")
     if (password !== repeatPassword) validationErrors.push("Passwords field must match repeat password field.")
-    if (!imageProfile)
-      validationErrors.push("Please choose your favorite avatar")
+    // if (!imageProfile)
+    //   validationErrors.push("Please choose your favorite avatar")
+
     if (validationErrors.length > 0) {
       setErrors(validationErrors)
       return
     }
+    const formData = new FormData();
+    formData.append("first_name", first_name);
+    formData.append("last_name", last_name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("profile_img", profile_img)
+
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(first_name, last_name, email, password, profile_img));
+      const data = await dispatch(signUp(formData));
       if (data) {
         setErrors(data)
       }
@@ -69,8 +81,10 @@ const SignUpForm = () => {
     setRepeatPassword(e.target.value);
   };
 
-  const updateProfileImg = (e) => {
-    setProfileImg(e.target.value);
+  const updateImage = (e) => {
+    const file = e.target.files[0];
+    setChoseImage(true)
+    setProfileImg(file);
   }
 
   if (user) {
@@ -78,90 +92,90 @@ const SignUpForm = () => {
   }
 
 
-  const profileImg1 = () => {
-    setPickedImage('profileImg1')
-    if (profile_img && imageProfile !== pictures[0]) {
-      setProfileImg("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F40%2F92%2FuDb8Ag.jpg&f=1&nofb=1")
-      setImageProfile(pictures[0]);
-    } else if (imageProfile === pictures[0]) {
-      setProfileImg("")
-      setImageProfile(pictures[6]);
-    } else {
-      setProfileImg("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F40%2F92%2FuDb8Ag.jpg&f=1&nofb=1")
-      setImageProfile(pictures[0]);
-    }
-  }
+  // const profileImg1 = () => {
+  //   setPickedImage('profileImg1')
+  //   if (profile_img && imageProfile !== pictures[0]) {
+  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F40%2F92%2FuDb8Ag.jpg&f=1&nofb=1")
+  //     setImageProfile(pictures[0]);
+  //   } else if (imageProfile === pictures[0]) {
+  //     setProfileImg("")
+  //     setImageProfile(pictures[6]);
+  //   } else {
+  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F40%2F92%2FuDb8Ag.jpg&f=1&nofb=1")
+  //     setImageProfile(pictures[0]);
+  //   }
+  // }
 
-  const profileImg2 = () => {
-    setPickedImage('profileImg2')
-    if (profile_img && imageProfile !== pictures[1]) {
-      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1")
-      setImageProfile(pictures[1])
-    } else if (imageProfile === pictures[1]) {
-      setProfileImg("")
-      setImageProfile(pictures[6]);
-    } else {
-      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1")
-      setImageProfile(pictures[1])
-    }
-  }
+  // const profileImg2 = () => {
+  //   setPickedImage('profileImg2')
+  //   if (profile_img && imageProfile !== pictures[1]) {
+  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1")
+  //     setImageProfile(pictures[1])
+  //   } else if (imageProfile === pictures[1]) {
+  //     setProfileImg("")
+  //     setImageProfile(pictures[6]);
+  //   } else {
+  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1")
+  //     setImageProfile(pictures[1])
+  //   }
+  // }
 
-  const profileImg3 = () => {
-    setPickedImage('profileImg3')
-    if (profile_img && imageProfile !== pictures[2]) {
-      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1")
-      setImageProfile(pictures[2])
-    } else if (imageProfile === pictures[2]) {
-      setProfileImg("")
-      setImageProfile(pictures[6]);
-    } else {
-      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1")
-      setImageProfile(pictures[2])
-    }
-  }
+  // const profileImg3 = () => {
+  //   setPickedImage('profileImg3')
+  //   if (profile_img && imageProfile !== pictures[2]) {
+  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1")
+  //     setImageProfile(pictures[2])
+  //   } else if (imageProfile === pictures[2]) {
+  //     setProfileImg("")
+  //     setImageProfile(pictures[6]);
+  //   } else {
+  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1")
+  //     setImageProfile(pictures[2])
+  //   }
+  // }
 
-  const profileImg4 = () => {
-    setPickedImage('profileImg4')
-    if (profile_img && imageProfile !== pictures[3]) {
-      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1")
-      setImageProfile(pictures[3])
-    } else if (imageProfile === pictures[3]) {
-      setProfileImg("")
-      setProfileImg()
-      setImageProfile(pictures[6]);
-    } else {
-      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1")
-      setImageProfile(pictures[3])
-    }
-  }
+  // const profileImg4 = () => {
+  //   setPickedImage('profileImg4')
+  //   if (profile_img && imageProfile !== pictures[3]) {
+  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1")
+  //     setImageProfile(pictures[3])
+  //   } else if (imageProfile === pictures[3]) {
+  //     setProfileImg("")
+  //     setProfileImg()
+  //     setImageProfile(pictures[6]);
+  //   } else {
+  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1")
+  //     setImageProfile(pictures[3])
+  //   }
+  // }
 
-  const profileImg5 = () => {
-    setPickedImage('profileImg5')
-    if (profile_img && imageProfile !== pictures[4]) {
-      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1")
-      setImageProfile(pictures[4])
-    } else if (imageProfile === pictures[4]) {
-      setProfileImg("")
-      setImageProfile(pictures[6]);
-    } else {
-      setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1")
-      setImageProfile(pictures[4])
-    }
-  }
+  // const profileImg5 = () => {
+  //   setPickedImage('profileImg5')
+  //   if (profile_img && imageProfile !== pictures[4]) {
+  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1")
+  //     setImageProfile(pictures[4])
+  //   } else if (imageProfile === pictures[4]) {
+  //     setProfileImg("")
+  //     setImageProfile(pictures[6]);
+  //   } else {
+  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1")
+  //     setImageProfile(pictures[4])
+  //   }
+  // }
 
-  const profileImg6 = () => {
-    setPickedImage('profileImg6')
-    if (profile_img && imageProfile !== pictures[5]) {
-      setProfileImg("https://cdn.dribbble.com/users/1044993/screenshots/7144312/media/aad1fc1a4ec6d1c27e486c04c1a820b9.png")
-      setImageProfile(pictures[5])
-    } else if (imageProfile === pictures[5]) {
-      setProfileImg("")
-      setImageProfile(pictures[6]);
-    } else {
-      setProfileImg("https://cdn.dribbble.com/users/1044993/screenshots/7144312/media/aad1fc1a4ec6d1c27e486c04c1a820b9.png")
-      setImageProfile(pictures[5])
-    }
-  }
+  // const profileImg6 = () => {
+  //   setPickedImage('profileImg6')
+  //   if (profile_img && imageProfile !== pictures[5]) {
+  //     setProfileImg("https://cdn.dribbble.com/users/1044993/screenshots/7144312/media/aad1fc1a4ec6d1c27e486c04c1a820b9.png")
+  //     setImageProfile(pictures[5])
+  //   } else if (imageProfile === pictures[5]) {
+  //     setProfileImg("")
+  //     setImageProfile(pictures[6]);
+  //   } else {
+  //     setProfileImg("https://cdn.dribbble.com/users/1044993/screenshots/7144312/media/aad1fc1a4ec6d1c27e486c04c1a820b9.png")
+  //     setImageProfile(pictures[5])
+  //   }
+  // }
 
   return (
     <div className='container-login-page'>
@@ -240,8 +254,26 @@ const SignUpForm = () => {
             placeholder='Confirm password'
           ></input>
         </div>
-        <h4>Please select a profile image</h4>
-        <div className='input'>
+        <div className='profile-img-container'>
+          <label className='choose-profile-img'>
+            <div className='img-btn-container'>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={updateImage}
+                hidden
+              /></div>
+            <span className='upload-profile-img'>Upload profile image</span>
+
+          </label>
+          {choseImage &&
+            <div className='selected-img'>
+              <span className="iconify check-icon" data-icon="akar-icons:circle-check-fill"></span>
+            </div>
+          }
+        </div>
+        {(imageLoading) && profile_img && <p className='profile-loading'>Loading...</p>}
+        {/* <div className='input'>
           <input
             className='login-input-field'
             type='hidden'
@@ -250,14 +282,14 @@ const SignUpForm = () => {
             value={!imageProfile ? profile_img : imageProfile}
             placeholder="Add profile image or pick one from below"
           >
-          </input>
-          {/* <button
+          </input> */}
+        {/* <button
             className='hide-profile-img-btn'
             onClick={hideImg}
             type="button"
           >{show ? "Close" : "Pick Here"}</button> */}
-          {/* {show ? */}
-          <div className='container-signup-profile-img form-container'>
+        {/* {show ? */}
+        {/* <div className='container-signup-profile-img form-container'>
             <span onClick={profileImg1}><img
               src={"https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F40%2F92%2FuDb8Ag.jpg&f=1&nofb=1"}
               alt="1"
@@ -300,8 +332,7 @@ const SignUpForm = () => {
               />
             </span>
           </div>
-          {/* : null} */}
-        </div>
+        </div> */}
         <button type='submit' className='login-btn'>Sign Up</button>
         <AboutLinks />
       </form>

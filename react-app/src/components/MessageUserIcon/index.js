@@ -1,12 +1,18 @@
 import './MessageUserIcon.css'
 
-const MessageUserIcon = ({ memberImage }) => {
+const MessageUserIcon = ({ memberImage, first_letter }) => {
   return (
-    <figure
-        className='message__icon--user'
-        style={{ backgroundImage: `url( ${memberImage})` }}
-      />
-   );
+    <>
+      {memberImage ?
+        <figure
+          className='message__icon--user'
+          style={{ backgroundImage: `url( ${memberImage})` }}
+        />
+        : <div className='default-profile message__icon--user'>
+          {first_letter}
+        </div>}
+    </>
+  );
 }
 
 export default MessageUserIcon;

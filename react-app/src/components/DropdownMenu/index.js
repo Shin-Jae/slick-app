@@ -42,7 +42,7 @@ const DropdownMenu = () => {
         className='navbar__profile'
         onClick={openMenu}
       >
-        <SearchIcon image={user.profile_img} />
+        <SearchIcon image={user.profile_img} first_letter={user.first_name[0]} />
       </div>
       {showMenu && (
         <div className='navbar__dropdown'>

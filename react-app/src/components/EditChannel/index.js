@@ -140,7 +140,13 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
           {setArr.length ? setArr.map(person => {
             if (person !== userId) {
               return <div key={`mem-${person}`} className="single-member-container">
-                <img src={allUsers[person].profile_img} alt={allUsers[person].id} className="search-profile-pics" /><span className='added-members-names'> {allUsers[person].first_name} {allUsers[person].last_name}</span>
+                {allUsers[person]?.profile_img ?
+                  <img src={allUsers[person].profile_img} alt={allUsers[person].id} className="search-profile-pics" />
+                  :
+                  <div className='default-profile search-profile-pics default-search'>
+                    {allUsers[person]?.first_name[0]}
+                  </div>}
+                <span className='added-members-names'> {allUsers[person].first_name} {allUsers[person].last_name}</span>
                 <button className='remove-one-member-btn' type="button" onClick={() => removeMembers(allUsers[person].id)}>-</button>
               </div>
             }
@@ -161,7 +167,13 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
               {query ? filteredUsers.map(user => {
                 if (user.id !== userId && !set.has(user.id)) {
                   return <div key={user.id} className='single-search-names-container'>
-                    <img src={user.profile_img} alt={user.id} className="search-profile-pics" /><span className='search-names-container search-names-text' >{user.first_name} {user.last_name}</span>
+                    {user?.profile_img ?
+                      <img src={user.profile_img} alt={user.id} className="search-profile-pics" />
+                      :
+                      <div className='default-profile search-profile-pics default-search'>
+                        {user.first_name[0]}
+                      </div>}
+                    <span className='search-names-container search-names-text' >{user.first_name} {user.last_name}</span>
                     <button className='add-members-btn' type="button" onClick={() => addMembers(user.id)}>+</button>
                   </div>
                 }
