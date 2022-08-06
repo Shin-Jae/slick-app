@@ -94,7 +94,9 @@ function SearchBar() {
                 >
                   <SearchIcon
                     className='search__icon--image'
-                    image={user.profile_img} />
+                    image={user.profile_img}
+                    first_letter={user.first_name[0]}
+                  />
                   <button
                     className="nav-search-results"
                     type="button" onClick={() => checkDm(user.id)}>{user.first_name} {user.last_name}

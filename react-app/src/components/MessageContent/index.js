@@ -126,7 +126,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
           <p className='error__text'>{`${errors}`}</p>
         </div>}
       <div className='message__icon--name'>
-        <MessageUserIcon memberImage={allUsers[message.owner_id].profile_img} />
+        <MessageUserIcon memberImage={allUsers[message.owner_id].profile_img} first_letter={allUsers[message.owner_id].first_name[0]} />
         <p className='message__user--name'>{allUsers[message.owner_id].first_name} {allUsers[message.owner_id].last_name}</p>
         <p className='message__user--time'>{convertedTimeString}</p>
       </div>
