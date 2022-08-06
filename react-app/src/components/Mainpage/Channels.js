@@ -7,8 +7,9 @@ import ChatBox from "../ChatBox";
 import './Channels.css'
 import DMs from '../DMs';
 import UserChannels from '../UserChannels';
-import DevIcon from "devicon-react-svg";
-import { FaLinkedin, FaFlask, FaPencilAlt } from "react-icons/fa";
+import { FaLinkedin, FaPython, FaReact, FaAws } from "react-icons/fa";
+import { DiPostgresql } from "react-icons/di";
+import { SiFlask } from "react-icons/si";
 
 function Channels() {
   const { userId, channelId } = useParams();
@@ -32,20 +33,24 @@ function Channels() {
           <div className='sidebar__info'>
             <ul>
               <li className='sidebar__info-item'>
-                <DevIcon icon='python' width='2em' />
+                <FaPython className='tech__icons' style={{fontSize: '1.5em'}}/>
                 <p className='sidebar__info-text'>Python</p>
               </li>
               <li className='sidebar__info-item'>
-                <DevIcon icon="react" width='2em' />
+                <FaReact className='tech__icons' style={{fontSize: '1.5em'}}/>
                 <p className='sidebar__info-text'>React</p>
               </li>
               <li className='sidebar__info-item'>
-                <DevIcon icon='aws' width='2em' />
+                <FaAws className='tech__icons' style={{fontSize: '1.5em'}}/>
                 <p className='sidebar__info-text'>AWS</p>
               </li>
               <li className='sidebar__info-item'>
-                <DevIcon icon='postgresql' width='2em' />
-                <p className='sidebar__info-text'>postgresql</p>
+                <DiPostgresql className='tech__icons' style={{fontSize: '1.5em'}}/>
+                <p className='sidebar__info-text'>PostgreSQL</p>
+              </li>
+              <li className='sidebar__info-item'>
+                <SiFlask className='tech__icons' style={{fontSize: '1.5em'}}/>
+                <p className='sidebar__info-text'>Flask</p>
               </li>
             </ul>
           </div>

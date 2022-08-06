@@ -8,6 +8,11 @@
   overflow: hidden;
 }
 
+.tech__icons {
+  font-size: 1.5em;
+  margin: .2em;
+}
+
 .main-display__sidebar {
   background-color: #f2f2f2;
   display: flex;
@@ -47,12 +52,18 @@
   margin-left: .5em;
 }
 
+.sidebar__top {
+  margin-bottom: 2em;
+}
+
 .sidebar__footer {
   border-top: .5px solid rgb(216, 216, 216);
   padding: 2em 1em;
   position: sticky;
   bottom: 0;
   width: 100%;
+  background-color: #f2f2f2;
+  z-index: 2;
 }
 
 .linked__in {
