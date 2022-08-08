@@ -13,10 +13,10 @@
 
 .modal__form-container input, textarea {
   padding: .5em;
-  border-radius: .75em;
+  border-radius: .35em;
   outline: none;
   border: 1px solid #D4D4D4;
-  width: 90%;
+  width: 95%;
 }
 
 .modal__form-container button:not(.add-members-btn, .remove-one-member-btn) {
