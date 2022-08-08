@@ -18,6 +18,15 @@ function Channels() {
 
   const allUsers = useSelector((state) => state.search);
 
+  // const style = {
+  //   backgroundColor: '#f2f2f2',
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   justifyContent: 'space-between',
+  //   overflowX: 'hidden',
+  //   borderRight: 'rgb(131, 131, 131) 1px solid',
+  //   zIndex: '2',
+  // }
   useEffect(() => {
     dispatch(getAllChannels(userId));
     if (channelId) {
@@ -35,6 +44,7 @@ function Channels() {
         defaultSize={{
           width: 300,
         }}
+        minWidth={200}
       >
         <div className='sidebar__top'>
           <div className='sidebar__info'>

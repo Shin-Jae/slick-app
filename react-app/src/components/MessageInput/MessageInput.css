@@ -1,9 +1,11 @@
 .message__input--container {
-  border: 1px #cecece solid;
+  border: 1px #a7a7a7 solid;
   background-color: white;
   box-shadow: 0 3px 7px rgba(33,33,33,.2);
   border-radius: 1em;
-  padding: 1em;
+  display: grid;
+  grid-template-columns: 90% 10%;
+  padding: 1.5em;
   margin: 0 2em 2em 2em;
   position: relative;
 }
@@ -26,16 +28,26 @@
   display: flex;
 }
 
+.message__button-container {
+  position: absolute;
+  margin: .5em;
+  right: 3em;
+  bottom: 1em;
+}
+
+.top__buttons {
+  display: flex;
+  align-items: center;
+  margin: .5em;
+  justify-content: space-evenly;
+}
+
 .message__input--btn {
   display: flex;
   align-items: center;
   padding: .5em 1em;
   border-radius: .5em;
   border: 1px solid #898989;
-  margin: .5em;
-  position: absolute;
-  right: 3em;
-  bottom: 1em;
 }
 
 .message__input--btn-active {
@@ -46,8 +58,6 @@
   transition: 0.2s;
   cursor: pointer;
 }
-
-
 
 .message__error {
   align-self: center;
@@ -70,29 +80,42 @@
 .choose-image {
   display: flex;
   font-size: 25px;
-  width: 25px;
   justify-content: center;
   color: black;
   transition: .5s;
   margin-left: 10px;
-  border-radius: 50%;
-}
-
-.choose-image:hover {
-  background-color: lightgray;
   cursor: pointer;
 }
 
+
 .plus-sign {
   font-family: 'Times New Roman', Times, serif;
+  border-radius: .15em;
+  width: 1.25em;
+  height:  1.25em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.clear__input {
+  border-radius: .25em;
+  padding: .15em;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.clear__input:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+.plus-sign:hover {
+  background-color: rgb(235, 235, 235);
 }
 
 .iconify {
   font-size: 20px;
   color: green;
-  margin-top: 5px;
-  margin-left: 5px;
-  margin-right: 10px;
 }
 
 .loading {
@@ -100,4 +123,18 @@
   font-style: italic;
   font-weight: bold;
   color: #898989;
+}
+
+.selected-img {
+  display: flex;
+  align-items: center;
+  color: gray;
+  font-weight: 600;
+  font-size: .85em;
+  margin: .15em;
+  font-style: italic;
+}
+
+.selected-img > span {
+  margin-left: .25em;
 }

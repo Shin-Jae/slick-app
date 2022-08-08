@@ -163,3 +163,7 @@
   margin-left: 60px;
   margin-top: -15px;
 }
+
+.image__hidden {
+  visibility: hidden;
+}

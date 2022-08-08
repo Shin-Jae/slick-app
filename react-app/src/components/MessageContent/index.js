@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from 'react'
 import { updateMessage, deleteMessage } from '../../store/messages';
 import MessageUserIcon from '../MessageUserIcon';
+import TextareaAutosize from 'react-textarea-autosize';
+
 
 
 const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpdated, setPrevMessage }) => {
@@ -109,7 +111,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
       }
     }
   };
-
+  console.log(message.image)
   // const timeString = message.created_at.slice(17, 25)
   const time = new Date(message.created_at)
 
@@ -132,8 +134,8 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
       </div>
       <form>
         <div className={edit ? 'message__textarea--container--inactive' : 'message__textarea--container'}>
-          <textarea
-            rows={textareaHeight}
+          <TextareaAutosize
+            minRows={2}
             maxLength='2000'
             className={edit ? 'input__inactive' : 'input__active'}
             value={content}
@@ -141,7 +143,9 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
             onChange={handleChange}
             disabled={edit}
           />
-          <div className='message-image-container'><img className='message-image' src={message.image} alt="" /></div>
+          {edit && <div className='message-image-container'>
+            <img className='message-image' src={message.image} alt="" />
+          </div>}
           {user.id === message.owner_id && edit && showTools &&
             <div className='message__tools--container'>
               {user.id === message.owner_id &&

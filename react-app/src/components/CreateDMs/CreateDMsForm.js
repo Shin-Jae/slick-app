@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { createOneChannel, getAllChannels } from "../../store/channels"
+import Select from 'react-select';
 
-const set = new Set();
 let count = 1
 function CreateDMForm({ onClose }) {
   const dispatch = useDispatch()
@@ -11,7 +11,7 @@ function CreateDMForm({ onClose }) {
   const [errors, setErrors] = useState([])
   const [resetMem, setResetMem] = useState(false)
   const [found, setFound] = useState('')
-
+  const [members, setMembers] = useState(null)
   const userChannels = useSelector((state) => state.channels);
   const channels = Object.values(userChannels);
 
@@ -19,13 +19,20 @@ function CreateDMForm({ onClose }) {
   const userId = useSelector((state) => state.session.user.id)
   const [query, setQuery] = useState("")
   const allUsers = useSelector((state) => state.search);
-  const users = Object.values(allUsers);
+
+  const users = Object.values(allUsers).filter(user => {
+    return user.id !== userId
+  });
+
+  const usersArray = users.map(user => {
+    return { value: user.id, label: `${user.first_name} ${user.last_name}` }
+  })
 
   const name = `private for ${userId}`
   const description = `dm description ${userId}`
   const private_chat = true
 
-  let setArr = [...set]
+  // let setArr = [...set]
 
   useEffect(() => {
     const validationErrors = []
@@ -35,36 +42,51 @@ function CreateDMForm({ onClose }) {
     setErrors(validationErrors)
   }, [count, resetMem])
 
-  useEffect(() => {
-    if (resetMem === false) {
-      set.clear();
-    }
-  }, [resetMem])
+  // useEffect(() => {
+  //   if (resetMem === false) {
+  //     set.clear();
+  //   }
+  // }, [resetMem])
 
   //check if dm already exists
-  let matchId;
-  channels.forEach(channel => {
-    if (channel.private_chat === true) {
-      let numOfMembers = 0
+  const checkExists = (members) => {
+    let matchId;
+    const set = new Set(members);
 
-      if (setArr.length === channel.members.length) {
-        channel.members.forEach(member => {
-          if (setArr.includes(member.id)) numOfMembers++
-        })
-        if (numOfMembers === setArr.length) {
-          matchId = channel.id
+    channels.forEach(channel => {
+      if (channel.private_chat === true) {
+        let numOfMembers = 0
+
+        if (set.size === channel.members.length) {
+          console.log('mySet bitch', set)
+          channel.members.forEach(member => {
+            if (set.has(member.id)) {
+              numOfMembers++
+            }
+          })
+          if (numOfMembers === set.size) {
+            matchId = channel.id
+          }
         }
       }
-    }
-  })
+    })
+    return matchId
+  }
 
   const channelSubmission = async (e) => {
     e.preventDefault()
 
+    const allMembers = members.map(member => {
+      return member.value
+    })
+
+    allMembers.push(userId);
+    console.log('allMembers', allMembers)
+    const matchId = checkExists(allMembers)
     if (matchId) {
       onClose(false)
       setResetMem(false)
-      set.clear()
+      setMembers(null)
       return history.push(`/users/${userId}/${matchId}`)
     }
 
@@ -73,79 +95,78 @@ function CreateDMForm({ onClose }) {
       description,
       private_chat,
       owner_id: userId,
-      members: setArr
+      members: allMembers
     }
+
+    console.log('payload', payload)
     setResetMem(true)
-    if (setArr.length > 1) {
-      const createdChannel = await dispatch(createOneChannel(userId, payload))
-      if (createdChannel) {
-        setErrors([])
-        setResetMem(false)
-        set.clear();
-        count = 1
-        await dispatch(getAllChannels(userId))
-        history.push(`/users/${userId}/${createdChannel.id}`)
-        onClose(false)
-      }
+    const createdChannel = await dispatch(createOneChannel(userId, payload))
+    if (createdChannel) {
+      setErrors([])
+      setResetMem(false)
+      setMembers(null)
+      count = 1
+      await dispatch(getAllChannels(userId))
+      history.push(`/users/${userId}/${createdChannel.id}`)
+      onClose(false)
     }
   }
 
-  const filterUsers = (users, query) => {
-    if (!query) {
-      return users;
-    }
-    return users.filter((user) => {
-      const fullName = `${user.first_name.toLowerCase()} ${user.last_name.toLowerCase()}`;
-      return fullName.includes(query.toLowerCase());
-    })
-  }
-  const filteredUsers = filterUsers(users, query);
+  // const filterUsers = (users, query) => {
+  //   if (!query) {
+  //     return users;
+  //   }
+  //   return users.filter((user) => {
+  //     const fullName = `${user.first_name.toLowerCase()} ${user.last_name.toLowerCase()}`;
+  //     return fullName.includes(query.toLowerCase());
+  //   })
+  // }
+  // const filteredUsers = filterUsers(users, query);
 
-  const handleNoUsers = (e) => {
-    const found = users.find(user =>
-      user.first_name.toLowerCase() === query.toLowerCase().trim() ||
-      user.last_name.toLowerCase() === query.toLowerCase().trim()
-    )
-    setFound(found)
-  }
+  // const handleNoUsers = (e) => {
+  //   const found = users.find(user =>
+  //     user.first_name.toLowerCase() === query.toLowerCase().trim() ||
+  //     user.last_name.toLowerCase() === query.toLowerCase().trim()
+  //   )
+  //   setFound(found)
+  // }
 
 
-  const removeMembers = (id) => {
-    if (set.has(id)) {
-      set.delete(id);
-      count -= 1
-      if (query === "") {
-        return setQuery("*")
-      } else {
-        return setQuery("")
-      }
-    }
-  }
+  // const removeMembers = (id) => {
+  //   if (set.has(id)) {
+  //     set.delete(id);
+  //     count -= 1
+  //     if (query === "") {
+  //       return setQuery("*")
+  //     } else {
+  //       return setQuery("")
+  //     }
+  //   }
+  // }
 
-  const addMembers = (e, id) => {
-    e.preventDefault();
-    if (!set.size) set.add(userId)
+  // const addMembers = (e, id) => {
+  //   e.preventDefault();
+  //   if (!set.size) set.add(userId)
 
-    if (!set.has(id)) {
-      set.add(id);
-      count += 1
-      return setQuery("")
-    }
-  }
+  //   if (!set.has(id)) {
+  //     set.add(id);
+  //     count += 1
+  //     return setQuery("")
+  //   }
+  // }
 
   return (
     <div className='modal__form-container'>
       <form onSubmit={channelSubmission}>
         <h1>Send New DM</h1>
-        {errors[0] && resetMem &&
+        {/* {errors[0] && resetMem &&
           <ul className='error__container'>{errors.map((error) => (
             <li className="error__text "
               key={error}>
               {error}
             </li>))}
-          </ul>}
-        <div>
-          {/* <label>Members: </label> */}
+          </ul>} */}
+        {/* <div>
           <div className="added-members-container">
             {setArr.length ? setArr.map(person => {
               if (person !== userId) {
@@ -167,7 +188,6 @@ function CreateDMForm({ onClose }) {
               type="text"
               placeholder="Search Members"
               value={query}
-              // required={!setArr.length}
               onInput={e => setQuery(e.target.value)}
               onChange={handleNoUsers}
             />
@@ -194,9 +214,16 @@ function CreateDMForm({ onClose }) {
               }
             </div>
           </div>
-        </div>
+        </div> */}
         <input type="hidden" value={private_chat} />
         <div>
+          <Select
+            closeMenuOnSelect={false}
+            isMulti
+            placeholder='Search users...'
+            onChange={setMembers}
+            options={usersArray}
+          />
           <button
             type="submit"
           >Send DM</button>
