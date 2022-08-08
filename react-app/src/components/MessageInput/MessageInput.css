@@ -1,8 +1,8 @@
 .message__input--container {
-  border: 2px #dedede solid;
+  border: 1px #cecece solid;
   background-color: white;
+  box-shadow: 0 3px 7px rgba(33,33,33,.2);
   border-radius: 1em;
-  /* width: 100%; */
   padding: 1em;
   margin: 0 2em 2em 2em;
   position: relative;

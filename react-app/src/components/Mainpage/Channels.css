@@ -20,7 +20,10 @@
   overflow-x: hidden;
   border-right: rgb(131, 131, 131) 1px solid;
   z-index: 2;
-  resize: horizontal
+}
+
+.main-display__sidebar:hover {
+  border-right: rgb(8, 177, 255) 3px solid;
 }
 
 .sidebar__info {
@@ -41,6 +44,7 @@
   margin: 2em 0;
 }
 
+
 .footer__header {
   display: flex;
   align-items: center;
@@ -59,9 +63,9 @@
 .sidebar__footer {
   border-top: .5px solid rgb(216, 216, 216);
   padding: 2em 1em;
+  margin-top:auto;
   position: sticky;
-  bottom: 0;
-  width: 100%;
+  bottom: 0em;
   background-color: #f2f2f2;
   z-index: 2;
 }

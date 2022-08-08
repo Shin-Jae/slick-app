@@ -64,14 +64,13 @@ const DMs = () => {
           <CreateDMModal hoverDisplay={hoverDisplay} />
         </div>
       </div>
-      <ul
+      {!hide && <ul
         className="view-dms view-channels"
-        style={hide ? { visibility: 'hidden' } : null}
       >
         {privateChannels.map(channel =>
           <DMChannel channel={channel} key={channel.id} />
         )}
-      </ul>
+      </ul>}
     </div>
   );
 }

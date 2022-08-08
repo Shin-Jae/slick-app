@@ -46,7 +46,7 @@
 
 .message__container {
   width: 100%;
-  padding: 1em;
+  padding: 0.5em;
   padding-left: 2em;
   transition: 0.2s;
   position: relative;
