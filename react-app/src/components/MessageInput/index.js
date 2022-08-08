@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { createNewMessage } from '../../store/messages';
 import './MessageInput.css'
+import ReactTooltip from "react-tooltip";
 // import { io } from 'socket.io-client';
 
 // let socket;
@@ -163,7 +164,10 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
                   onChange={updateImage}
                   hidden
                 /></div>
-              <span className='plus-sign'>+</span>
+              <ReactTooltip id="photo__tip" place="top" effect="solid">
+                Click to attach a photo
+              </ReactTooltip>
+              <div className='plus-sign' data-tip data-for="photo__tip">+</div>
             </label>
             {choseImage &&
               <div className='selected-img'>
@@ -176,7 +180,8 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
             type='submit'
             className={
               message.trim().length &&
-                message.length <= 1999 ?
+                message.length <= 1999
+                ?
                 'message__input--btn message__input--btn-active' :
                 'message__input--btn btn__disabled'}
             disabled={!message.trim().length || message.trim().length > 1999}>
