@@ -1,6 +1,5 @@
 .main-display {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
+  display: flex;
   position: absolute;
   top: 3em; /* Header Height */
   bottom: 0; /* Footer Height */
@@ -86,9 +85,9 @@
   color: #0a66c2;
 }
 
-@media screen and ( min-width: 1600px ){
+/* @media screen and ( min-width: 1600px ){
   .main-display {
     display: grid;
     grid-template-columns: 1fr 5fr;
   }
-}
+} */

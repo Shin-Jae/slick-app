@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { createNewMessage } from '../../store/messages';
 import './MessageInput.css'
 import ReactTooltip from "react-tooltip";
+import TextareaAutosize from 'react-textarea-autosize';
 // import { io } from 'socket.io-client';
 
 // let socket;
@@ -98,33 +99,33 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
     setImage(file);
   }
 
-  const handleChange = (e) => {
-    setTyping(e.target.value.length)
-    if (e.target.value.length < 1) {
-      setTyping(false)
-    }
-    setUserTyping(user)
-    setMessage(e.target.value)
-    setSpaceCheck(e.target.value.trim().length)
-    let value = e.target.value.length
-    let trows;
-    if (value < 140) {
-      trows = 2;
-      setTextareaHeight(1)
-    } else {
-      trows = Math.ceil(value / 140);
-    }
-    if (trows > rowValue) {
-      setTextareaHeight(textareaHeight + 1);
-      setRowValue(trows);
-    }
+  // const handleChange = (e) => {
+  //   setTyping(e.target.value.length)
+  //   if (e.target.value.length < 1) {
+  //     setTyping(false)
+  //   }
+  //   setUserTyping(user)
+  //   setMessage(e.target.value)
+  //   setSpaceCheck(e.target.value.trim().length)
+  //   let value = e.target.value.length
+  //   let trows;
+  //   if (value < 140) {
+  //     trows = 2;
+  //     setTextareaHeight(1)
+  //   } else {
+  //     trows = Math.ceil(value / 140);
+  //   }
+  //   if (trows > rowValue) {
+  //     setTextareaHeight(textareaHeight + 1);
+  //     setRowValue(trows);
+  //   }
 
-    if (trows < rowValue) {
-      setTextareaHeight(Math.ceil(value / 120));
-      setRowValue(trows);
-      if (!trows) trows = 2;
-    }
-  }
+  //   if (trows < rowValue) {
+  //     setTextareaHeight(Math.ceil(value / 120));
+  //     setRowValue(trows);
+  //     if (!trows) trows = 2;
+  //   }
+  // }
 
   const handleKeyPress = (e) => {
     if (e.target.value.length <= 1999) {
@@ -143,16 +144,15 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
           </div>}
 
         <form className='message__form' onSubmit={handleSubmit}>
-          <textarea
+          <TextareaAutosize
             className='message__input'
             type='text'
             placeholder={private_chat ? `Message ${privateMembers}` : `Message #${name}`}
             onKeyPress={handleKeyPress}
             maxLength='2000'
-            rows={textareaHeight}
+            minRows={3}
             value={message}
-            onChange={handleChange}
-          // onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => setMessage(e.target.value)}
           />
           <div className='add-img-container'>
             <label className='choose-image'>

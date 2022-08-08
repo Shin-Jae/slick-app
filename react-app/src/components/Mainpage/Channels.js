@@ -86,9 +86,9 @@ function Channels() {
           </a>
         </div>
       </div>
-      <div className='main-display__chatbox'>
+      <>
         {channelId && <ChatBox />}
-      </div>
+      </>
     </div >
   )
 }
