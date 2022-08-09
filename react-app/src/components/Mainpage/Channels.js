@@ -8,14 +8,14 @@ import './Channels.css'
 import DMs from '../DMs';
 import UserChannels from '../UserChannels';
 import { FaLinkedin, FaPython, FaReact, FaAws } from "react-icons/fa";
-import { DiPostgresql } from "react-icons/di";
+import { DiCelluloid, DiPostgresql } from "react-icons/di";
 import { SiFlask } from "react-icons/si";
 import { Resizable } from "re-resizable";
+import Welcome from '../Welcome'
 
 function Channels() {
   const { userId, channelId } = useParams();
   const dispatch = useDispatch();
-
   const allUsers = useSelector((state) => state.search);
 
   // const style = {
@@ -105,6 +105,9 @@ function Channels() {
       </Resizable>
       <>
         {channelId && <ChatBox />}
+      </>
+      <>
+        {!channelId && <Welcome />}
       </>
     </div >
   )

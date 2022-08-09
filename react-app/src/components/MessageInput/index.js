@@ -6,15 +6,14 @@ import { createNewMessage } from '../../store/messages';
 import './MessageInput.css'
 import ReactTooltip from "react-tooltip";
 import TextareaAutosize from 'react-textarea-autosize';
+import { BeatLoader } from 'react-spinners'
 // import { io } from 'socket.io-client';
 
 // let socket;
 
 const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
   const dispatch = useDispatch()
-  const channels = useSelector((state) => state.channels)
-  const [rowValue, setRowValue] = useState(5)
-  const [spaceCheck, setSpaceCheck] = useState(0)
+  const channels = useSelector((state) => state.channels);
   const user = useSelector(state => state.session.user);
   const { userId, channelId } = useParams()
   const [textareaHeight, setTextareaHeight] = useState(1);
@@ -119,13 +118,18 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
             onChange={(e) => setMessage(e.target.value)}
           />
           <div className='add-img-container'>
-            {choseImage && !imageLoading  &&
+            {choseImage && !imageLoading &&
               <div className='selected-img'>
                 <span class="iconify" data-icon="akar-icons:circle-check-fill"></span>
                 <span>{image?.name}</span>
               </div>
             }
-            {(imageLoading) && image && <p className='loading'>Loading Image...</p>}
+            {(imageLoading) &&
+              image &&
+              <span className='loading'>Loading Image
+                <BeatLoader />
+              </span>
+            }
           </div>
           <div className='message__button-container'>
             <div className='top__buttons'>

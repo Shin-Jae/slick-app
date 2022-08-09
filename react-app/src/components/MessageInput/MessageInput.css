@@ -120,6 +120,7 @@
 
 .loading {
   margin-top: 5px;
+  display: flex;
   font-style: italic;
   font-weight: bold;
   color: #898989;

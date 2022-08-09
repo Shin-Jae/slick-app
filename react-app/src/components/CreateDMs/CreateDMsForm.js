@@ -58,7 +58,6 @@ function CreateDMForm({ onClose }) {
         let numOfMembers = 0
 
         if (set.size === channel.members.length) {
-          console.log('mySet bitch', set)
           channel.members.forEach(member => {
             if (set.has(member.id)) {
               numOfMembers++
@@ -98,7 +97,6 @@ function CreateDMForm({ onClose }) {
       members: allMembers
     }
 
-    console.log('payload', payload)
     setResetMem(true)
     const createdChannel = await dispatch(createOneChannel(userId, payload))
     if (createdChannel) {

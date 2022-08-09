@@ -1,9 +1,8 @@
 import Channels from "./Channels";
-// import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import UnauthorizedUser from "../UnauthorizedUser";
-// import { getAllChannels } from '../../store/channels';
+import './MainPage.css'
 
 function MainPage() {
   const { userId } = useParams()
@@ -16,11 +15,9 @@ function MainPage() {
   }
 
   return (
-    <>
-      <div>
-        <Channels />
-      </div>
-    </>
+    <div>
+      <Channels />
+    </div>
   )
 }
 

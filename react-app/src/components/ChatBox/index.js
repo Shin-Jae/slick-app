@@ -23,7 +23,7 @@ const ChatBox = () => {
   const channels = useSelector((state) => state.channels);
   const logInId = useSelector((state) => state.session.user.id);
   const currentChannel = channels[channelId];
-
+  console.log('channel', currentChannel)
   const messages = Object.values(allMessages);
   const [deleted, setDeleted] = useState(false);
   const [messageReceived, setMessageReceived] = useState('')

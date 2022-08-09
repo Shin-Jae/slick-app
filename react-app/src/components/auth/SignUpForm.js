@@ -6,6 +6,7 @@ import './LoginForm.css';
 import './SignUpForm.css';
 import slickicon from "../../images/slickicon.png"
 import AboutLinks from '../AboutLinks';
+import { createChannels, createOneChannel } from '../../store/channels'
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
@@ -87,8 +88,26 @@ const SignUpForm = () => {
     setProfileImg(file);
   }
 
+  const createChannel = async (userid) => {
+    const channel = {
+      name: `${user.first_name} ${user.last_name}`,
+      description: 'A private channel for you',
+      private_chat: true,
+      owner_id: userid,
+      members: [userid]
+    }
+    return await dispatch(createOneChannel(user.id, channel));
+  }
+
   if (user) {
-    return <Redirect to={`/users/${user.id}`} />;
+    const channel = (async () =>
+    await createChannel(user.id))()
+
+    const printChannel = async() => {
+      return await createChannel(user.id);
+    }
+    (async () => console.log('CHHHANNEL', await printChannel()))();
+    // return (async () => await (<Redirect to={`/users/${user.id}/${channel.id}`} />))();
   }
 
 
