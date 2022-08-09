@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect, NavLink } from 'react-router-dom';
+import { Redirect, NavLink, useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
 import './LoginForm.css';
 import './SignUpForm.css';
 import slickicon from "../../images/slickicon.png"
 import AboutLinks from '../AboutLinks';
+import { createChannels, createOneChannel } from '../../store/channels'
+import { PropagateLoader } from 'react-spinners'
+
 
 const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
+  const history = useHistory();
+  const [channel, setChannel] = useState('');
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,16 +22,17 @@ const SignUpForm = () => {
   const [profile_img, setProfileImg] = useState('');
   // const [imageProfile, setImageProfile] = useState("");
   // const [pickedImage, setPickedImage] = useState(null);
-
+  const [loading, setLoading] = useState(false)
   const [imageLoading, setImageLoading] = useState(false);
   const [choseImage, setChoseImage] = useState(false);
 
   const user = useSelector(state => state.session.user);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   // let pictures = ["%curious%george%with%cool%binoculars%", "%courage%the%cowardly%dog", "%storm%trooper%", "%ninja%with%kunai%", "%happy%minion%looking%up%", "5%sleeping%koala%on%branch%", ""]
 
   const onSignUp = async (e) => {
+    setLoading(true)
     e.preventDefault();
     const validationErrors = []
     if (!first_name)
@@ -53,13 +59,28 @@ const SignUpForm = () => {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("profile_img", profile_img)
+    const data = {}
 
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(formData));
-      if (data) {
-        setErrors(data)
-      }
+      await dispatch(signUp(formData))
+        .then(user => {
+          data['user'] = user.id
+          return dispatch(createOneChannel(user.id, {
+            name: `${user.first_name} ${user.last_name}`,
+            description: 'A private channel for you',
+            private_chat: true,
+            owner_id: user.id,
+            members: [user.id]
+          }))
+        })
+        .then((channel) => {
+          data['channel'] = channel.id;
+
+          history.push(`/users/${data.user}/${data.channel}`);
+        })
+      setLoading(false)
     };
+
   }
   const updateFirstName = (e) => {
     setFirstName(e.target.value);
@@ -87,95 +108,29 @@ const SignUpForm = () => {
     setProfileImg(file);
   }
 
-  if (user) {
-    return <Redirect to={`/users/${user.id}`} />;
+  const override = {
+    display: "block",
+    margin: "0 auto",
+  };
+
+  if (loading) {
+    return (
+      <div className='loader__wrapper'>
+        <div className='loader__content'>
+          <div className='loader__text'>
+            <p className='loader__header'>👋 Welcome!</p>
+            <p className='loader__subheader'>Please wait while we create your account</p>
+          </div>
+          <div className='loader__loader'>
+            <PropagateLoader
+              color={'#f91690'}
+              cssOverride={override}
+            />
+          </div>
+        </div>
+      </div>
+    )
   }
-
-
-  // const profileImg1 = () => {
-  //   setPickedImage('profileImg1')
-  //   if (profile_img && imageProfile !== pictures[0]) {
-  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F40%2F92%2FuDb8Ag.jpg&f=1&nofb=1")
-  //     setImageProfile(pictures[0]);
-  //   } else if (imageProfile === pictures[0]) {
-  //     setProfileImg("")
-  //     setImageProfile(pictures[6]);
-  //   } else {
-  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F40%2F92%2FuDb8Ag.jpg&f=1&nofb=1")
-  //     setImageProfile(pictures[0]);
-  //   }
-  // }
-
-  // const profileImg2 = () => {
-  //   setPickedImage('profileImg2')
-  //   if (profile_img && imageProfile !== pictures[1]) {
-  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1")
-  //     setImageProfile(pictures[1])
-  //   } else if (imageProfile === pictures[1]) {
-  //     setProfileImg("")
-  //     setImageProfile(pictures[6]);
-  //   } else {
-  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1")
-  //     setImageProfile(pictures[1])
-  //   }
-  // }
-
-  // const profileImg3 = () => {
-  //   setPickedImage('profileImg3')
-  //   if (profile_img && imageProfile !== pictures[2]) {
-  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1")
-  //     setImageProfile(pictures[2])
-  //   } else if (imageProfile === pictures[2]) {
-  //     setProfileImg("")
-  //     setImageProfile(pictures[6]);
-  //   } else {
-  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1")
-  //     setImageProfile(pictures[2])
-  //   }
-  // }
-
-  // const profileImg4 = () => {
-  //   setPickedImage('profileImg4')
-  //   if (profile_img && imageProfile !== pictures[3]) {
-  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1")
-  //     setImageProfile(pictures[3])
-  //   } else if (imageProfile === pictures[3]) {
-  //     setProfileImg("")
-  //     setProfileImg()
-  //     setImageProfile(pictures[6]);
-  //   } else {
-  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1")
-  //     setImageProfile(pictures[3])
-  //   }
-  // }
-
-  // const profileImg5 = () => {
-  //   setPickedImage('profileImg5')
-  //   if (profile_img && imageProfile !== pictures[4]) {
-  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1")
-  //     setImageProfile(pictures[4])
-  //   } else if (imageProfile === pictures[4]) {
-  //     setProfileImg("")
-  //     setImageProfile(pictures[6]);
-  //   } else {
-  //     setProfileImg("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1")
-  //     setImageProfile(pictures[4])
-  //   }
-  // }
-
-  // const profileImg6 = () => {
-  //   setPickedImage('profileImg6')
-  //   if (profile_img && imageProfile !== pictures[5]) {
-  //     setProfileImg("https://cdn.dribbble.com/users/1044993/screenshots/7144312/media/aad1fc1a4ec6d1c27e486c04c1a820b9.png")
-  //     setImageProfile(pictures[5])
-  //   } else if (imageProfile === pictures[5]) {
-  //     setProfileImg("")
-  //     setImageProfile(pictures[6]);
-  //   } else {
-  //     setProfileImg("https://cdn.dribbble.com/users/1044993/screenshots/7144312/media/aad1fc1a4ec6d1c27e486c04c1a820b9.png")
-  //     setImageProfile(pictures[5])
-  //   }
-  // }
 
   return (
     <div className='container-login-page'>

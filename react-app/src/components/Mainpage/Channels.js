@@ -8,15 +8,25 @@ import './Channels.css'
 import DMs from '../DMs';
 import UserChannels from '../UserChannels';
 import { FaLinkedin, FaPython, FaReact, FaAws } from "react-icons/fa";
-import { DiPostgresql } from "react-icons/di";
+import { DiCelluloid, DiPostgresql } from "react-icons/di";
 import { SiFlask } from "react-icons/si";
+import { Resizable } from "re-resizable";
+import Welcome from '../Welcome'
 
 function Channels() {
   const { userId, channelId } = useParams();
   const dispatch = useDispatch();
-
   const allUsers = useSelector((state) => state.search);
 
+  // const style = {
+  //   backgroundColor: '#f2f2f2',
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   justifyContent: 'space-between',
+  //   overflowX: 'hidden',
+  //   borderRight: 'rgb(131, 131, 131) 1px solid',
+  //   zIndex: '2',
+  // }
   useEffect(() => {
     dispatch(getAllChannels(userId));
     if (channelId) {
@@ -28,28 +38,35 @@ function Channels() {
   // check
   return (
     <div className='main-display'>
-      <div className='main-display__sidebar'>
+      <Resizable
+        enable={{ top: false, right: true, bottom: false, left: false, topRight: false, bottomRight: false, bottomLeft: false, topLeft: false }}
+        className='main-display__sidebar'
+        defaultSize={{
+          width: 300,
+        }}
+        minWidth={200}
+      >
         <div className='sidebar__top'>
           <div className='sidebar__info'>
             <ul>
               <li className='sidebar__info-item'>
-                <FaPython className='tech__icons' style={{fontSize: '1.5em'}}/>
+                <FaPython className='tech__icons' style={{ fontSize: '1.5em' }} />
                 <p className='sidebar__info-text'>Python</p>
               </li>
               <li className='sidebar__info-item'>
-                <FaReact className='tech__icons' style={{fontSize: '1.5em'}}/>
+                <FaReact className='tech__icons' style={{ fontSize: '1.5em' }} />
                 <p className='sidebar__info-text'>React</p>
               </li>
               <li className='sidebar__info-item'>
-                <FaAws className='tech__icons' style={{fontSize: '1.5em'}}/>
+                <FaAws className='tech__icons' style={{ fontSize: '1.5em' }} />
                 <p className='sidebar__info-text'>AWS</p>
               </li>
               <li className='sidebar__info-item'>
-                <DiPostgresql className='tech__icons' style={{fontSize: '1.5em'}}/>
+                <DiPostgresql className='tech__icons' style={{ fontSize: '1.5em' }} />
                 <p className='sidebar__info-text'>PostgreSQL</p>
               </li>
               <li className='sidebar__info-item'>
-                <SiFlask className='tech__icons' style={{fontSize: '1.5em'}}/>
+                <SiFlask className='tech__icons' style={{ fontSize: '1.5em' }} />
                 <p className='sidebar__info-text'>Flask</p>
               </li>
             </ul>
@@ -85,10 +102,13 @@ function Channels() {
             </div>
           </a>
         </div>
-      </div>
-      <div className='main-display__chatbox'>
+      </Resizable>
+      <>
         {channelId && <ChatBox />}
-      </div>
+      </>
+      <>
+        {!channelId && <Welcome />}
+      </>
     </div >
   )
 }

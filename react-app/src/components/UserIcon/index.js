@@ -1,7 +1,21 @@
 import './UserIcon.css'
 
 const UserIcon = ({ members }) => {
-
+  if (members.length === 1) {
+    return (
+      <>
+        {members[0]?.profile_img ?
+          <figure
+            className='dm__icon'
+            style={{ backgroundImage: `url( ${members[0]?.profile_img})` }}
+          /> :
+          <div className='default-members dm__icon'>
+            {members[0]?.first_name[0]}
+          </div>
+        }
+      </>
+    )
+  }
   if (members.length <= 2) {
     return (
       <>

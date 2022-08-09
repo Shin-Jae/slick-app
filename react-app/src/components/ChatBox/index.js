@@ -11,6 +11,7 @@ import EditDMModal from '../EditDMs';
 import { deleteChannel } from '../../store/channels';
 import { io } from 'socket.io-client';
 import Typing from '../Typing'
+import ReactTooltip from "react-tooltip";
 
 let socket;
 
@@ -23,7 +24,6 @@ const ChatBox = () => {
   const channels = useSelector((state) => state.channels);
   const logInId = useSelector((state) => state.session.user.id);
   const currentChannel = channels[channelId];
-
   const messages = Object.values(allMessages);
   const [deleted, setDeleted] = useState(false);
   const [messageReceived, setMessageReceived] = useState('')
@@ -143,6 +143,38 @@ const ChatBox = () => {
     )
   }
 
+  const getStrings = (messages) => {
+    return (
+      messages.map((message, i) =>
+        <>
+          <div className='date__container'>
+            {i === 0 &&
+              <div className='date__string-container'>
+                <p className='date__string'>{getHumanDate(messages[0].created_at)}</p>
+              </div>
+            }
+            {
+              i > 0 &&
+              getDate(messages[i - 1]) !== getDate(message) &&
+              <div className='date__string-container'>
+                <p className='date__string'>{getHumanDate(message.created_at)}</p>
+              </div>
+            }
+          </div>
+          <li className="one-message" key={`message-${message.id}`}>
+            {i > 0 && getDate(messages[i - 1]) !== getDate(message) && <div className='date__line' />}
+            <MessageContent
+              message={message}
+              setUpdateComplete={setUpdateComplete}
+              setOnDelete={setOnDelete}
+              setMessageUpdated={setMessageUpdated}
+              setPrevMessage={setPrevMessage}
+            />
+          </li>
+        </>
+      )
+    )
+  }
   const getDate = (message) => {
     const { created_at } = message;
     return created_at.slice(0, 11)
@@ -204,12 +236,17 @@ const ChatBox = () => {
           <h2 className='chatbox__header--text'>
             {privateMembers ?
               (`${privateMembers}`) :
-              <div className='chatbox__header--text-container-icons'>
-                <span className="material-symbols-outlined">
-                  tag
-                </span>
-                {currentChannel.name}
-              </div>
+              <>
+                <ReactTooltip id="header__tip" place="bottom" effect="solid">
+                  {currentChannel.description}
+                </ReactTooltip>
+                <div className='chatbox__header--text-container-icons' data-tip data-for="header__tip">
+                  <span className="material-symbols-outlined">
+                    tag
+                  </span>
+                  {currentChannel.name}
+                </div>
+              </>
             }
           </h2>
         </div>
@@ -249,29 +286,7 @@ const ChatBox = () => {
       </div>
       <div className='chatbox__messages'>
         <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>
-          {messages.length > 0 &&
-            <div className='date__line'>
-              <p className='date__string'>{getHumanDate(messages[0].created_at)}</p>
-            </div>
-          }
-          {messages.map((message, i) =>
-            <li className="one-message" key={`message-${message.id}`}>
-              <MessageContent
-                message={message}
-                setUpdateComplete={setUpdateComplete}
-                setOnDelete={setOnDelete}
-                setMessageUpdated={setMessageUpdated}
-                setPrevMessage={setPrevMessage}
-              />
-              {
-                i > 0 &&
-                getDate(messages[i - 1]) !== getDate(message) &&
-                <div className='date__line'>
-                  <p className='date__string'>{getHumanDate(message.created_at)}</p>
-                </div>
-              }
-            </li>
-          )}
+          {getStrings(messages)}
         </ul>
         <div ref={bottomRef} />
       </div>

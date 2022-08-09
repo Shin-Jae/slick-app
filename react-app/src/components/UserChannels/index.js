@@ -61,9 +61,8 @@ const UserChannels = () => {
         </div>
         <CreateChannelModal hoverDisplay={hoverDisplay} />
       </div>
-      <ul
+     {!hide && <ul
         className="view-channels"
-        style={hide ? { visibility: 'hidden' } : null}
       >
         {channels.map(channel =>
           !channel.private_chat &&
@@ -81,7 +80,7 @@ const UserChannels = () => {
             </div>
           </NavLink>
         )}
-      </ul>
+      </ul>}
     </div>
   );
 }

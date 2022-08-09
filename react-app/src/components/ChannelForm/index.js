@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { createOneChannel, getAllChannels } from "../../store/channels"
+import Select from 'react-select';
+import TextareaAutosize from 'react-textarea-autosize';
+
 
 let count = 1
 let set = new Set()
@@ -13,7 +16,8 @@ const CreateChannelForm = ({ onClose }) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const privatechat = false
-  const [errors, setErrors] = useState([])
+  const [errors, setErrors] = useState([]);
+  const [members, setMembers] = useState(null);
   const [trySubmit, setTrySubmit] = useState(false)
   const [found, setFound] = useState('')
 
@@ -21,7 +25,16 @@ const CreateChannelForm = ({ onClose }) => {
   const userId = useSelector((state) => state.session.user.id)
   const [query, setQuery] = useState("")
   const allUsers = useSelector((state) => state.search);
-  const users = Object.values(allUsers);
+
+  const users = Object.values(allUsers).filter(user => {
+    return user.id !== userId
+  });
+
+  const usersArray = users.map(user => {
+    return { value: user.id, label: `${user.first_name} ${user.last_name}` }
+  })
+
+  // const users = Object.values(allUsers);
   let setArr = [...set]
 
   useEffect(() => {
@@ -34,10 +47,10 @@ const CreateChannelForm = ({ onClose }) => {
       validationErrors.push("Please enter channel's description")
     if (description.length > 255)
       validationErrors.push("Channel Description must be 255 characters or less")
-    if (count < 2)
-      validationErrors.push("Please add a member to the channel")
+    if (members === null || !members.length)
+      validationErrors.push("Please add at least one member to the channel")
     setErrors(validationErrors)
-  }, [name, description, count, trySubmit, dispatch])
+  }, [name, description, members, count, trySubmit, dispatch])
 
   useEffect(() => {
     if (trySubmit === false) {
@@ -47,12 +60,19 @@ const CreateChannelForm = ({ onClose }) => {
 
   const channelSubmission = async (e) => {
     e.preventDefault()
+
+    const allMembers = members.map(member => {
+      return member.value
+    })
+
+    allMembers.push(userId);
+
     const payload = {
       name,
       description,
       privatechat,
       owner_id: userId,
-      members: setArr
+      members: allMembers
     }
     setTrySubmit(true)
     if (!errors.length) {
@@ -129,15 +149,16 @@ const CreateChannelForm = ({ onClose }) => {
           </input>
         </div>
         <div>
-          <textarea
+          <TextareaAutosize
             className='create__channel--textarea'
             placeholder='Description'
+            minRows={4}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
+          />
         </div>
         <div>
-          <div className="added-members-container">
+          {/* <div className="added-members-container">
             {setArr.length ? setArr.map(person => {
               if (person !== userId) {
                 return <div key={`user-${person}`} className="single-member-container">
@@ -152,16 +173,23 @@ const CreateChannelForm = ({ onClose }) => {
                 </div>
               }
             }) : null}
-          </div>
+          </div> */}
           <div>
-            <input
+            {/* <input
               type="text"
               placeholder="Add Members"
               value={query}
               onInput={e => setQuery(e.target.value)}
               onChange={handleNoUsers}
+            /> */}
+            <Select
+              closeMenuOnSelect={false}
+              isMulti
+              placeholder='Search users...'
+              onChange={setMembers}
+              options={usersArray}
             />
-            <div className={filteredUsers.length !== 0 && filteredUsers.length !== users.length ? 'container-add-members' : 'empty'}>
+            {/* <div className={filteredUsers.length !== 0 && filteredUsers.length !== users.length ? 'container-add-members' : 'empty'}>
               <ul className="filtered-list-channels" >
                 {query === "*" ? setQuery("") : null}
                 {query ? filteredUsers.map(user => {
@@ -182,11 +210,16 @@ const CreateChannelForm = ({ onClose }) => {
               {!found && !filteredUsers.length &&
                 <h4 className='no-users-text-create'>No users by that name</h4>
               }
-            </div>
+            </div> */}
           </div>
         </div>
         <div>
-          <button type="submit"> Create Channel
+          <button
+          type="submit"
+          id={errors.length ? 'disabled' : ''}
+          disabled={errors.length}
+          >
+          Create Channel
           </button>
         </div>
       </form>

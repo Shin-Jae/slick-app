@@ -1,6 +1,5 @@
 .main-display {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
+  display: flex;
   position: absolute;
   top: 3em; /* Header Height */
   bottom: 0; /* Footer Height */
@@ -23,6 +22,10 @@
   z-index: 2;
 }
 
+.main-display__sidebar:hover {
+  border-right: rgb(8, 177, 255) 3px solid;
+}
+
 .sidebar__info {
   margin: 2em .5em;
 }
@@ -40,6 +43,7 @@
   border-bottom: .5px solid rgb(216, 216, 216);
   margin: 2em 0;
 }
+
 
 .footer__header {
   display: flex;
@@ -59,9 +63,9 @@
 .sidebar__footer {
   border-top: .5px solid rgb(216, 216, 216);
   padding: 2em 1em;
+  margin-top:auto;
   position: sticky;
-  bottom: 0;
-  width: 100%;
+  bottom: 0em;
   background-color: #f2f2f2;
   z-index: 2;
 }
@@ -85,9 +89,9 @@
   color: #0a66c2;
 }
 
-@media screen and ( min-width: 1600px ){
+/* @media screen and ( min-width: 1600px ){
   .main-display {
     display: grid;
     grid-template-columns: 1fr 5fr;
   }
-}
+} */

@@ -46,7 +46,7 @@
 
 .message__container {
   width: 100%;
-  padding: 1em;
+  padding: 0.5em;
   padding-left: 2em;
   transition: 0.2s;
   position: relative;
@@ -162,4 +162,8 @@
 .message-image-container {
   margin-left: 60px;
   margin-top: -15px;
+}
+
+.image__hidden {
+  visibility: hidden;
 }
