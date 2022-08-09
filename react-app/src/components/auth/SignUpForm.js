@@ -75,7 +75,6 @@ const SignUpForm = () => {
         })
         .then((channel) => {
           data['channel'] = channel.id;
-          console.log('data', data)
 
           history.push(`/users/${data.user}/${data.channel}`);
         })

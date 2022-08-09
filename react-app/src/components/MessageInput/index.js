@@ -127,7 +127,7 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
             {(imageLoading) &&
               image &&
               <span className='loading'>Loading Image
-                <BeatLoader />
+                <BeatLoader color={'#f91690'}/>
               </span>
             }
           </div>

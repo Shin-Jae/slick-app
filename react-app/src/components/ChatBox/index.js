@@ -146,22 +146,22 @@ const ChatBox = () => {
     return (
       messages.map((message, i) =>
         <>
+          <div className='date__container'>
+            {i === 0 &&
+              <div className='date__string-container'>
+                <p className='date__string'>{getHumanDate(messages[0].created_at)}</p>
+              </div>
+            }
+            {
+              i > 0 &&
+              getDate(messages[i - 1]) !== getDate(message) &&
+              <div className='date__string-container'>
+                <p className='date__string'>{getHumanDate(message.created_at)}</p>
+              </div>
+            }
+          </div>
           <li className="one-message" key={`message-${message.id}`}>
-            <div className='date__container'>
-              {i === 0 &&
-                <div className='date__string-container'>
-                  <p className='date__string'>{getHumanDate(messages[0].created_at)}</p>
-                </div>
-              }
-              {
-                i > 0 &&
-                getDate(messages[i - 1]) !== getDate(message) &&
-                <div className='date__string-container'>
-                  <p className='date__string'>{getHumanDate(message.created_at)}</p>
-                </div>
-              }
-            </div>
-            {/* { i > 0 && getDate(messages[i - 1]) !== getDate(message) && <div className='date__line' />} */}
+            {i > 0 && getDate(messages[i - 1]) !== getDate(message) && <div className='date__line' />}
             <MessageContent
               message={message}
               setUpdateComplete={setUpdateComplete}
@@ -280,13 +280,6 @@ const ChatBox = () => {
       </div>
       <div className='chatbox__messages'>
         <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>
-          {/* {messages.length > 0 &&
-            <div className='date__container'>
-              <div className='date__line'>
-                <p className='date__string'>{getHumanDate(messages[0].created_at)}</p>
-              </div>
-            </div>
-          } */}
           {getStrings(messages)}
         </ul>
         <div ref={bottomRef} />

@@ -111,7 +111,6 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
       }
     }
   };
-  console.log(message.image)
   // const timeString = message.created_at.slice(17, 25)
   const time = new Date(message.created_at)
 

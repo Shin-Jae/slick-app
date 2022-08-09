@@ -47,8 +47,8 @@ const CreateChannelForm = ({ onClose }) => {
       validationErrors.push("Please enter channel's description")
     if (description.length > 255)
       validationErrors.push("Channel Description must be 255 characters or less")
-    if (!members)
-      validationErrors.push("Please add a member to the channel")
+    if (members === null || !members.length)
+      validationErrors.push("Please add at least one member to the channel")
     setErrors(validationErrors)
   }, [name, description, members, count, trySubmit, dispatch])
 
@@ -66,8 +66,6 @@ const CreateChannelForm = ({ onClose }) => {
     })
 
     allMembers.push(userId);
-
-    console.log('allMembers', allMembers)
 
     const payload = {
       name,
@@ -216,7 +214,12 @@ const CreateChannelForm = ({ onClose }) => {
           </div>
         </div>
         <div>
-          <button type="submit"> Create Channel
+          <button
+          type="submit"
+          id={errors.length ? 'disabled' : ''}
+          disabled={errors.length}
+          >
+          Create Channel
           </button>
         </div>
       </form>

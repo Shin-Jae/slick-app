@@ -80,7 +80,6 @@ function CreateDMForm({ onClose }) {
     })
 
     allMembers.push(userId);
-    console.log('allMembers', allMembers)
     const matchId = checkExists(allMembers)
     if (matchId) {
       onClose(false)
@@ -224,6 +223,8 @@ function CreateDMForm({ onClose }) {
           />
           <button
             type="submit"
+            disabled={!members || !members.length}
+            id={members === null || !members.length ? 'disabled' : ''}
           >Send DM</button>
         </div>
       </form>

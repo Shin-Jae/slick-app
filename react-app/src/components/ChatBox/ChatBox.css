@@ -76,8 +76,15 @@
   z-index: 5;
 }
 
+.one-message {
+  position: relative;
+}
+
 .date__line {
-  border-bottom: green 1px solid;
+  border-bottom: rgb(209, 209, 209) 1px solid;
+  position: absolute;
+  width: 100%;
+  top: -2em
 }
 
 .date__string-container{
@@ -89,12 +96,14 @@
 
 .date__string {
   padding: .5em;
+  text-align: center;
   font-size: .75em;
-  min-width: 11em;
+  min-width: 13em;
+  min-height: 2.5em;
   font-weight: 600;
   color: rgb(59, 59, 59);
   border:rgb(184, 184, 184) solid .75px;
-  box-shadow: 0 3px 7px rgba(33,33,33,.2);
+  /* box-shadow: 0 3px 7px rgba(33,33,33,.2); */
   border-radius: 2em;
   position: absolute;
   top: -1.2em;

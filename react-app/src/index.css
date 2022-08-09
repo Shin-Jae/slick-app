@@ -59,6 +59,11 @@ ul {
   margin: 2em;
 }
 
+#disabled {
+  background-color: rgb(167, 167, 167);
+  cursor: default;
+}
+
 .error__container {
   background-color: rgba(245, 83, 83, .2);
   padding: .5em;
