@@ -1,7 +1,6 @@
 import './UserIcon.css'
 
 const UserIcon = ({ members }) => {
-  console.log('members', members)
   if (members.length === 1) {
     return (
       <>
