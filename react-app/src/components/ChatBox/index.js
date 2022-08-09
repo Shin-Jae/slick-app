@@ -11,6 +11,7 @@ import EditDMModal from '../EditDMs';
 import { deleteChannel } from '../../store/channels';
 import { io } from 'socket.io-client';
 import Typing from '../Typing'
+import ReactTooltip from "react-tooltip";
 
 let socket;
 
@@ -235,12 +236,17 @@ const ChatBox = () => {
           <h2 className='chatbox__header--text'>
             {privateMembers ?
               (`${privateMembers}`) :
-              <div className='chatbox__header--text-container-icons'>
-                <span className="material-symbols-outlined">
-                  tag
-                </span>
-                {currentChannel.name}
-              </div>
+              <>
+                <ReactTooltip id="header__tip" place="bottom" effect="solid">
+                  {currentChannel.description}
+                </ReactTooltip>
+                <div className='chatbox__header--text-container-icons' data-tip data-for="header__tip">
+                  <span className="material-symbols-outlined">
+                    tag
+                  </span>
+                  {currentChannel.name}
+                </div>
+              </>
             }
           </h2>
         </div>
