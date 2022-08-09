@@ -20,10 +20,12 @@ const ChatBox = () => {
   const history = useHistory();
   const bottomRef = useRef(null);
   const { channelId, userId } = useParams()
+  const channelFromLoad = useSelector(state => state.channels)
+  const newChannel = Object.values(channelFromLoad)[0];
   const allMessages = useSelector((state) => state.messages);
   const channels = useSelector((state) => state.channels);
   const logInId = useSelector((state) => state.session.user.id);
-  const currentChannel = channels[channelId];
+  const currentChannel = channels[channelId] || channels[newChannel.id];
   const messages = Object.values(allMessages);
   const [deleted, setDeleted] = useState(false);
   const [messageReceived, setMessageReceived] = useState('')
@@ -36,7 +38,6 @@ const ChatBox = () => {
   const [typing, setTyping] = useState(false)
   const [otherTyping, setOtherTyping] = useState('')
   const [userTyping, setUserTyping] = useState('')
-
   let privateMembers;
 
   if (currentChannel?.private_chat) {

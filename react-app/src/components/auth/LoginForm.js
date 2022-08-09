@@ -78,9 +78,9 @@ const LoginForm = () => {
               className='demo-login-btn demo-user-1'
               type='submit'
               onClick={demoUser1}
-            >Demo User 1</button>
+            >Demo User</button>
           </div>
-          <div>
+          {/* <div>
             <button
               className='demo-login-btn demo-user-2'
               type='submit'
@@ -93,7 +93,7 @@ const LoginForm = () => {
               type='submit'
               onClick={demoUser3}
             >Demo User 3</button>
-          </div>
+          </div> */}
         </div>
         <div className='container-content-rule'>
           <hr className='horizontal-line line-left'></hr>

@@ -145,6 +145,7 @@ const CreateChannelForm = ({ onClose }) => {
           <input
             placeholder='Channel Name'
             value={name}
+            max={100}
             onChange={(e) => setName(e.target.value)}>
           </input>
         </div>
@@ -153,6 +154,7 @@ const CreateChannelForm = ({ onClose }) => {
             className='create__channel--textarea'
             placeholder='Description'
             minRows={4}
+            maxLength={255}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
