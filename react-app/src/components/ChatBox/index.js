@@ -12,6 +12,7 @@ import { deleteChannel } from '../../store/channels';
 import { io } from 'socket.io-client';
 import Typing from '../Typing'
 import ReactTooltip from "react-tooltip";
+import Welcome from '../Welcome'
 
 let socket;
 
@@ -19,11 +20,11 @@ const ChatBox = () => {
   const dispatch = useDispatch()
   const history = useHistory();
   const bottomRef = useRef(null);
-  const { channelId, userId } = useParams()
+  let { channelId, userId } = useParams()
   const allMessages = useSelector((state) => state.messages);
   const channels = useSelector((state) => state.channels);
   const logInId = useSelector((state) => state.session.user.id);
-  const currentChannel = channels[channelId];
+  let currentChannel = channels[channelId];
   const messages = Object.values(allMessages);
   const [deleted, setDeleted] = useState(false);
   const [messageReceived, setMessageReceived] = useState('')
@@ -32,18 +33,39 @@ const ChatBox = () => {
   const [prevMessage, setPrevMessage] = useState('')
   const [createMessage, setCreateMessage] = useState('')
   const [onDelete, setOnDelete] = useState(false)
+  const data = useParams();
+  const [home, setHome] = useState(!data['channelId'])
   const [owner, setOwner] = useState(false)
   const [typing, setTyping] = useState(false)
   const [otherTyping, setOtherTyping] = useState('')
   const [userTyping, setUserTyping] = useState('')
 
+
   let privateMembers;
+
+  if (home) {
+    const privateChannel = Object.values(channels).filter(channel =>
+      channel.members.length === 1 && channel.members[0].id === +userId)
+    if (privateChannel.length) {
+      currentChannel = privateChannel[0]
+    }
+  }
 
   if (currentChannel?.private_chat) {
     privateMembers = currentChannel.members.filter(user =>
       +user.id !== +userId
     ).map(user => `${user.first_name} ${user.last_name}`).join(', ')
   }
+
+  useEffect(() => {
+    if (!channelId) {
+      const privateChannel = Object.values(channels).filter(channel =>
+        channel.members.length === 1 && channel.members[0].id === +userId)
+      if (privateChannel.length) {
+        channelId = privateChannel[0].id;
+      }
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(getAllChannels(userId));
@@ -136,12 +158,8 @@ const ChatBox = () => {
   }
 
   if (!Object.keys(channels).length) return null;
+  if (!currentChannel) return null;
 
-  if (!currentChannel) {
-    return (
-      <Redirect to={`/users/${logInId}`} />
-    )
-  }
 
   const getStrings = (messages) => {
     return (
@@ -231,59 +249,59 @@ const ChatBox = () => {
 
   return (
     <div className='chatbox'>
-      <div className='chatbox__header'>
-        <div className='chatbox__header--text-container'>
-          <h2 className='chatbox__header--text'>
-            {privateMembers ?
-              (`${privateMembers}`) :
-              <>
-                <ReactTooltip id="header__tip" place="bottom" effect="solid">
-                  {currentChannel.description}
-                </ReactTooltip>
-                <div className='chatbox__header--text-container-icons' data-tip data-for="header__tip">
-                  <span className="material-symbols-outlined">
-                    tag
-                  </span>
-                  {currentChannel.name}
-                </div>
-              </>
-            }
-          </h2>
-        </div>
-        <div className='chatbox__header--icon-container'>
-          <h2>{
-            owner &&
-            currentChannel.private_chat &&
-            <EditDMModal
-              channelId={currentChannel.id}
-            />}
-          </h2>
-          <div className='chatbox__header--buttons-container'>
-            <h2 className='h2__edit'>{
-              owner &&
-              !currentChannel.private_chat &&
-              <EditChannelModal
-                channelId={currentChannel.id}
-                userId={userId}
-                owner_id={currentChannel.owner_id}
-              />}
-            </h2>
-            <h2 className='h2__delete'>
-              {+userId === +currentChannel.owner_id &&
-                !currentChannel.private_chat &&
-                <button
-                  className='chatbox__header--buttons'
-                  onClick={() => removingChannel(currentChannel.id)}
-                  style={{ cursor: "pointer" }}>
-                  <span className="material-symbols-outlined">
-                    delete
-                  </span>
-                </button>}
+      {home ? <Welcome /> :
+        (!home && <div className='chatbox__header'>
+          <div className='chatbox__header--text-container'>
+            <h2 className='chatbox__header--text'>
+              {privateMembers ?
+                (`${privateMembers}`) :
+                <>
+                  <ReactTooltip id="header__tip" place="bottom" effect="solid">
+                    {currentChannel.description}
+                  </ReactTooltip>
+                  <div className='chatbox__header--text-container-icons' data-tip data-for="header__tip">
+                    <span className="material-symbols-outlined">
+                      tag
+                    </span>
+                    {currentChannel.name}
+                  </div>
+                </>
+              }
             </h2>
           </div>
-
-        </div>
-      </div>
+          <div className='chatbox__header--icon-container'>
+            <h2>{
+              owner &&
+              currentChannel.private_chat &&
+              <EditDMModal
+                channelId={currentChannel.id}
+              />}
+            </h2>
+            <div className='chatbox__header--buttons-container'>
+              <h2 className='h2__edit'>{
+                owner &&
+                !currentChannel.private_chat &&
+                <EditChannelModal
+                  channelId={currentChannel.id}
+                  userId={userId}
+                  owner_id={currentChannel.owner_id}
+                />}
+              </h2>
+              <h2 className='h2__delete'>
+                {+userId === +currentChannel.owner_id &&
+                  !currentChannel.private_chat &&
+                  <button
+                    className='chatbox__header--buttons'
+                    onClick={() => removingChannel(currentChannel.id)}
+                    style={{ cursor: "pointer" }}>
+                    <span className="material-symbols-outlined">
+                      delete
+                    </span>
+                  </button>}
+              </h2>
+            </div>
+          </div>
+        </div>)}
       <div className='chatbox__messages'>
         <ul className="chatbox__messages--list" style={{ listStyleType: "none" }}>
           {getStrings(messages)}
@@ -299,6 +317,7 @@ const ChatBox = () => {
           </div>
         }
         <MessageInput
+          channelId={currentChannel.id}
           setMessageReceived={setMessageReceived}
           setCreateMessage={setCreateMessage}
           setTyping={setTyping}

@@ -5,6 +5,8 @@ from app.models import db, User, Channel
 import datetime
 
 # Adds a demo user, you can add other users here if you want
+
+
 def seed_users():
     school = Channel(
         owner_id=1,
@@ -26,7 +28,7 @@ def seed_users():
         updated_at=datetime.datetime.now(),
         # channel_members = [1, 2, 3]
         # channel_members = [demo, tony, bill]
-        )
+    )
 
     appAcademy = Channel(
         owner_id=2,
@@ -37,7 +39,7 @@ def seed_users():
         updated_at=datetime.datetime.now(),
         # channel_members = [1, 2, 3]
         # channel_members = [demo, tony, bill]
-        )
+    )
 
     private1 = Channel(
         owner_id=2,
@@ -47,7 +49,7 @@ def seed_users():
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
         # channel_members = [tony, bill]
-        )
+    )
 
     private2 = Channel(
         owner_id=2,
@@ -57,7 +59,7 @@ def seed_users():
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
         # channel_members = [demo, tony]
-        )
+    )
 
     private3 = Channel(
         owner_id=2,
@@ -67,7 +69,7 @@ def seed_users():
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
         # channel_members = [demo, tony, bill]
-        )
+    )
     demo = User(
         first_name='Demo',
         last_name='Demo',
@@ -75,30 +77,63 @@ def seed_users():
         password='password',
         profile_img='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
         created_at=datetime.datetime.now(),
-        user_members= [school, work, appAcademy, private2, private3]
-        )
+        user_members=[school, work, appAcademy, private2, private3]
+    )
     tony = User(
-        first_name='Tony',
-        last_name='Stark',
+        first_name='Layton',
+        last_name='Campos',
         email='Tony@ironman.io',
         password='password',
         profile_img='https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
         created_at=datetime.datetime.now(),
-        user_members= [school, work, appAcademy, private1, private2, private3]
+        user_members=[school, work, appAcademy, private1, private2, private3]
     )
     bill = User(
-        first_name='Bill',
-        last_name='Gates',
+        first_name='Nola',
+        last_name='Everett',
         email='bill@microsoft.com',
         password='password',
         profile_img='https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
         created_at=datetime.datetime.now(),
-        user_members= [school, work, appAcademy, private1, private3]
+        user_members=[school, work, appAcademy, private1, private3]
+    )
+
+    self1 = Channel(
+        owner_id=1,
+        name='Demo User',
+        description='A private channel for you',
+        private_chat=True,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+        channel_members=[demo]
+    )
+
+    self2 = Channel(
+        owner_id=2,
+        name='Layton Campos',
+        description='A private channel for you',
+        private_chat=True,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+        channel_members=[tony]
+    )
+
+    self3 = Channel(
+        owner_id=3,
+        name='Nola Everett',
+        description='A private channel for you',
+        private_chat=True,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+        channel_members=[bill]
     )
 
     db.session.add(demo)
     db.session.add(tony)
     db.session.add(bill)
+    db.session.add(self1)
+    db.session.add(self2)
+    db.session.add(self3)
 
     db.session.commit()
 

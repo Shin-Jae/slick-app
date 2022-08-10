@@ -31,8 +31,8 @@ const SignUpForm = () => {
   const dispatch = useDispatch();
   // let pictures = ["%curious%george%with%cool%binoculars%", "%courage%the%cowardly%dog", "%storm%trooper%", "%ninja%with%kunai%", "%happy%minion%looking%up%", "5%sleeping%koala%on%branch%", ""]
 
+
   const onSignUp = async (e) => {
-    setLoading(true)
     e.preventDefault();
     const validationErrors = []
     if (!first_name)
@@ -44,7 +44,7 @@ const SignUpForm = () => {
     if (!password)
       validationErrors.push("Please enter password")
     if (!repeatPassword)
-      validationErrors.push("Please enter the same password again")
+      validationErrors.push("Please re-enter password")
     if (password !== repeatPassword) validationErrors.push("Passwords field must match repeat password field.")
     // if (!imageProfile)
     //   validationErrors.push("Please choose your favorite avatar")
@@ -53,6 +53,9 @@ const SignUpForm = () => {
       setErrors(validationErrors)
       return
     }
+
+    setLoading(true)
+
     const formData = new FormData();
     formData.append("first_name", first_name);
     formData.append("last_name", last_name);
@@ -75,8 +78,7 @@ const SignUpForm = () => {
         })
         .then((channel) => {
           data['channel'] = channel.id;
-
-          history.push(`/users/${data.user}/${data.channel}`);
+          history.push(`/users/${data.user}`);
         })
       setLoading(false)
     };
@@ -163,6 +165,7 @@ const SignUpForm = () => {
           <input
             className='login-input-field'
             type='text'
+            required
             name='first_name'
             onChange={updateFirstName}
             value={first_name}
@@ -174,6 +177,7 @@ const SignUpForm = () => {
             className='login-input-field'
             type='text'
             name='last_name'
+            required
             onChange={updateLastName}
             value={last_name}
             placeholder='Your last name'
@@ -184,6 +188,7 @@ const SignUpForm = () => {
             className='login-input-field'
             type='text'
             name='email'
+            required
             onChange={updateEmail}
             value={email}
             placeholder='Your email'
@@ -193,6 +198,7 @@ const SignUpForm = () => {
           <input
             className='login-input-field'
             type='password'
+            required
             name='password'
             onChange={updatePassword}
             value={password}
@@ -203,6 +209,7 @@ const SignUpForm = () => {
           <input
             className='login-input-field'
             type='password'
+            required
             name='repeat_password'
             onChange={updateRepeatPassword}
             value={repeatPassword}

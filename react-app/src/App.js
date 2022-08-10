@@ -16,6 +16,7 @@ import PageNotFound from './components/PageNotFound';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,7 +34,7 @@ function App() {
     <BrowserRouter>
       <NavBar loaded={loaded} />
       <Route exact path='/'>
-        <LoginForm />
+        <LoginForm props={{loading, setLoading}}/>
       </Route>
       <Route exact path='/sign-up'>
         <SignUpForm />
@@ -53,7 +54,7 @@ function App() {
             <User />
           </Route>
           <Route>
-            <PageNotFound />
+            {!loading && <PageNotFound />}
           </Route>
         </Switch>
       </PrivateRoute>

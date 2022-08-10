@@ -8,13 +8,13 @@
   background-color: white;
   text-align: center;
   position: absolute;
-  right: 3em;
+  right: 9em;
   top: 3.5em;
   border: 1px solid rgb(231, 231, 231);
   border-radius: 1em;
   padding: 2em;
   box-shadow: 0 3px 7px rgba(33,33,33,.2);
-  z-index: 4;
+  z-index: 10;
 }
 
 .navbar__dropdown--text {

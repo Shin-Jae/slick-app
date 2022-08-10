@@ -10,7 +10,6 @@ def seed_channels():
         private_chat=False,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
-        # channel_members = [1, 2, 3]
         channel_members = [demo, tony, bill]
         )
 
@@ -21,7 +20,6 @@ def seed_channels():
         private_chat=False,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
-        # channel_members = [1, 2, 3]
         channel_members = [demo, tony, bill]
         )
 
@@ -32,7 +30,6 @@ def seed_channels():
         private_chat=False,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
-        # channel_members = [1, 2, 3]
         channel_members = [demo, tony, bill]
         )
 
@@ -73,6 +70,7 @@ def seed_channels():
     db.session.add(private1)
     db.session.add(private2)
     db.session.add(private3)
+
 
     db.session.commit()
 

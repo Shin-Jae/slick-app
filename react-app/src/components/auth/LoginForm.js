@@ -5,9 +5,11 @@ import { login } from '../../store/session';
 import "./LoginForm.css"
 import slickicon from "../../images/slickicon.png"
 import AboutLinks from '../AboutLinks';
+import { PropagateLoader } from 'react-spinners';
 
-const LoginForm = () => {
 
+const LoginForm = ({ props }) => {
+  const { loading, setLoading } = props
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,14 +18,46 @@ const LoginForm = () => {
 
   const onLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
     const data = await dispatch(login(email, password));
     if (data) {
       setErrors(data);
     }
   };
 
+  const override = {
+    display: "block",
+    margin: "0 auto",
+  };
+
+  if (loading) {
+    return (
+      <div className='loader__wrapper'>
+        <div className='loader__content'>
+          <div className='loader__text'>
+            <p className='loader__header'>👋 Welcome Back!</p>
+            <p className='loader__subheader'>Please wait while we load your channels</p>
+          </div>
+          <div className='loader__loader'>
+            <PropagateLoader
+              color={'#f91690'}
+              cssOverride={override}
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const demoUser1 = async (e) => {
     e.preventDefault()
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
     await dispatch(login('demo@aa.io', 'password'));
   }
 
@@ -78,9 +112,9 @@ const LoginForm = () => {
               className='demo-login-btn demo-user-1'
               type='submit'
               onClick={demoUser1}
-            >Demo User 1</button>
+            >Demo User</button>
           </div>
-          <div>
+          {/* <div>
             <button
               className='demo-login-btn demo-user-2'
               type='submit'
@@ -93,7 +127,7 @@ const LoginForm = () => {
               type='submit'
               onClick={demoUser3}
             >Demo User 3</button>
-          </div>
+          </div> */}
         </div>
         <div className='container-content-rule'>
           <hr className='horizontal-line line-left'></hr>
