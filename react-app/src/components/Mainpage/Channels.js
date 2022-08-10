@@ -104,9 +104,6 @@ function Channels() {
       <>
         {<ChatBox />}
       </>
-      {/* <>
-        {!channelId && <Welcome props={privateChannel}/>}
-      </> */}
     </div >
   )
 }

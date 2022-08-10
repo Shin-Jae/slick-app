@@ -21,7 +21,8 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping, channelId })
   const [message, setMessage] = useState('')
   const [newMessageId, setNewMessageId] = useState('')
   const [errors, setErrors] = useState([])
-
+  const data = useParams();
+  const [selfChat, setSelfChat] = useState('channelId' in data)
   const [image, setImage] = useState('');
   const [imageLoading, setImageLoading] = useState(false);
   const [choseImage, setChoseImage] = useState(false);
@@ -112,7 +113,10 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping, channelId })
           <TextareaAutosize
             className='message__input'
             type='text'
-            placeholder={private_chat ? `Message ${privateMembers}` : `Message #${name}`}
+            placeholder={
+              !selfChat ?
+                `Jot something down` :
+                (private_chat ? `Message ${privateMembers}` : `Message #${name}`)}
             onKeyPress={handleKeyPress}
             maxLength='2000'
             minRows={3}
@@ -130,7 +134,7 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping, channelId })
             {(imageLoading) &&
               image &&
               <span className='loading'>Loading Image
-                <BeatLoader color={'#f91690'}/>
+                <BeatLoader color={'#f91690'} />
               </span>
             }
           </div>
