@@ -8,6 +8,7 @@ import slickicon from "../../images/slickicon.png"
 import AboutLinks from '../AboutLinks';
 import { createChannels, createOneChannel } from '../../store/channels'
 import { PropagateLoader } from 'react-spinners'
+import talking from '../../images/talking.png'
 
 
 const SignUpForm = () => {
@@ -122,6 +123,11 @@ const SignUpForm = () => {
           <div className='loader__text'>
             <p className='loader__header'>👋 Welcome!</p>
             <p className='loader__subheader'>Please wait while we create your account</p>
+            <img
+              src={talking}
+              alt='two people chatting'
+              className='chatting__png'
+            />
           </div>
           <div className='loader__loader'>
             <PropagateLoader
@@ -135,127 +141,131 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className='container-login-page'>
-      <header className='container-login-header'>
-        <div className='header-left-col'></div>
-        <NavLink exact to="/" className='header-center-col'></NavLink>
-        <div className='header-right-col'>
-          <div className='link-to-other-form'>
-            Already have an account?
-          </div>
-          <div><NavLink to="/">Sign in instead</NavLink></div>
-        </div>
-      </header>
-      <div className='text-sign-in'>
-        <h1>Join <span className='text-sign-in-slick'>Slick</span> today</h1>
-        <p className='text-sign-in-suggest'>We suggest using the email address you use at work</p>
-        <img
-          className='slick-logo3'
-          alt=''
-          src={slickicon} />
-      </div>
-      <form onSubmit={onSignUp} className='form-container'>
-        {errors[0] &&
-          <div className='error__container'>
-            {errors.map((error, ind) => (
-              <p key={ind} className='error__text'>{error}</p>
-            ))}
-          </div>}
-        <div className='input'>
-          <input
-            className='login-input-field'
-            type='text'
-            required
-            name='first_name'
-            onChange={updateFirstName}
-            value={first_name}
-            placeholder='Your first name'
-          ></input>
-        </div>
-        <div className='input'>
-          <input
-            className='login-input-field'
-            type='text'
-            name='last_name'
-            required
-            onChange={updateLastName}
-            value={last_name}
-            placeholder='Your last name'
-          ></input>
-        </div>
-        <div className='input'>
-          <input
-            className='login-input-field'
-            type='text'
-            name='email'
-            required
-            onChange={updateEmail}
-            value={email}
-            placeholder='Your email'
-          ></input>
-        </div>
-        <div className='input'>
-          <input
-            className='login-input-field'
-            type='password'
-            required
-            name='password'
-            onChange={updatePassword}
-            value={password}
-            placeholder='Please enter a password'
-          ></input>
-        </div>
-        <div className='input'>
-          <input
-            className='login-input-field'
-            type='password'
-            required
-            name='repeat_password'
-            onChange={updateRepeatPassword}
-            value={repeatPassword}
-            placeholder='Confirm password'
-          ></input>
-        </div>
-        <div className='profile-img-container'>
-          <label className='choose-profile-img'>
-            <div className='img-btn-container'>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={updateImage}
-                hidden
-              /></div>
-            <span className='upload-profile-img'>Upload profile image</span>
-
-          </label>
-          {choseImage &&
-            <div className='selected-img'>
-              <span className="iconify check-icon" data-icon="akar-icons:circle-check-fill"></span>
+    <>
+      <div className='container-login-page'>
+        <header className='container-login-header'>
+          <div className='header-left-col'></div>
+          <NavLink exact to="/" className='header-center-col'></NavLink>
+          <div className='header-right-col'>
+            <div className='link-to-other-form'>
+              Already have an account?
             </div>
-          }
+            <div className='sign__up-text'><NavLink to="/">Sign in instead</NavLink></div>
+          </div>
+        </header>
+        <div className='text-sign-in'>
+          <h1>Join <span className='text-sign-in-slick'>Slick</span> today</h1>
+          <p className='text-sign-in-suggest'>We suggest using the email address you use at work</p>
+          <img
+            className='slick-logo3'
+            alt=''
+            src={slickicon} />
         </div>
-        {(imageLoading) && profile_img && <p className='profile-loading'>Loading...</p>}
-        {/* <div className='input'>
+        <form onSubmit={onSignUp} className='form-container'>
+          {errors[0] &&
+            <div className='error__container'>
+              {errors.map((error, ind) => (
+                <p key={ind} className='error__text'>{error}</p>
+              ))}
+            </div>}
+          <div className='input'>
+            <input
+              className='login-input-field'
+              type='text'
+              autoComplete='off'
+              required
+              name='first_name'
+              onChange={updateFirstName}
+              value={first_name}
+              placeholder='Your first name'
+            ></input>
+          </div>
+          <div className='input'>
+            <input
+              className='login-input-field'
+              type='text'
+              name='last_name'
+              autoComplete='off'
+              required
+              onChange={updateLastName}
+              value={last_name}
+              placeholder='Your last name'
+            ></input>
+          </div>
+          <div className='input'>
+            <input
+              className='login-input-field'
+              type='text'
+              name='email'
+              autoComplete='off'
+              required
+              onChange={updateEmail}
+              value={email}
+              placeholder='Your email'
+            ></input>
+          </div>
+          <div className='input'>
+            <input
+              className='login-input-field'
+              type='password'
+              required
+              name='password'
+              onChange={updatePassword}
+              value={password}
+              placeholder='Please enter a password'
+            ></input>
+          </div>
+          <div className='input'>
+            <input
+              className='login-input-field'
+              type='password'
+              required
+              name='repeat_password'
+              onChange={updateRepeatPassword}
+              value={repeatPassword}
+              placeholder='Confirm password'
+            ></input>
+          </div>
+          <div className='profile-img-container'>
+            <label className='choose-profile-img'>
+              <div className='img-btn-container'>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={updateImage}
+                  hidden
+                /></div>
+              <span className='upload-profile-img'>Upload profile image</span>
+
+            </label>
+            {choseImage &&
+              <div className='selected-img'>
+                <span className="iconify check-icon" data-icon="akar-icons:circle-check-fill"></span>
+              </div>
+            }
+          </div>
+          {(imageLoading) && profile_img && <p className='profile-loading'>Loading...</p>}
+          {/* <div className='input'>
           <input
-            className='login-input-field'
-            type='hidden'
-            name='profile_img'
-            onChange={updateProfileImg}
-            value={!imageProfile ? profile_img : imageProfile}
-            placeholder="Add profile image or pick one from below"
+          className='login-input-field'
+          type='hidden'
+          name='profile_img'
+          onChange={updateProfileImg}
+          value={!imageProfile ? profile_img : imageProfile}
+          placeholder="Add profile image or pick one from below"
           >
-          </input> */}
-        {/* <button
+        </input> */}
+          {/* <button
             className='hide-profile-img-btn'
             onClick={hideImg}
             type="button"
           >{show ? "Close" : "Pick Here"}</button> */}
-        {/* {show ? */}
-        {/* <div className='container-signup-profile-img form-container'>
+          {/* {show ? */}
+          {/* <div className='container-signup-profile-img form-container'>
             <span onClick={profileImg1}><img
-              src={"https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F40%2F92%2FuDb8Ag.jpg&f=1&nofb=1"}
-              alt="1"
-              className={pickedImage === 'profileImg1' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
+            src={"https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F40%2F92%2FuDb8Ag.jpg&f=1&nofb=1"}
+            alt="1"
+            className={pickedImage === 'profileImg1' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
             />
             </span>
             <span onClick={profileImg2}>
@@ -263,42 +273,43 @@ const SignUpForm = () => {
                 src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8tdN9Y1EdqHqjxJKNaM8fgHaEK%26pid%3DApi&f=1"}
                 alt="2"
                 className={pickedImage === 'profileImg2' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
-              />
-            </span>
-            <span onClick={profileImg3}>
-              <img
+                />
+                </span>
+                <span onClick={profileImg3}>
+                <img
                 src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.FoDrAACvIhot0pCtrxiTVgAAAA%26pid%3DApi&f=1"}
                 alt="3"
                 className={pickedImage === 'profileImg3' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
-              />
-            </span>
-            <span onClick={profileImg4}>
-              <img
+                />
+                </span>
+                <span onClick={profileImg4}>
+                <img
                 src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ufGaAO3SS0Cc387fjLkt8gHaHa%26pid%3DApi&f=1"}
                 alt="4"
                 className={pickedImage === 'profileImg4' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
-              />
-            </span>
-            <span onClick={profileImg5}>
-              <img
+                />
+                </span>
+                <span onClick={profileImg5}>
+                <img
                 src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.utwjOzxNcqOu7nG40Wx2kQHaEo%26pid%3DApi&f=1"}
                 alt="5"
                 className={pickedImage === 'profileImg5' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
-              />
-            </span>
-            <span onClick={profileImg6}>
-              <img
+                />
+                </span>
+                <span onClick={profileImg6}>
+                <img
                 src={"https://cdn.dribbble.com/users/1044993/screenshots/7144312/media/aad1fc1a4ec6d1c27e486c04c1a820b9.png"}
                 alt="6"
                 className={pickedImage === 'profileImg6' ? 'signup-profile-img picked__img' : 'signup-profile-img'}
-              />
-            </span>
-          </div>
-        </div> */}
-        <button type='submit' className='login-btn'>Sign Up</button>
-        <AboutLinks />
-      </form>
-    </div>
+                />
+                </span>
+                </div>
+              </div> */}
+          <button type='submit' className='login-btn'>Sign Up</button>
+        </form>
+      </div>
+      <AboutLinks />
+    </>
   );
 };
 

@@ -48,6 +48,16 @@
   width: 30px;
 }
 
+.sign__up-text {
+  padding: .25em;
+  border-radius: .25em;
+  transition: .2s;
+}
+
+.sign__up-text:hover {
+  background: rgb(228, 228, 228);
+}
+
 .upload-profile-img {
   border: 1px solid white;
   font-size: 18px;

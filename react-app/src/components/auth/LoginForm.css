@@ -1,6 +1,7 @@
 .container-login-page {
   font-family: Slack-Larsseit, Helvetica Neue, Helvetica, Segoe UI, Tahoma,
     Arial, sans-serif;
+
 }
 
 .container-login-header {
@@ -20,6 +21,11 @@
 
 .link-to-other-form {
   margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.chatting__png {
+  width: 20em;
 }
 
 .header-right-col {
