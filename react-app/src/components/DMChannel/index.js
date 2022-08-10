@@ -30,25 +30,36 @@ const DMChannel = ({ channel }) => {
         onMouseEnter={(e) => setShowDelete(true)}
         onMouseLeave={(e) => setShowDelete(false)}
       >
-        <NavLink className='dms__link' activeClassName="dm-blue" activeStyle={{ color: 'white' }}
-          exact to={`/users/${id}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
-          <div className='dms__list-item--icon-name'>
-            <div className='dms__list-item--icon-container'>
-              <UserIcon members={channel.members} />
-            </div>
-            <div className='dms__list-item--name-container'>
-              {DMString}
-            </div>
-            {channel.members.length === 1 &&
-              <div className='dms__list-item--name-container'>
-                {`${channel.members[0].first_name} ${channel.members[0].last_name}`}
+        {channel.members.length === 1 ?
+          (<NavLink className='dms__link' activeClassName="dm-blue" activeStyle={{ color: 'white' }}
+            exact to={`/users/${id}`} style={{ textDecoration: "none", color: "black" }}>
+            <div className='dms__list-item--icon-name'>
+              <div className='dms__list-item--icon-container'>
+                <UserIcon members={channel.members} />
               </div>
-            }
-          </div>
-        </NavLink>
-        <div className='dm__delete-container'>
-          <DeleteDMButton currentChannelId={channel.id} showDelete={showDelete} />
-        </div>
+              <div className='dms__list-item--name-container'>
+                {`${channel.members[0].first_name} ${channel.members[0].last_name} (you)`}
+              </div>
+            </div>
+          </NavLink>)
+          :
+          (
+            <>
+              <NavLink className='dms__link' activeClassName="dm-blue" activeStyle={{ color: 'white' }}
+                exact to={`/users/${id}/${channel.id}`} style={{ textDecoration: "none", color: "black" }}>
+                <div className='dms__list-item--icon-name'>
+                  <div className='dms__list-item--icon-container'>
+                    <UserIcon members={channel.members} />
+                  </div>
+                  <div className='dms__list-item--name-container'>
+                    {DMString}
+                  </div>
+                </div>
+              </NavLink>
+              <div className='dm__delete-container'>
+                <DeleteDMButton currentChannelId={channel.id} showDelete={showDelete} />
+              </div>
+            </>)}
       </div>
     </li>
   );

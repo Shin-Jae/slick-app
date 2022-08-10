@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
 import ChatBox from "../ChatBox";
@@ -17,16 +17,14 @@ function Channels() {
   const { userId, channelId } = useParams();
   const dispatch = useDispatch();
   const allUsers = useSelector((state) => state.search);
+  const channels = useSelector((state) => state.channels);
 
-  // const style = {
-  //   backgroundColor: '#f2f2f2',
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   justifyContent: 'space-between',
-  //   overflowX: 'hidden',
-  //   borderRight: 'rgb(131, 131, 131) 1px solid',
-  //   zIndex: '2',
-  // }
+  // const [privateChannel, setPrivateChannel] = useState(
+  //   Object.values(channels).filter(channel =>
+  //     channel.members.length === 1 && channel.members[0].id == userId
+  //   )[0]
+  // )
+
   useEffect(() => {
     dispatch(getAllChannels(userId));
     if (channelId) {
@@ -104,11 +102,11 @@ function Channels() {
         </div>
       </Resizable>
       <>
-        {channelId && <ChatBox />}
+        {<ChatBox />}
       </>
-      <>
-        {!channelId && <Welcome />}
-      </>
+      {/* <>
+        {!channelId && <Welcome props={privateChannel}/>}
+      </> */}
     </div >
   )
 }

@@ -1,0 +1,24 @@
+.welcome__container {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: rgb(212, 212, 212) 1px solid;
+  padding: 0 10em 0 2em;
+  /* align-items: center; */
+}
+
+.welcome__text-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.welcome__header {
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.chat__png {
+  max-width: 25em;
+}

@@ -17,7 +17,6 @@ const DMs = () => {
   const [hide, setHide] = useState(false)
 
   const privateChannels = channels.filter(channel => channel.private_chat)
-
   useEffect(() => {
     dispatch(getAllChannels(id));
     if (channelId) {

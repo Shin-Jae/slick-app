@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createNewMessage } from '../../store/messages';
 import './MessageInput.css'
 import ReactTooltip from "react-tooltip";
@@ -11,11 +11,12 @@ import { BeatLoader } from 'react-spinners'
 
 // let socket;
 
-const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
+const MessageInput = ({ setUserTyping, setCreateMessage, setTyping, channelId }) => {
   const dispatch = useDispatch()
+  const focusRef = useRef()
   const channels = useSelector((state) => state.channels);
   const user = useSelector(state => state.session.user);
-  const { userId, channelId } = useParams()
+  const { userId } = useParams()
   const [textareaHeight, setTextareaHeight] = useState(1);
   const [message, setMessage] = useState('')
   const [newMessageId, setNewMessageId] = useState('')
@@ -30,7 +31,8 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
     if (message.length > 1999)
       validationErrors.push('Please keep message to under 2000 characters')
     setErrors(validationErrors)
-  }, [message, dispatch])
+    focusRef.current.focus();
+  }, [message, dispatch, channelId])
 
   if (!channels[channelId]) return null;
 
@@ -114,6 +116,7 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping }) => {
             onKeyPress={handleKeyPress}
             maxLength='2000'
             minRows={3}
+            ref={focusRef}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
