@@ -141,7 +141,7 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
             if (person !== userId) {
               return <div key={`mem-${person}`} className="single-member-container">
                 {allUsers[person]?.profile_img ?
-                  <img src={allUsers[person].profile_img} alt={allUsers[person].id} className="search-profile-pics" />
+                  <figure style={{ backgroundImage: `url(${allUsers[person].profile_img})`}} alt={allUsers[person].id} className="search-profile-pics" />
                   :
                   <div className='default-profile search-profile-pics default-search'>
                     {allUsers[person]?.first_name[0]}
@@ -168,7 +168,7 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
                 if (user.id !== userId && !set.has(user.id)) {
                   return <div key={user.id} className='single-search-names-container'>
                     {user?.profile_img ?
-                      <img src={user.profile_img} alt={user.id} className="search-profile-pics" />
+                      <figure style={{ backgroundImage: `url (${user.profile_img})`}} alt={user.id} className="search-profile-pics" />
                       :
                       <div className='default-profile search-profile-pics default-search'>
                         {user.first_name[0]}

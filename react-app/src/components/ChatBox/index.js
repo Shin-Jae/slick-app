@@ -13,32 +13,35 @@ import { io } from 'socket.io-client';
 import Typing from '../Typing'
 import ReactTooltip from "react-tooltip";
 import Welcome from '../Welcome'
+import { Modal } from '../../context/modal'
+import DeleteWarning from '../DeleteWarning'
 
 let socket;
 
 const ChatBox = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const history = useHistory();
   const bottomRef = useRef(null);
-  let { channelId, userId } = useParams()
+  let { channelId, userId } = useParams();
   const allMessages = useSelector((state) => state.messages);
   const channels = useSelector((state) => state.channels);
   const logInId = useSelector((state) => state.session.user.id);
   let currentChannel = channels[channelId];
   const messages = Object.values(allMessages);
   const [deleted, setDeleted] = useState(false);
-  const [messageReceived, setMessageReceived] = useState('')
-  const [updateComplete, setUpdateComplete] = useState('')
-  const [messageUpdated, setMessageUpdated] = useState('')
-  const [prevMessage, setPrevMessage] = useState('')
-  const [createMessage, setCreateMessage] = useState('')
-  const [onDelete, setOnDelete] = useState(false)
+  const [messageReceived, setMessageReceived] = useState('');
+  const [updateComplete, setUpdateComplete] = useState('');
+  const [messageUpdated, setMessageUpdated] = useState('');
+  const [warning, setWarning] = useState(false);
+  const [prevMessage, setPrevMessage] = useState('');
+  const [createMessage, setCreateMessage] = useState('');
+  const [onDelete, setOnDelete] = useState(false);
   const data = useParams();
-  const [home, setHome] = useState(!data['channelId'])
-  const [owner, setOwner] = useState(false)
-  const [typing, setTyping] = useState(false)
-  const [otherTyping, setOtherTyping] = useState('')
-  const [userTyping, setUserTyping] = useState('')
+  const [home, setHome] = useState(!data['channelId']);
+  const [owner, setOwner] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [otherTyping, setOtherTyping] = useState('');
+  const [userTyping, setUserTyping] = useState('');
 
 
   let privateMembers;
@@ -292,13 +295,22 @@ const ChatBox = () => {
                   !currentChannel.private_chat &&
                   <button
                     className='chatbox__header--buttons'
-                    onClick={() => removingChannel(currentChannel.id)}
+                    onClick={() => setWarning(true)}
                     style={{ cursor: "pointer" }}>
                     <span className="material-symbols-outlined">
                       delete
                     </span>
                   </button>}
               </h2>
+              {warning &&
+                <Modal onClose={() => setWarning(false)}>
+                  <DeleteWarning
+                    type={'channel'}
+                    setModalClose={setWarning}
+                    handleDelete={removingChannel}
+                    id={currentChannel.id}
+                    />
+                </Modal>}
             </div>
           </div>
         </div>)}

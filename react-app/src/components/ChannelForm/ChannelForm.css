@@ -21,7 +21,7 @@
 
 .modal__form-container button:not(.add-members-btn, .remove-one-member-btn) {
   padding: .75em;
-  border-radius: .75em;
+  border-radius: .25em;
   color: white;
   background-color: #FF4FCA;
   transition: 0.3s;
@@ -50,9 +50,16 @@
 }
 
 .search-profile-pics {
-  height: 38px;
-  width: 38px;
-  border-radius: .75em;
+  width: 2.5em;
+  border-radius: .15em;
+  background-size: cover;
+  background-position: center;
+}
+
+.search-profile-pics::after {
+  display: block;
+  padding-top: 100%;
+  content: "";
 }
 
 .single-search-names-container {
@@ -87,7 +94,6 @@
   cursor: pointer;
 }
 
-
 /* already added members */
 .added-members-container {
   display: grid;
@@ -108,7 +114,7 @@
   height: 45px;
   background-color: white;
   border: gainsboro 1px solid;
-  border-radius: .75em;
+  border-radius: .25em;
   margin-top: 5px;
   transition: .3s;
 }

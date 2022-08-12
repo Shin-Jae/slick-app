@@ -34,13 +34,14 @@
 
 .h2__edit {
   position: absolute;
-  right: 0;
+  left: 0;
   margin: .25em;
   bottom: -1em;
 }
 
 .h2__delete {
   position: absolute;
+  right: 0;
   margin: .25em;
   bottom: -1em;
 }
