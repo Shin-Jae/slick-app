@@ -15,7 +15,6 @@ const EditChannelForm = ({ channelId, set, onClose }) => {
   const [found, setFound] = useState('')
   const userId = useSelector((state) => state.session.user.id)
 
-  //used for search
   const [query, setQuery] = useState("")
   const allUsers = useSelector((state) => state.search);
   const users = Object.values(allUsers);
