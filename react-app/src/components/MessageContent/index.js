@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react'
 import { updateMessage, deleteMessage } from '../../store/messages';
 import MessageUserIcon from '../MessageUserIcon';
 import TextareaAutosize from 'react-textarea-autosize';
-
+import { Modal } from "../../context/modal";
+import ReactTooltip from "react-tooltip";
+import DeleteWarning from '../DeleteWarning';
 
 
 const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpdated, setPrevMessage }) => {
@@ -13,18 +15,17 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
   const user = useSelector((state) => state.session.user)
   const [errors, setErrors] = useState([])
   const [originalContent, setOriginalContent] = useState(message.content)
-  const [content, setContent] = useState(message.content)
+  const [content, setContent] = useState(message.content || '')
   const [edit, setEdit] = useState(true)
   const [deleted, setDeleted] = useState(false)
   const [showTools, setShowTools] = useState(false)
   const [rowValue, setRowValue] = useState(5)
-  const [textareaHeight, setTextareaHeight] = useState(message.content.length < 600 ?
-    2 : message.content.length / 131);
   const [spaceCheck, setSpaceCheck] = useState(message.content.trim().length)
+  const [warning, setWarning] = useState(false)
 
   useEffect(() => {
     const validationErrors = []
-    if (content.length > 1999)
+    if (content?.length > 1999)
       validationErrors.push('Please keep message to under 2000 characters')
     setErrors(validationErrors)
   }, [content, dispatch])
@@ -36,8 +37,6 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
   }
 
   const handleDelete = async (e) => {
-    e.preventDefault()
-
     let deletedMessage;
     try {
       deletedMessage = await dispatch(deleteMessage(message.id));
@@ -49,6 +48,11 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
       setDeleted(true)
       setOnDelete(true)
     }
+  }
+
+  const handleChange = (e) => {
+    setContent(e.target.value);
+    setSpaceCheck(content.trim().length);
   }
 
   const handleSave = async (e) => {
@@ -87,22 +91,22 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
     setContent(message.content)
   }
 
-  const handleChange = (e) => {
-    setContent(e.target.value)
-    setSpaceCheck(e.target.value.trim().length)
-    let value = e.target.value.length
-    let trows = Math.ceil(value / 140) - 1;
-    if (trows > rowValue) {
-      setTextareaHeight(textareaHeight + 1);
-      setRowValue(trows);
-    }
+  // const handleChange = (e) => {
+  //   setContent(e.target.value)
+  //   setSpaceCheck(e.target.value.trim().length)
+  //   let value = e.target.value.length
+  //   let trows = Math.ceil(value / 140) - 1;
+  //   if (trows > rowValue) {
+  //     setTextareaHeight(textareaHeight + 1);
+  //     setRowValue(trows);
+  //   }
 
-    if (trows < rowValue) {
-      setTextareaHeight(Math.ceil(value / 120));
-      setRowValue(trows);
-      if (!trows) trows = 5;
-    }
-  }
+  //   if (trows < rowValue) {
+  //     setTextareaHeight(Math.ceil(value / 120));
+  //     setRowValue(trows);
+  //     if (!trows) trows = 5;
+  //   }
+  // }
 
   const handleKeyPress = (e) => {
     if (e.target.value.length <= 1999) {
@@ -126,10 +130,34 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
         <div className='error__container'>
           <p className='error__text'>{`${errors}`}</p>
         </div>}
-      <div className='message__icon--name'>
-        <MessageUserIcon memberImage={allUsers[message.owner_id].profile_img} first_letter={allUsers[message.owner_id].first_name[0]} />
-        <p className='message__user--name'>{allUsers[message.owner_id].first_name} {allUsers[message.owner_id].last_name}</p>
-        <p className='message__user--time'>{convertedTimeString}</p>
+      <div className='message__icon--name' >
+        <div
+          className='user__container'
+          data-tip data-for='icon__tip'
+        >
+          <MessageUserIcon
+            memberImage={allUsers[message.owner_id].profile_img}
+            first_letter={allUsers[message.owner_id].first_name[0]}
+            className='message__user--name'
+          />
+          <p
+          >{allUsers[message.owner_id].first_name} {allUsers[message.owner_id].last_name}</p>
+          <p className='message__user--time'>{convertedTimeString}</p>
+        </div>
+        {/* <ReactTooltip
+        id="icon__tip"
+        place="top"
+        effect="solid"
+        delayShow='500'
+        backgroundColor='white'
+        border={true}
+        className='user__info'
+        borderColor='black'
+        textColor='black'
+        clickable={true}
+        >
+          USER
+        </ReactTooltip> */}
       </div>
       <form>
         <div className={edit ? 'message__textarea--container--inactive' : 'message__textarea--container'}>
@@ -138,8 +166,8 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
             maxLength='2000'
             className={edit ? 'input__inactive' : 'input__active'}
             value={content}
-            onKeyPress={handleKeyPress}
             onChange={handleChange}
+            onKeyPress={handleKeyPress}
             disabled={edit}
           />
           {edit && <div className='message-image-container'>
@@ -148,7 +176,7 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
           {user.id === message.owner_id && edit && showTools &&
             <div className='message__tools--container'>
               {user.id === message.owner_id &&
-                <button
+                <div
                   className='message__tools-btn'
                   onClick={handleEdit}
                   type='submit'>
@@ -156,17 +184,17 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
                     className="material-symbols-outlined message__tools--tool-icons">
                     edit
                   </span>
-                </button>}
+                </div>}
               {user.id === message.owner_id &&
-                <button
+                <div
                   className='message__tools-btn'
-                  onClick={handleDelete}
+                  onClick={() => setWarning(true)}
                   type='submit'>
                   <span
                     className="material-symbols-outlined message__tools--tool-icons">
                     delete
                   </span>
-                </button>}
+                </div>}
             </div>
           }
           {!edit &&
@@ -191,6 +219,13 @@ const MessageContent = ({ message, setUpdateComplete, setOnDelete, setMessageUpd
           }
         </div>
       </form>
+      {warning &&
+        <Modal onClose={() => setWarning(false)}>
+          <DeleteWarning
+            type={'message'}
+            setModalClose={setWarning}
+            handleDelete={handleDelete} />
+        </Modal>}
     </div>
   );
 }

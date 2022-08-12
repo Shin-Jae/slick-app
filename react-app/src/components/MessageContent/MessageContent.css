@@ -35,9 +35,17 @@
   box-shadow: 0 3px 7px rgba(33,33,33,.2);
 }
 
-
 .message__container:hover .input__inactive{
   background-color: #f7f7f7;
+}
+
+.user__container {
+  display: flex;
+}
+
+.user__info {
+  width: 10em;
+  height: 10em;
 }
 
 .message__container:hover {
@@ -93,14 +101,18 @@
 
 .message__tools-btn {
   background-color: transparent;
-  border-radius: .5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: .15em;
   border: none;
-  padding: .5em;
+  width: 2.25em;
+  height: 2.25em;
   transition: 0.2s;
 }
 
 .message__tools-btn:hover {
-  background-color: #DADADA;
+  background-color: #eeeeee;
   cursor: pointer;
 }
 
@@ -110,7 +122,7 @@
 
 .message__edit--btn {
   padding: .5em 1em;
-  border-radius: .5em;
+  border-radius: .25em;
   border: 1px solid #898989;
   margin: .5em;
 }
@@ -166,4 +178,45 @@
 
 .image__hidden {
   visibility: hidden;
+}
+
+.delete__modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+}
+
+.delete__modal-header {
+  text-align: center;
+  font-size: 1.25em;
+  margin: 1em;
+}
+
+.delete__modal-buttons > button {
+  margin: .5em;
+  padding: .75em;
+  border: none;
+  border-radius: .25em;
+  font-weight: bold;
+  transition: .2s;
+  cursor: pointer;
+}
+
+.delete__modal-buttons > button:hover {
+  filter:brightness(.8)
+}
+
+.delete__modal-confirm {
+  color: white;
+  background-color: #157500;
+}
+
+.delete__modal-cancel {
+
+}
+
+.delete__modal-confirm {
+
 }

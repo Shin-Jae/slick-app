@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteChannel } from '../../store/channels';
 import { getAllChannels } from '../../store/channels';
 import { getAllMessages } from '../../store/messages';
+import { Modal } from '../../context/modal'
+import DeleteWarning from '../DeleteWarning'
 
 const DeleteDMButton = ({ currentChannelId, showDelete }) => {
   const { channelId } = useParams()
   const dispatch = useDispatch()
+  const [warning, setWarning] = useState(false)
   const history = useHistory();
   const [deleted, setDeleted] = useState(false)
   const logInId = useSelector((state) => state.session.user.id)
@@ -50,10 +53,19 @@ const DeleteDMButton = ({ currentChannelId, showDelete }) => {
       className='dms__list-item--delete-container'>
       <button
         className='deleteDM__button'
-        onClick={() => handleDelete(currentChannelId)}
+        onClick={() => setWarning(true)}
       >
         <span className="material-symbols-outlined">close</span>
       </button>
+      {warning &&
+        <Modal onClose={() => setWarning(false)}>
+          <DeleteWarning
+            type={'direct message'}
+            setModalClose={setWarning}
+            handleDelete={handleDelete}
+            id={currentChannelId}
+          />
+        </Modal>}
     </div>
   );
 }

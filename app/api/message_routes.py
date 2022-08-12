@@ -48,21 +48,25 @@ def messages():
 
         url = upload["url"]
 
-    if form.validate_on_submit():
-        message = Message(
-            content=form.data['content'],
-            owner_id=form.data['owner_id'],
-            channel_id=form.data['channel_id'],
-            image=url,
-            created_at=datetime.now(),
-            updated_at=datetime.now(),
-        )
-        db.session.add(message)
-        db.session.commit()
+    # content=None
+    # if 'content'in request.form:
+    #     content=form.data['content']
 
-        return message.to_dict()
+    message = Message(
+        content=form.data['content'],
+        owner_id=form.data['owner_id'],
+        channel_id=form.data['channel_id'],
+        image=url,
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+    )
 
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    db.session.add(message)
+    db.session.commit()
+
+    return message.to_dict()
+
+    # return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 @message_routes.route('/<int:messageId>', methods=['PUT'], strict_slashes=False)
