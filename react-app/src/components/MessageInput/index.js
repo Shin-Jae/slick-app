@@ -24,7 +24,7 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping, channelId })
   const data = useParams();
   const [selfChat, setSelfChat] = useState('channelId' in data)
   const [image, setImage] = useState(null);
-  console.log("O<AGE", image)
+  // console.log("O<AGE", image)
   const [imageLoading, setImageLoading] = useState(false);
   const [choseImage, setChoseImage] = useState(false);
 
@@ -51,7 +51,7 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping, channelId })
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log('message', message)
+    // console.log('message', message)
     const formData = new FormData();
     if (message) formData.append("content", message.trim());
     formData.append("owner_id", userId);
@@ -182,7 +182,7 @@ const MessageInput = ({ setUserTyping, setCreateMessage, setTyping, channelId })
                   'message__input--btn message__input--btn-active' :
                   'message__input--btn btn__disabled'}
               disabled={(!message.trim().length || message.trim().length > 1999) && image === null}
-              >
+            >
               <span
                 className="material-symbols-outlined">
                 send
