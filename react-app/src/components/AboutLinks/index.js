@@ -22,4 +22,3 @@ const AboutLinks = () => {
 }
 
 export default AboutLinks;
-//
