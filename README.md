@@ -3,19 +3,19 @@ Welcome to slick! This project is inspired by [Slack](https://slack.com/) where 
 
 ## Index
 
-- [live site](https://app-slick.herokuapp.com/)
+- [live site](https://slick.herokuapp.com/)
 
-- [Home](https://github.com/walkeradkins/slick-app/wiki)
+- [Home](https://github.com/Shin-Jae/slick-app/wiki)
 
-- [Backend Routes](https://github.com/walkeradkins/slick-app/wiki/Backend-Routes)
+- [Backend Routes](https://github.com/Shin-Jae/slick-app/wiki/Backend-Routes)
 
-- [Database Schema](https://github.com/walkeradkins/slick-app/wiki/Database-Schema)
+- [Database Schema](https://github.com/Shin-Jae/slick-app/wiki/Database-Schema)
 
-- [Feature List](https://github.com/walkeradkins/slick-app/wiki/Feature--List)
+- [Feature List](https://github.com/Shin-Jae/slick-app/wiki/Features-List)
 
-- [Frontend Routes](https://github.com/walkeradkins/slick-app/wiki/Frontend-Routes)
+- [Frontend Routes](https://github.com/Shin-Jae/slick-app/wiki/Frontend-Routes)
 
-- [User Stories Channel](https://github.com/walkeradkins/slick-app/wiki/User-Stories-Channels)
+- [User Stories Channel](https://github.com/Shin-Jae/slick-app/wiki/Users-Stories-Channels)
 
 ## Meet the Developers
 - [Walker Adkins](https://github.com/walkeradkins)
@@ -29,7 +29,7 @@ Welcome to slick! This project is inspired by [Slack](https://slack.com/) where 
 1. Clone this repistory
 
     ```bash
-    https://github.com/walkeradkins/slick-app.git
+    https://github.com/Shin-Jae/slick-app.git
     ```
 
 2. Install the project's backend dependencies at root directory
@@ -62,7 +62,7 @@ Welcome to slick! This project is inspired by [Slack](https://slack.com/) where 
 
     ```bash
    pipenv shell
-   ```  
+   ```
 
    ```bash
    flask db upgrade
@@ -102,7 +102,7 @@ Welcome to slick! This project is inspired by [Slack](https://slack.com/) where 
 * Every user can send individual direct message(DM) or group message to other users
 * Inside the DM channel, logged-in users can create, edit, and delete their own message
 4. Live Server
-* When two logged-in users are chatting, both of them will see the chat being updated 
+* When two logged-in users are chatting, both of them will see the chat being updated
 
 <img width="1437" alt="Screen Shot 2022-08-03 at 7 02 54 PM" src="https://user-images.githubusercontent.com/95829246/182727277-6e8d34da-56e9-469f-a441-51ea6fcc9a50.png">
 
